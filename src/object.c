@@ -47,6 +47,15 @@ static uint32_t hashString(char const* key, uint32_t length) {
 }
 
 
+static void printFunction(ObjFunction* function) {
+    if (function->name) {
+        printf("<fn %s>", function->name->chars);
+        return;
+    }
+    printf("<script>");
+}
+
+
 /* Public functions */
 
 ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
@@ -77,8 +86,21 @@ ObjString* takeString(VM* vm, char* chars, uint32_t length) {
 }
 
 
+ObjFunction* newFunction(VM* vm) {
+    ObjFunction* function = ALLOCATE_OBJ(vm, ObjFunction, OBJ_FUNCTION);
+    function->arity = 0;
+    function->name = nullptr;
+    initChunk(&function->chunk);
+
+    return function;
+}
+
+
 void printObject(Value value) {
     switch (objType(value)) {
+        case OBJ_FUNCTION:
+            printFunction(asFunction(value));
+            break;
         case OBJ_STRING:
             printf("%s", asCString(value));
             break;

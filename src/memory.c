@@ -8,11 +8,18 @@
 
 static void freeObject(Obj* object) {
     switch (object->type) {
+        case OBJ_FUNCTION: {
+                ObjFunction* function = (ObjFunction*)object;
+                freeChunk(&function->chunk);
+                assert(FREE(ObjFunction, object) == nullptr);
+                break;
+            }
         case OBJ_STRING: {
-            ObjString* string = (ObjString*)object;
-            assert(FREE_ARRAY(char, string->chars, string->length + 1) == nullptr);
-            assert(FREE(ObjString, object) == nullptr);
-        }
+                ObjString* string = (ObjString*)object;
+                assert(FREE_ARRAY(char, string->chars, string->length + 1) == nullptr);
+                assert(FREE(ObjString, object) == nullptr);
+                break;
+            }
     }
 }
 
