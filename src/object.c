@@ -48,11 +48,11 @@ static uint32_t hashString(char const* key, uint32_t length) {
 
 
 static void printFunction(ObjFunction* function) {
-    if (function->name) {
-        printf("<fn %s>", function->name->chars);
+    if (!function->name) {
+        printf("<script>");
         return;
     }
-    printf("<script>");
+    printf("<fn %s>", function->name->chars);
 }
 
 

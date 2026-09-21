@@ -6,7 +6,7 @@
 #include "vm.h"
 
 
-bool compile(VM* vm, char const* source, Chunk* chunk);
+ObjFunction* compile(VM* vm, char const* source);
 
 
 #endif

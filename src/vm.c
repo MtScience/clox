@@ -15,6 +15,7 @@
 
 static void resetStack(VM* restrict vm) {
     vm->stackTop = vm->stack;
+    vm->frameCount = 0;
 }
 
 
@@ -48,10 +49,12 @@ static void runtimeError(VM* restrict vm, char const* format, ...) {
     va_start(args, format);
     vfprintf(stderr, format, args);
     va_end(args);
+
     fputc('\n', stderr);
 
-    size_t instruction = (size_t)(vm->ip - vm->chunk->code - 1);
-    uint32_t line = vm->chunk->lines[instruction];
+    CallFrame* frame = &vm->frames[vm->frameCount - 1];
+    size_t instruction = (size_t)(frame->ip - frame->function->chunk.code - 1);
+    uint32_t line = frame->function->chunk.lines[instruction];
     fprintf(stderr, "[line %u] in script\n", line);
 
     resetStack(vm);
@@ -59,9 +62,11 @@ static void runtimeError(VM* restrict vm, char const* format, ...) {
 
 
 static InterpretResult run(VM* restrict vm) {
-#define READ_BYTE()     (*vm->ip++)
-#define READ_SHORT()    (vm->ip += 2, (uint16_t)((vm->ip[-2] << 8) | vm->ip[-1]))
-#define READ_CONSTANT() (vm->chunk->constants.values[READ_BYTE()])
+    CallFrame* frame = &vm->frames[vm->frameCount - 1];
+
+#define READ_BYTE()     (*frame->ip++)
+#define READ_SHORT()    (frame->ip += 2, (uint16_t)((frame->ip[-2] << 8) | frame->ip[-1]))
+#define READ_CONSTANT() (frame->function->chunk.constants.values[READ_BYTE()])
 #define READ_STRING()   asString(READ_CONSTANT())
 #define BINARY_OP(valueType, op)                                \
     do {                                                        \
@@ -83,7 +88,8 @@ static InterpretResult run(VM* restrict vm) {
             printf(" ]");
         }
         putchar('\n');
-        disassembleInstruction(vm->chunk, (uint32_t)(vm->ip - vm->chunk->code));
+        disassembleInstruction(&frame->function->chunk,
+                               (uint32_t)(frame->ip - frame->function->chunk.code));
 #endif
         uint8_t instruction;
         switch (instruction = READ_BYTE()) {
@@ -104,12 +110,12 @@ static InterpretResult run(VM* restrict vm) {
             case OP_FALSE: push(vm, boolVal(false)); break;
             case OP_GET_LOCAL: {
                 uint8_t slot = READ_BYTE();
-                push(vm, vm->stack[slot]);
+                push(vm, frame->slots[slot]);
                 break;
             }
             case OP_SET_LOCAL: {
                 uint8_t slot = READ_BYTE();
-                vm->stack[slot] = peek(vm, 0);
+                frame->slots[slot] = peek(vm, 0);
                 break;
             }
             case OP_GET_GLOBAL: {
@@ -166,18 +172,18 @@ static InterpretResult run(VM* restrict vm) {
             case OP_POP: pop(vm); break;
             case OP_LOOP: {
                     uint16_t offset = READ_SHORT();
-                    vm->ip -= offset;
+                    frame->ip -= offset;
                     break;
                 }
             case OP_JUMP: {
                     uint16_t offset = READ_SHORT();
-                    vm->ip += offset;
+                    frame->ip += offset;
                     break;
                 }
             case OP_JUMP_IF_FALSE: {
                     uint16_t offset = READ_SHORT();
                     if (isFalsey(peek(vm, 0)))
-                        vm->ip += offset;
+                        frame->ip += offset;
                     break;
                 }
             case OP_PRINT: {
@@ -216,21 +222,21 @@ void freeVM(VM* restrict vm) {
 
 
 InterpretResult interpret(VM* restrict vm, char const* source) {
-    Chunk chunk;
-    initChunk(&chunk);
+    ObjFunction* function = compile(vm, source);
 
-    if (!compile(vm, source, &chunk)) {
-        freeChunk(&chunk);
+    if (!function)
         return INTERPRET_COMPILE_ERROR;
-    }
 
-    vm->chunk = &chunk;
-    vm->ip = vm->chunk->code;
+    push(vm, objVal((Obj*)function));
 
-    InterpretResult result = run(vm);
+    CallFrame* frame = &vm->frames[vm->frameCount++];
+    *frame = (CallFrame){
+        .function = function,
+        .ip = function->chunk.code,
+        .slots = vm->stack,
+    };
 
-    freeChunk(&chunk);
-    return result;
+    return run(vm);
 }
 
 

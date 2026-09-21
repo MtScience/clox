@@ -47,8 +47,10 @@ typedef struct {
 
 
 typedef struct {
+    ObjFunction* function;
+    FunctionType type;
+
     Local locals[uint8Count];
-    Chunk* compilingChunk;  /* TODO: This is temporary */
     int16_t localCount;
     int16_t scopeDepth;
 } Compiler;
@@ -65,17 +67,17 @@ typedef struct {
 
 
 static Chunk* currentChunk(Compiler* compiler) {
-    return compiler->compilingChunk;
+    return &compiler->function->chunk;
 }
 
 
 static void errorAt(Parser* parser, Token* token, char const* message) {
-    if (parser->panicMode) return;
+    if (parser->panicMode)
+        return;
 
     parser->panicMode = true;
 
     fprintf(stderr, "[line %u] Error", token->line);
-
     if (token->type == TOKEN_EOF) {
         fprintf(stderr, " at end");
     } else if (token->type != TOKEN_ERROR) {
@@ -203,18 +205,32 @@ static void emitLoop(Compiler* compiler, Parser* parser, uint32_t loopStart) {
 }
 
 
-static void initCompiler(Compiler* compiler) {
+static void initCompiler(VM* vm, Compiler* compiler, FunctionType type) {
+    compiler->function = nullptr;
+    compiler->type = type;
     compiler->localCount = 0;
     compiler->scopeDepth = 0;
+    compiler->function = newFunction(vm);
+
+    Local* local = &compiler->locals[compiler->localCount++];
+    local->depth = 0;
+    local->name.start = "";
+    local->name.length = 0;
 }
 
 
-static void endCompiler(Compiler* compiler, Parser* parser) {
+static ObjFunction* endCompiler(Compiler* compiler, Parser* parser) {
     emitReturn(compiler, parser);
+
+    ObjFunction* function = compiler->function;
+
 #ifdef DEBUG_PRINT_CODE
     if (!parser->hadError)
-        disassembleChunk(currentChunk(compiler), "code");
+        disassembleChunk(currentChunk(compiler),
+                         function->name ? function->name->chars : "<script>");
 #endif
+
+    return function;
 }
 
 
@@ -823,7 +839,7 @@ static void declaration(
 }
 
 
-bool compile(VM* vm, char const* source, Chunk* chunk) {
+ObjFunction* compile(VM* vm, char const* source) {
     Scanner scanner;
     Parser parser = {
         .hadError = false,
@@ -832,14 +848,12 @@ bool compile(VM* vm, char const* source, Chunk* chunk) {
     Compiler compiler;
 
     initScanner(&scanner, source);
-    initCompiler(&compiler);
-
-    compiler.compilingChunk = chunk;
+    initCompiler(vm, &compiler, TYPE_SCRIPT);
 
     advance(&parser, &scanner);
     while (!match(&parser, &scanner, TOKEN_EOF))
         declaration(vm, &compiler, &parser, &scanner);
 
-    endCompiler(&compiler, &parser);
-    return !parser.hadError;
+    ObjFunction* function = endCompiler(&compiler, &parser);
+    return parser.hadError ? nullptr : function;
 }

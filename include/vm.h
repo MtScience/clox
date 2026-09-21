@@ -2,23 +2,35 @@
 #define clox_vm_h
 
 
-#include "chunk.h"
+typedef struct VM VM;
+
+
+#include "object.h"
 #include "table.h"
 #include "value.h"
 
 
-constexpr uint16_t stackMax = 256;
+constexpr uint16_t framesMax = 64;
+constexpr uint16_t stackMax = framesMax * uint8Count;
 
 
 typedef struct {
-    Chunk* chunk;
+    ObjFunction* function;
     uint8_t* ip;
+    Value* slots;
+} CallFrame;
+
+
+struct VM {
+    CallFrame frames[framesMax];
+    uint16_t frameCount;
+
     Value stack[stackMax];
     Value* stackTop;
     Table strings;
     Table globals;
     Obj* objects;
-} VM;
+};
 
 
 typedef enum : uint8_t {
