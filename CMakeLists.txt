@@ -36,6 +36,7 @@ add_executable(clox
     src/scanner.c
     src/object.c
     src/table.c
+    src/native.c
 )
 
 # Include project headers, if any.

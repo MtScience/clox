@@ -18,7 +18,7 @@ void initValueArray(ValueArray* restrict array) {
 
 
 void freeValueArray(ValueArray* restrict array) {
-    assert(FREE_ARRAY(uint8_t, array->values, array->capacity) == nullptr);
+    assert(FREE_ARRAY(Value, array->values, array->capacity) == nullptr);
     initValueArray(array);
 }
 

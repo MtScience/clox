@@ -77,6 +77,7 @@ uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset) {
         case OP_JUMP_IF_FALSE: return jumpInstruction("OP_JUMP_IF_FALSE", 1,  chunk, offset);
         case OP_GET_LOCAL:     return byteInstruction("OP_GET_LOCAL", chunk, offset);
         case OP_SET_LOCAL:     return byteInstruction("OP_SET_LOCAL", chunk, offset);
+        case OP_CALL:          return byteInstruction("OP_CALL",      chunk, offset);
         case OP_NIL:           return simpleInstruction("OP_NIL",      offset);
         case OP_TRUE:          return simpleInstruction("OP_TRUE",     offset);
         case OP_FALSE:         return simpleInstruction("OP_FALSE",    offset);

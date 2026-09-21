@@ -6,6 +6,7 @@
 #include "compiler.h"
 #include "object.h"
 #include "memory.h"
+#include "native.h"
 #include "vm.h"
 
 #ifdef DEBUG_TRACE_EXECUTION
@@ -52,12 +53,61 @@ static void runtimeError(VM* restrict vm, char const* format, ...) {
 
     fputc('\n', stderr);
 
-    CallFrame* frame = &vm->frames[vm->frameCount - 1];
-    size_t instruction = (size_t)(frame->ip - frame->function->chunk.code - 1);
-    uint32_t line = frame->function->chunk.lines[instruction];
-    fprintf(stderr, "[line %u] in script\n", line);
+    for (int32_t i = vm->frameCount - 1; i >= 0; i--) {
+        CallFrame* frame = &vm->frames[i];
+        ObjFunction* function = frame->function;
+        uint32_t instruction = (uint32_t)(frame->ip - function->chunk.code - 1);
+        fprintf(stderr, "[line %u] in ", function->chunk.lines[instruction]);
+        if (!function->name) {
+            fprintf(stderr, "script\n");
+        } else {
+            fprintf(stderr, "%s()\n", function->name->chars);
+        }
+    }
 
     resetStack(vm);
+}
+
+
+static bool call(VM*vm, ObjFunction* function, uint8_t argCount) {
+    if (argCount != function->arity) {
+        runtimeError(vm, "Expected %u arguments but got %u.", function->arity, argCount);
+        return false;
+    }
+
+    if (vm->frameCount == framesMax) {
+        runtimeError(vm, "Stack overflow.");
+        return false;
+    }
+
+    CallFrame* frame = &vm->frames[vm->frameCount++];
+    *frame = (CallFrame){
+        .function = function,
+        .ip = function->chunk.code,
+        .slots = vm->stackTop - argCount - 1,
+    };
+    return true;
+}
+
+
+static bool callValue(VM* vm, Value callee, uint8_t argCount) {
+    if (isObj(callee)) {
+        switch (objType(callee)) {
+            case OBJ_FUNCTION:
+                return call(vm, asFunction(callee), argCount);
+            case OBJ_NATIVE: {
+                    NativeFn native = asNative(callee);
+                    Value result = native(argCount, vm->stackTop - argCount);
+                    vm->stackTop -= argCount + 1;
+                    push(vm, result);
+                    return true;
+                }
+            default:
+                break;
+        }
+    }
+    runtimeError(vm, "Can only call functions and classes.");
+    return false;
 }
 
 
@@ -191,7 +241,27 @@ static InterpretResult run(VM* restrict vm) {
                     putchar('\n');
                     break;
                 }
-            case OP_RETURN: return INTERPRET_OK;
+            case OP_CALL: {
+                    uint8_t argCount = READ_BYTE();
+                    if (!callValue(vm, peek(vm, argCount), argCount)) {
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+                    frame = &vm->frames[vm->frameCount - 1];
+                    break;
+                }
+            case OP_RETURN: {
+                Value result = pop(vm);
+                vm->frameCount--;
+                if (vm->frameCount == 0) {
+                    pop(vm);
+                    return INTERPRET_OK;
+                }
+
+                vm->stackTop = frame->slots;
+                push(vm, result);
+                frame = &vm->frames[vm->frameCount - 1];
+                break;
+            }
         }
     }
 
@@ -211,6 +281,8 @@ void initVM(VM* restrict vm) {
     vm->objects = nullptr;
     initTable(&vm->globals);
     initTable(&vm->strings);
+
+    defineNative(vm, "clock", clockNative);
 }
 
 
@@ -228,13 +300,7 @@ InterpretResult interpret(VM* restrict vm, char const* source) {
         return INTERPRET_COMPILE_ERROR;
 
     push(vm, objVal((Obj*)function));
-
-    CallFrame* frame = &vm->frames[vm->frameCount++];
-    *frame = (CallFrame){
-        .function = function,
-        .ip = function->chunk.code,
-        .slots = vm->stack,
-    };
+    call(vm, function, 0);
 
     return run(vm);
 }

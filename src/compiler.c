@@ -167,6 +167,7 @@ static void emitConstant(Compiler* compiler, Parser* parser, Value value) {
 
 
 static void emitReturn(Compiler* compiler, Parser* parser) {
+    emitByte(compiler, parser, OP_NIL);  /* TODO: change to emitBytes if nothing is gonna go in between */
     emitByte(compiler, parser, OP_RETURN);
 }
 
@@ -205,12 +206,18 @@ static void emitLoop(Compiler* compiler, Parser* parser, uint32_t loopStart) {
 }
 
 
-static void initCompiler(VM* vm, Compiler* compiler, FunctionType type) {
+static void initCompiler(VM* vm, Compiler* compiler, Parser* parser, FunctionType type) {
     compiler->function = nullptr;
     compiler->type = type;
     compiler->localCount = 0;
     compiler->scopeDepth = 0;
     compiler->function = newFunction(vm);
+
+    if (type != TYPE_SCRIPT) {
+        compiler->function->name = copyString(vm,
+                                              parser->previous.start,
+                                              parser->previous.length);
+    }
 
     Local* local = &compiler->locals[compiler->localCount++];
     local->depth = 0;
@@ -332,6 +339,9 @@ static uint8_t parseVariable(
 
 
 static void markInitialized(Compiler* compiler) {
+    if (compiler->scopeDepth == 0)
+        return;
+
     compiler->locals[compiler->localCount - 1].depth = compiler->scopeDepth;
 }
 
@@ -421,11 +431,48 @@ static void variable(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanne
 static void and_(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner, bool canAssign);
 static void or_(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner, bool canAssign);
 
+static void expression(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner);
 static void declaration(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner);
 static void statement(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner);
 
+
+static uint8_t argumentList(
+    VM* vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner
+) {
+    uint8_t argCount = 0;
+
+    if (!check(parser, TOKEN_RIGHT_PAREN)) {
+        do {
+            expression(vm, compiler, parser, scanner);
+            if (argCount == UINT8_MAX) {
+                error(parser, "Can't have more than 255 arguments.");
+            }
+            argCount++;
+        } while (match(parser, scanner, TOKEN_COMMA));
+    }
+    consume(parser, scanner, TOKEN_RIGHT_PAREN, "Expect ')' after arguments.");
+
+    return argCount;
+}
+
+
+static void call(
+    VM* vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner,
+    [[maybe_unused]] bool canAssign
+) {
+    uint8_t argCount = argumentList(vm, compiler, parser, scanner);
+    emitBytes(compiler, parser, OP_CALL, argCount);
+}
+
+
 static ParseRule rules[] = {
-    [TOKEN_LEFT_PAREN]    = {grouping, nullptr, PREC_NONE},
+    [TOKEN_LEFT_PAREN]    = {grouping, call,    PREC_CALL},
     [TOKEN_RIGHT_PAREN]   = {nullptr,  nullptr, PREC_NONE},
     [TOKEN_LEFT_BRACE]    = {nullptr,  nullptr, PREC_NONE},
     [TOKEN_RIGHT_BRACE]   = {nullptr,  nullptr, PREC_NONE},
@@ -800,6 +847,26 @@ static void forStatement(
 }
 
 
+static void returnStatement(
+    VM* vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner
+) {
+    if (compiler->type == TYPE_SCRIPT) {
+        error(parser, "Can't return from top-level code.");
+    }
+
+    if (match(parser, scanner, TOKEN_SEMICOLON)) {
+        emitReturn(compiler, parser);
+    } else {
+        expression(vm, compiler, parser, scanner);
+        consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after return value.");
+        emitByte(compiler, parser, OP_RETURN);
+    }
+}
+
+
 static void statement(
     VM* vm,
     Compiler* compiler,
@@ -810,6 +877,8 @@ static void statement(
         printStatement(vm, compiler, parser, scanner);
     } else if (match(parser, scanner, TOKEN_IF)) {
         ifStatement(vm, compiler, parser, scanner);
+    } else if (match(parser, scanner, TOKEN_RETURN)) {
+        returnStatement(vm, compiler, parser, scanner);
     } else if (match(parser, scanner, TOKEN_WHILE)) {
         whileStatement(vm, compiler, parser, scanner);
     } else if (match(parser, scanner, TOKEN_FOR)) {
@@ -823,19 +892,70 @@ static void statement(
 }
 
 
+static void function(
+    VM* vm,
+    Compiler* enclosing,
+    Parser* parser,
+    Scanner* scanner,
+    FunctionType type
+) {
+    Compiler compiler;
+    initCompiler(vm, &compiler, parser, type);
+
+    beginScope(&compiler);
+
+    consume(parser, scanner, TOKEN_LEFT_PAREN, "Expect '(' after function name.");
+    if (!check(parser, TOKEN_RIGHT_PAREN)) {
+        do {
+            compiler.function->arity++;
+            if (compiler.function->arity > UINT8_MAX) {
+                errorAtCurrent(parser, "Can't have more than 255 parameters.");
+            }
+            uint8_t constant = parseVariable(vm, &compiler, parser, scanner, "Expect parameter name.");
+            defineVariable(&compiler, parser, constant);
+        } while (match(parser, scanner, TOKEN_COMMA));
+    }
+    consume(parser, scanner, TOKEN_RIGHT_PAREN, "Expect ')' after parameters.");
+
+    consume(parser, scanner, TOKEN_LEFT_BRACE, "Expect '{' before function body.");
+    block(vm, &compiler, parser, scanner);
+
+    ObjFunction* function = endCompiler(&compiler, parser);
+    emitBytes(enclosing, parser, OP_CONSTANT,
+              makeConstant(enclosing, parser, objVal((Obj*)function)));
+}
+
+
+static void funDeclaration(
+    VM* vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner
+) {
+    uint8_t global = parseVariable(vm, compiler, parser, scanner, "Expect function name.");
+    markInitialized(compiler);
+    function(vm, compiler, parser, scanner, TYPE_FUNCTION);
+    defineVariable(compiler, parser, global);
+}
+
+
 static void declaration(
     VM* vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
 ) {
-    if (match(parser, scanner, TOKEN_VAR))
+    if (match(parser, scanner, TOKEN_FUN)) {
+        funDeclaration(vm, compiler, parser, scanner);
+    } else if (match(parser, scanner, TOKEN_VAR)) {
         varDeclaration(vm, compiler, parser, scanner);
-    else
+    } else {
         statement(vm, compiler, parser, scanner);
+    }
 
-    if (parser->panicMode)
+    if (parser->panicMode) {
         synchronize(parser, scanner);
+    }
 }
 
 
@@ -848,11 +968,12 @@ ObjFunction* compile(VM* vm, char const* source) {
     Compiler compiler;
 
     initScanner(&scanner, source);
-    initCompiler(vm, &compiler, TYPE_SCRIPT);
+    initCompiler(vm, &compiler, &parser, TYPE_SCRIPT);
 
     advance(&parser, &scanner);
-    while (!match(&parser, &scanner, TOKEN_EOF))
+    while (!match(&parser, &scanner, TOKEN_EOF)) {
         declaration(vm, &compiler, &parser, &scanner);
+    }
 
     ObjFunction* function = endCompiler(&compiler, &parser);
     return parser.hadError ? nullptr : function;

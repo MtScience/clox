@@ -11,6 +11,7 @@
 
 typedef enum : uint8_t {
     OBJ_FUNCTION,
+    OBJ_NATIVE,
     OBJ_STRING,
 } ObjType;
 
@@ -37,6 +38,15 @@ struct ObjFunction {
 };
 
 
+typedef Value (*NativeFn)(uint8_t arg, Value* args);
+
+
+typedef struct {
+    Obj obj;
+    NativeFn function;
+} ObjNative;
+
+
 /* Type checks */
 
 static inline
@@ -47,6 +57,7 @@ bool isObjType(Value value, ObjType type) {
 static inline ObjType objType(Value value) { return asObj(value)->type; }
 static inline bool isString(Value value) { return isObjType(value, OBJ_STRING); }
 static inline bool isFunction(Value value) { return isObjType(value, OBJ_FUNCTION); }
+static inline bool isNative(Value value) { return isObjType(value, OBJ_NATIVE); }
 
 
 /* Type conversions */
@@ -54,6 +65,7 @@ static inline bool isFunction(Value value) { return isObjType(value, OBJ_FUNCTIO
 static inline char* asCString(Value value) { return ((ObjString*)asObj(value))->chars; }
 static inline ObjString* asString(Value value) { return (ObjString*)asObj(value); }
 static inline ObjFunction* asFunction(Value value) { return (ObjFunction*)asObj(value); }
+static inline NativeFn asNative(Value value) { return ((ObjNative*)asObj(value))->function; }
 
 
 /* Interface */
@@ -62,6 +74,7 @@ ObjString* copyString(VM* vm, char const* chars, uint32_t length);
 ObjString* takeString(VM* vm, char* chars, uint32_t length);
 
 ObjFunction* newFunction(VM* vm);
+ObjNative* newNative(VM* vm, NativeFn function);
 
 void printObject(Value value);
 
