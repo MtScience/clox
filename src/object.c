@@ -103,17 +103,19 @@ ObjNative* newNative(VM* vm, NativeFn function) {
     return native;
 }
 
+ObjClosure* newClosure(VM* vm, ObjFunction* function) {
+    ObjClosure* closure = ALLOCATE_OBJ(vm, ObjClosure, OBJ_CLOSURE);
+    closure->function = function;
+
+    return closure;
+}
+
 
 void printObject(Value value) {
     switch (objType(value)) {
-        case OBJ_FUNCTION:
-            printFunction(asFunction(value));
-            break;
-        case OBJ_NATIVE:
-            printf("<native fn>");
-            break;
-        case OBJ_STRING:
-            printf("%s", asCString(value));
-            break;
+        case OBJ_FUNCTION: printFunction(asFunction(value));          break;
+        case OBJ_NATIVE:   printf("<native fn>");                     break;
+        case OBJ_CLOSURE:  printFunction(asClosure(value)->function); break;
+        case OBJ_STRING:   printf("%s", asCString(value));            break;
     }
 }

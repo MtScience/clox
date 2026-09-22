@@ -18,6 +18,10 @@ static void freeObject(Obj* object) {
                 assert(FREE(ObjNative, object) == nullptr);
                 break;
             }
+        case OBJ_CLOSURE: {
+                assert(FREE(ObjClosure, object) == nullptr);
+                break;
+            }
         case OBJ_STRING: {
                 ObjString* string = (ObjString*)object;
                 assert(FREE_ARRAY(char, string->chars, string->length + 1) == nullptr);

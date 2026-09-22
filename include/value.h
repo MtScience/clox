@@ -8,6 +8,7 @@
 typedef struct Obj Obj;
 typedef struct ObjString ObjString;
 typedef struct ObjFunction ObjFunction;
+typedef struct ObjClosure ObjClosure;
 
 
 typedef enum : uint8_t {
@@ -37,17 +38,17 @@ typedef struct {
 
 /* Type-checks */
 
-static inline bool isBool(Value value) {   return value.type == VAL_BOOL; }
-static inline bool isNil(Value value) {    return value.type == VAL_NIL; }
+static inline bool isBool(Value value)   { return value.type == VAL_BOOL; }
+static inline bool isNil(Value value)    { return value.type == VAL_NIL; }
 static inline bool isNumber(Value value) { return value.type == VAL_NUMBER; }
-static inline bool isObj(Value value) {    return value.type == VAL_OBJ; }
+static inline bool isObj(Value value)    { return value.type == VAL_OBJ; }
 
 
 /* Type conversions */
 
-static inline bool asBool(Value value) {     return value.as.boolean; }
+static inline bool   asBool(Value value)   { return value.as.boolean; }
 static inline double asNumber(Value value) { return value.as.number; }
-static inline Obj* asObj(Value value) {      return value.as.obj; }
+static inline Obj*   asObj(Value value)    { return value.as.obj; }
 
 
 /* Constuctors */

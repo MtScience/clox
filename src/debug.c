@@ -1,6 +1,7 @@
 #include <stdio.h>  /* For printf, puts */
 
 #include "debug.h"
+#include "object.h"
 #include "value.h"
 
 
@@ -27,7 +28,7 @@ static uint32_t jumpInstruction(char const* name, int8_t sign, Chunk* chunk, uin
     jump |= chunk->code[offset + 2];
 
     /*
-     * Doing this instead of just (offset + 3 + sign * jump)
+     * NOTE: Doing this instead of just (offset + 3 + sign * jump)
      * in order to avoidpotentially dangerous implicit cast.
      */
     uint32_t target = offset + 3;
@@ -75,9 +76,9 @@ uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset) {
         case OP_LOOP:          return jumpInstruction("OP_LOOP"         , -1, chunk, offset);
         case OP_JUMP:          return jumpInstruction("OP_JUMP"         , 1,  chunk, offset);
         case OP_JUMP_IF_FALSE: return jumpInstruction("OP_JUMP_IF_FALSE", 1,  chunk, offset);
-        case OP_GET_LOCAL:     return byteInstruction("OP_GET_LOCAL", chunk, offset);
-        case OP_SET_LOCAL:     return byteInstruction("OP_SET_LOCAL", chunk, offset);
-        case OP_CALL:          return byteInstruction("OP_CALL",      chunk, offset);
+        case OP_GET_LOCAL:     return byteInstruction("OP_GET_LOCAL",   chunk, offset);
+        case OP_SET_LOCAL:     return byteInstruction("OP_SET_LOCAL",   chunk, offset);
+        case OP_CALL:          return byteInstruction("OP_CALL",        chunk, offset);
         case OP_NIL:           return simpleInstruction("OP_NIL",      offset);
         case OP_TRUE:          return simpleInstruction("OP_TRUE",     offset);
         case OP_FALSE:         return simpleInstruction("OP_FALSE",    offset);
@@ -93,6 +94,15 @@ uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset) {
         case OP_LESS:          return simpleInstruction("OP_LESS",     offset);
         case OP_PRINT:         return simpleInstruction("OP_PRINT",    offset);
         case OP_RETURN:        return simpleInstruction("OP_RETURN",   offset);
+        case OP_CLOSURE: {
+                offset++;
+                uint8_t constant = chunk->code[offset++];
+                printf("%-16s %4u ", "OP_CLOSURE", constant);
+                printValue(chunk->constants.values[constant]);
+                putchar('\n');
+
+                return offset;
+            }
         default:
             printf("Unknown opcode %u\n", instruction);
             return offset + 1;

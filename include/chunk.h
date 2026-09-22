@@ -31,6 +31,7 @@ typedef enum : uint8_t {
     OP_JUMP_IF_FALSE,
     OP_PRINT,
     OP_CALL,
+    OP_CLOSURE,
     OP_RETURN,
 } OpCode;
 

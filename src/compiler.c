@@ -46,13 +46,15 @@ typedef struct {
 } Local;
 
 
-typedef struct {
+typedef struct Compiler {
     ObjFunction* function;
     FunctionType type;
 
     Local locals[uint8Count];
     int16_t localCount;
     int16_t scopeDepth;
+
+    struct Compiler* enclosing;
 } Compiler;
 
 
@@ -206,11 +208,18 @@ static void emitLoop(Compiler* compiler, Parser* parser, uint32_t loopStart) {
 }
 
 
-static void initCompiler(VM* vm, Compiler* compiler, Parser* parser, FunctionType type) {
+static void initCompiler(
+    VM* vm,
+    Compiler* compiler,
+    Compiler* enclosing,
+    Parser* parser,
+    FunctionType type
+) {
     compiler->function = nullptr;
     compiler->type = type;
     compiler->localCount = 0;
     compiler->scopeDepth = 0;
+    compiler->enclosing = enclosing;
     compiler->function = newFunction(vm);
 
     if (type != TYPE_SCRIPT) {
@@ -734,10 +743,11 @@ static void block(
 static void varDeclaration(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner) {
     uint8_t global = parseVariable(vm, compiler, parser, scanner, "Expect variable name.");
 
-    if (match(parser, scanner, TOKEN_EQUAL))
+    if (match(parser, scanner, TOKEN_EQUAL)) {
         expression(vm, compiler, parser, scanner);
-    else
+    } else {
         emitByte(compiler, parser, OP_NIL);
+    }
 
     consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after variable declaration.");
 
@@ -900,7 +910,7 @@ static void function(
     FunctionType type
 ) {
     Compiler compiler;
-    initCompiler(vm, &compiler, parser, type);
+    initCompiler(vm, &compiler, enclosing, parser, type);
 
     beginScope(&compiler);
 
@@ -921,7 +931,7 @@ static void function(
     block(vm, &compiler, parser, scanner);
 
     ObjFunction* function = endCompiler(&compiler, parser);
-    emitBytes(enclosing, parser, OP_CONSTANT,
+    emitBytes(enclosing, parser, OP_CLOSURE,
               makeConstant(enclosing, parser, objVal((Obj*)function)));
 }
 
@@ -968,7 +978,7 @@ ObjFunction* compile(VM* vm, char const* source) {
     Compiler compiler;
 
     initScanner(&scanner, source);
-    initCompiler(vm, &compiler, &parser, TYPE_SCRIPT);
+    initCompiler(vm, &compiler, nullptr, &parser, TYPE_SCRIPT);
 
     advance(&parser, &scanner);
     while (!match(&parser, &scanner, TOKEN_EOF)) {

@@ -15,7 +15,7 @@ constexpr uint16_t stackMax = framesMax * uint8Count;
 
 
 typedef struct {
-    ObjFunction* function;
+    ObjClosure* closure;
     uint8_t* ip;
     Value* slots;
 } CallFrame;
