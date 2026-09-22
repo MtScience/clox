@@ -4,7 +4,6 @@
 
 #include "common.h"
 #include "compiler.h"
-#include "object.h"
 #include "memory.h"
 #include "native.h"
 #include "vm.h"
@@ -17,6 +16,7 @@
 static void resetStack(VM* restrict vm) {
     vm->stackTop = vm->stack;
     vm->frameCount = 0;
+    vm->openUpvalues = nullptr;
 }
 
 
@@ -112,6 +112,41 @@ static bool callValue(VM* vm, Value callee, uint8_t argCount) {
 }
 
 
+static ObjUpvalue* captureUpvalue(VM* vm, Value* local) {
+    ObjUpvalue* prevUpvalue = nullptr;
+    ObjUpvalue* upvalue = vm->openUpvalues;
+    while (upvalue && upvalue->location > local) {
+        prevUpvalue = upvalue;
+        upvalue = upvalue->next;
+    }
+
+    if (upvalue && upvalue->location == local) {
+        return upvalue;
+    }
+
+    ObjUpvalue* createdUpvalue = newUpvalue(vm, local);
+    createdUpvalue->next = upvalue;
+
+    if (!prevUpvalue) {
+        vm->openUpvalues = createdUpvalue;
+    } else {
+        prevUpvalue->next = createdUpvalue;
+    }
+
+    return createdUpvalue;
+}
+
+
+static void closeUpvalues(VM* vm, Value* last) {
+    while (vm->openUpvalues && vm->openUpvalues->location >= last) {
+        ObjUpvalue* upvalue = vm->openUpvalues;
+        upvalue->closed = *upvalue->location;
+        upvalue->location = &upvalue->closed;
+        vm->openUpvalues = upvalue->next;
+    }
+}
+
+
 static InterpretResult run(VM* restrict vm) {
     CallFrame* frame = &vm->frames[vm->frameCount - 1];
 
@@ -167,6 +202,16 @@ static InterpretResult run(VM* restrict vm) {
             case OP_SET_LOCAL: {
                 uint8_t slot = READ_BYTE();
                 frame->slots[slot] = peek(vm, 0);
+                break;
+            }
+            case OP_GET_UPVALUE: {
+                uint8_t slot = READ_BYTE();
+                push(vm, *frame->closure->upvalues[slot]->location);
+                break;
+            }
+            case OP_SET_UPVALUE: {
+                uint8_t slot = READ_BYTE();
+                *frame->closure->upvalues[slot]->location = peek(vm, 0);
                 break;
             }
             case OP_GET_GLOBAL: {
@@ -233,8 +278,9 @@ static InterpretResult run(VM* restrict vm) {
                 }
             case OP_JUMP_IF_FALSE: {
                     uint16_t offset = READ_SHORT();
-                    if (isFalsey(peek(vm, 0)))
+                    if (isFalsey(peek(vm, 0))) {
                         frame->ip += offset;
+                    }
                     break;
                 }
             case OP_PRINT: {
@@ -254,21 +300,39 @@ static InterpretResult run(VM* restrict vm) {
                     ObjFunction* function = asFunction(READ_CONSTANT());
                     ObjClosure* closure = newClosure(vm, function);
                     push(vm, objVal((Obj*)closure));
+
+                    for (uint8_t i = 0; i < closure->upvalueCount; i++) {
+                        uint8_t isLocal = READ_BYTE();
+                        uint8_t index = READ_BYTE();
+
+                        if (isLocal) {
+                            closure->upvalues[i] = captureUpvalue(vm, frame->slots + index);
+                        } else {
+                            closure->upvalues[i] = frame->closure->upvalues[index];
+                        }
+                    }
+
+                    break;
+                }
+            case OP_CLOSE_UPVALUE: {
+                    closeUpvalues(vm, vm->stackTop - 1);
+                    pop(vm);
                     break;
                 }
             case OP_RETURN: {
-                Value result = pop(vm);
-                vm->frameCount--;
-                if (vm->frameCount == 0) {
-                    pop(vm);
-                    return INTERPRET_OK;
-                }
+                    Value result = pop(vm);
+                    closeUpvalues(vm, frame->slots);
+                    vm->frameCount--;
+                    if (vm->frameCount == 0) {
+                        pop(vm);
+                        return INTERPRET_OK;
+                    }
 
-                vm->stackTop = frame->slots;
-                push(vm, result);
-                frame = &vm->frames[vm->frameCount - 1];
-                break;
-            }
+                    vm->stackTop = frame->slots;
+                    push(vm, result);
+                    frame = &vm->frames[vm->frameCount - 1];
+                    break;
+                }
         }
     }
 

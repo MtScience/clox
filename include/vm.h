@@ -30,6 +30,8 @@ struct VM {
     Table strings;
     Table globals;
     Obj* objects;
+
+    ObjUpvalue* openUpvalues;
 };
 
 

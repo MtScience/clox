@@ -6,10 +6,6 @@
 #include <stddef.h>  /* For unreachable */
 
 
-#define DEBUG_TRACE_EXECUTION
-#define DEBUG_PRINT_CODE
-
-
 constexpr uint16_t uint8Count = UINT8_MAX + 1;
 
 

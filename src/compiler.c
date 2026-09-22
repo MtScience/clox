@@ -43,13 +43,21 @@ typedef struct {
 typedef struct {
     Token name;
     int32_t depth;
+    bool isCaptured;
 } Local;
+
+
+typedef struct {
+    uint8_t index;
+    bool isLocal;
+} Upvalue;
 
 
 typedef struct Compiler {
     ObjFunction* function;
     FunctionType type;
 
+    Upvalue upvalues[uint8Count];
     Local locals[uint8Count];
     int16_t localCount;
     int16_t scopeDepth;
@@ -232,6 +240,7 @@ static void initCompiler(
     local->depth = 0;
     local->name.start = "";
     local->name.length = 0;
+    local->isCaptured = false;
 }
 
 
@@ -262,7 +271,11 @@ static void endScope(Compiler* compiler, Parser* parser) {
         compiler->localCount > 0 &&
         compiler->locals[compiler->localCount - 1].depth > compiler->scopeDepth
     ) {
-        emitByte(compiler, parser, OP_POP);
+        if (compiler->locals[compiler->localCount - 1].isCaptured) {
+            emitByte(compiler, parser, OP_CLOSE_UPVALUE);
+        } else {
+            emitByte(compiler, parser, OP_POP);
+        }
         compiler->localCount--;
     }
 }
@@ -292,7 +305,30 @@ static void addLocal(Compiler* compiler, Parser* parser, Token name) {
     *local = (Local){
         .name = name,
         .depth = -1,
+        .isCaptured = false,
     };
+}
+
+
+static int16_t addUpvalue(Compiler* compiler, Parser* parser, uint8_t index, bool isLocal) {
+    uint8_t upvalueCount = compiler->function->upvalueCount;
+
+    for (uint8_t i = 0; i < upvalueCount; i++) {
+        Upvalue* upvalue = &compiler->upvalues[i];
+        if (upvalue->index == index && upvalue->isLocal == isLocal) {
+            return i;
+        }
+    }
+
+    if (upvalueCount == UINT8_MAX) {
+        error(parser, "Too many closure variables in function.");
+        return 0;
+    }
+
+    compiler->upvalues[upvalueCount].isLocal = isLocal;
+    compiler->upvalues[upvalueCount].index = index;
+
+    return compiler->function->upvalueCount++;
 }
 
 
@@ -306,6 +342,24 @@ static int16_t resolveLocal(Compiler* compiler, Parser* parser, Token* name) {
             return i;
         }
     }
+
+    return -1;
+}
+
+
+static int16_t resolveUpvalue(Compiler* compiler, Parser* parser, Token* name) {
+    if (!compiler->enclosing)
+        return -1;
+
+    int16_t local = resolveLocal(compiler->enclosing, parser, name);
+    if (local != -1) {
+        compiler->enclosing->locals[local].isCaptured = true;
+        return addUpvalue(compiler, parser, (uint8_t)local, true);
+    }
+
+    int16_t upvalue = resolveUpvalue(compiler->enclosing, parser, name);
+    if (upvalue != -1)
+        return addUpvalue(compiler, parser, (uint8_t)upvalue, false);
 
     return -1;
 }
@@ -678,6 +732,9 @@ static void namedVariable(
     if (arg != -1) {
         getOp = OP_GET_LOCAL;
         setOp = OP_SET_LOCAL;
+    } else if ((arg = resolveUpvalue(compiler, parser, &name)) != -1) {
+        getOp = OP_GET_UPVALUE;
+        setOp = OP_SET_UPVALUE;
     } else {
         arg = identifierConstant(vm, compiler, parser, &name);
         getOp = OP_GET_GLOBAL;
@@ -933,6 +990,11 @@ static void function(
     ObjFunction* function = endCompiler(&compiler, parser);
     emitBytes(enclosing, parser, OP_CLOSURE,
               makeConstant(enclosing, parser, objVal((Obj*)function)));
+
+    for (uint8_t i = 0; i < function->upvalueCount; i++) {
+        emitByte(enclosing, parser, compiler.upvalues[i].isLocal);
+        emitByte(enclosing, parser, compiler.upvalues[i].index);
+    }
 }
 
 

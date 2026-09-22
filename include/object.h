@@ -14,6 +14,7 @@ typedef enum : uint8_t {
     OBJ_NATIVE,
     OBJ_CLOSURE,
     OBJ_STRING,
+    OBJ_UPVALUE,
 } ObjType;
 
 
@@ -31,9 +32,18 @@ struct ObjString {
 };
 
 
+struct ObjUpvalue {
+    Obj obj;
+    Value* location;
+    Value closed;
+    struct ObjUpvalue* next;
+};
+
+
 struct ObjFunction {
     Obj obj;
     uint16_t arity;
+    uint8_t upvalueCount;
     Chunk chunk;
     ObjString* name;
 };
@@ -51,6 +61,8 @@ typedef struct {
 struct ObjClosure {
     Obj obj;
     ObjFunction* function;
+    ObjUpvalue** upvalues;
+    uint8_t upvalueCount;
 };
 
 
@@ -82,6 +94,7 @@ static inline ObjClosure*  asClosure(Value value)  { return (ObjClosure*)asObj(v
 ObjString* copyString(VM* vm, char const* chars, uint32_t length);
 ObjString* takeString(VM* vm, char* chars, uint32_t length);
 
+ObjUpvalue*  newUpvalue(VM* vm, Value* slot);
 ObjFunction* newFunction(VM* vm);
 ObjNative*   newNative(VM* vm, NativeFn function);
 ObjClosure*  newClosure(VM* vm, ObjFunction* function);

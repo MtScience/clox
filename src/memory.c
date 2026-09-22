@@ -19,7 +19,13 @@ static void freeObject(Obj* object) {
                 break;
             }
         case OBJ_CLOSURE: {
+                ObjClosure* closure = (ObjClosure*)object;
+                assert(FREE_ARRAY(ObjUpvalue*, closure->upvalues, closure->upvalueCount) == nullptr);
                 assert(FREE(ObjClosure, object) == nullptr);
+                break;
+            }
+        case OBJ_UPVALUE: {
+                assert(FREE(ObjUpvalue, object) == nullptr);
                 break;
             }
         case OBJ_STRING: {

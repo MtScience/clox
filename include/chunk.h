@@ -15,6 +15,8 @@ typedef enum : uint8_t {
     OP_POP,
     OP_GET_LOCAL,
     OP_SET_LOCAL,
+    OP_GET_UPVALUE,
+    OP_SET_UPVALUE,
     OP_GET_GLOBAL,
     OP_SET_GLOBAL,
     OP_DEFINE_GLOBAL,
@@ -32,6 +34,7 @@ typedef enum : uint8_t {
     OP_PRINT,
     OP_CALL,
     OP_CLOSURE,
+    OP_CLOSE_UPVALUE,
     OP_RETURN,
 } OpCode;
 

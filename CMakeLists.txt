@@ -45,6 +45,19 @@ target_include_directories(clox
         ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+# Build flags
+option(DEBUG_TRACE_EXECUTION "Trace execution" ON)
+option(DEBUG_PRINT_CODE "Print compiled chunks" ON)
+
+if (DEBUG_TRACE_EXECUTION)
+    target_compile_definitions(clox PRIVATE DEBUG_TRACE_EXECUTION)
+endif()
+
+if (DEBUG_PRINT_CODE)
+    target_compile_definitions(clox PRIVATE DEBUG_PRINT_CODE)
+endif()
+
+
 # Optional: enable stricter warnings for GCC specifically.
 target_compile_options(clox
     PRIVATE

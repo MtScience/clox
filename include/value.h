@@ -9,6 +9,7 @@ typedef struct Obj Obj;
 typedef struct ObjString ObjString;
 typedef struct ObjFunction ObjFunction;
 typedef struct ObjClosure ObjClosure;
+typedef struct ObjUpvalue ObjUpvalue;
 
 
 typedef enum : uint8_t {
