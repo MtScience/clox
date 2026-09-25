@@ -20,6 +20,7 @@ typedef enum : uint8_t {
 
 struct Obj {
     ObjType type;
+    bool isMarked;
     struct Obj* next;
 };
 
@@ -91,13 +92,13 @@ static inline ObjClosure*  asClosure(Value value)  { return (ObjClosure*)asObj(v
 
 /* Interface */
 
-ObjString* copyString(VM* vm, char const* chars, uint32_t length);
-ObjString* takeString(VM* vm, char* chars, uint32_t length);
+ObjString* copyString(VM* restrict vm, char const* chars, uint32_t length);
+ObjString* takeString(VM* restrict vm, char* chars, uint32_t length);
 
-ObjUpvalue*  newUpvalue(VM* vm, Value* slot);
-ObjFunction* newFunction(VM* vm);
-ObjNative*   newNative(VM* vm, NativeFn function);
-ObjClosure*  newClosure(VM* vm, ObjFunction* function);
+ObjUpvalue*  newUpvalue(VM* restrict vm, Value* slot);
+ObjFunction* newFunction(VM* restrict vm);
+ObjNative*   newNative(VM* restrict vm, NativeFn function);
+ObjClosure*  newClosure(VM* restrict vm, ObjFunction* function);
 
 void printObject(Value value);
 

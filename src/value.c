@@ -17,24 +17,24 @@ void initValueArray(ValueArray* restrict array) {
 }
 
 
-void freeValueArray(ValueArray* restrict array) {
-    assert(FREE_ARRAY(Value, array->values, array->capacity) == nullptr);
+void freeValueArray(VM* restrict vm, ValueArray* restrict array) {
+    assert(FREE_ARRAY(vm, Value, array->values, array->capacity) == nullptr);
     initValueArray(array);
 }
 
 
-void writeValueArray(ValueArray* array, Value value) {
+void writeValueArray(VM* restrict vm, ValueArray* array, Value value) {
     if (array->capacity < array->count + 1) {
         uint32_t oldCapacity = array->capacity;
         array->capacity = growCapacity(oldCapacity);
-        array->values = GROW_ARRAY(Value, array->values, oldCapacity, array->capacity);
+        array->values = GROW_ARRAY(vm, Value, array->values, oldCapacity, array->capacity);
     }
 
     array->values[array->count++] = value;
 }
 
 
-bool valuesEqual(Value a, Value b) {
+bool valuesEqual(Value a, Value b) [[reproducible]] {
     if (a.type != b.type)
         return false;
 

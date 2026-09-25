@@ -2,6 +2,9 @@
 #define clox_chunk_h
 
 
+typedef struct VM VM;
+
+
 #include "common.h"
 #include "value.h"
 
@@ -49,9 +52,9 @@ typedef struct {
 
 
 void initChunk(Chunk* restrict chunk);
-void freeChunk(Chunk* restrict chunk);
-void writeChunk(Chunk* chunk, uint8_t byte, uint32_t line);
-uint32_t addConstant(Chunk* chunk, Value value);
+void freeChunk(VM* restrict vm, Chunk* restrict chunk);
+void writeChunk(VM* restrict vm, Chunk* chunk, uint8_t byte, uint32_t line);
+uint32_t addConstant(VM* restrict vm, Chunk* chunk, Value value);
 
 
 #endif

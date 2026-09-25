@@ -48,6 +48,7 @@ target_include_directories(clox
 # Build flags
 option(DEBUG_TRACE_EXECUTION "Trace execution" ON)
 option(DEBUG_PRINT_CODE "Print compiled chunks" ON)
+option(DEBUG_GC "Garbage-collection debugging mode" OFF)
 
 if (DEBUG_TRACE_EXECUTION)
     target_compile_definitions(clox PRIVATE DEBUG_TRACE_EXECUTION)
@@ -55,6 +56,14 @@ endif()
 
 if (DEBUG_PRINT_CODE)
     target_compile_definitions(clox PRIVATE DEBUG_PRINT_CODE)
+endif()
+
+if (DEBUG_GC)
+    target_compile_definitions(clox
+        PRIVATE
+            DEBUG_STRESS_GC
+            DEBUG_LOG_GC
+    )
 endif()
 
 

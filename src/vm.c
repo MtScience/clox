@@ -30,17 +30,19 @@ static bool isFalsey(Value value) [[unsequenced]] {
 }
 
 
-static void concatenate(VM* vm) {
-    ObjString* b = asString(pop(vm));
-    ObjString* a = asString(pop(vm));
+static void concatenate(VM* restrict vm) {
+    ObjString* b = asString(peek(vm, 0));
+    ObjString* a = asString(peek(vm, 1));
 
     uint32_t length = a->length + b->length;
-    char* chars = ALLOCATE(char, length + 1);
+    char* chars = ALLOCATE(vm, char, length + 1);
     memcpy(chars, a->chars, a->length);
     memcpy(chars + a->length, b->chars, b->length);
     chars[length + 1] = '\0';
 
     ObjString* result = takeString(vm, chars, length);
+    pop(vm);
+    pop(vm);
     push(vm, objVal((Obj*)result));
 }
 
@@ -226,7 +228,7 @@ static InterpretResult run(VM* restrict vm) {
                 }
             case OP_SET_GLOBAL: {
                     ObjString* name = READ_STRING();
-                    if (tableSet(&vm->globals, name, peek(vm, 0))) {
+                    if (tableSet(vm, &vm->globals, name, peek(vm, 0))) {
                         tableDelete(&vm->globals, name);
                         runtimeError(vm, "Undefined variable '%s'.", name->chars);
                         return INTERPRET_RUNTIME_ERROR;
@@ -235,7 +237,7 @@ static InterpretResult run(VM* restrict vm) {
                 }
             case OP_DEFINE_GLOBAL: {
                     ObjString* name = READ_STRING();
-                    tableSet(&vm->globals, name, peek(vm, 0));
+                    tableSet(vm, &vm->globals, name, peek(vm, 0));
                     pop(vm);
                     break;
                 }
@@ -353,13 +355,20 @@ void initVM(VM* restrict vm) {
     initTable(&vm->globals);
     initTable(&vm->strings);
 
+    vm->grayCount = 0;
+    vm->grayCapacity = 0;
+    vm->grayStack = nullptr;
+
+    vm->bytesAllocated = 0;
+    vm->nextGC = 1024 * 1024;
+
     defineNative(vm, "clock", clockNative);
 }
 
 
 void freeVM(VM* restrict vm) {
-    freeTable(&vm->strings);
-    freeTable(&vm->globals);
+    freeTable(vm, &vm->strings);
+    freeTable(vm, &vm->globals);
     freeObjects(vm);
 }
 

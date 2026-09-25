@@ -4,6 +4,7 @@
 
 #include "common.h"
 #include "compiler.h"
+#include "memory.h"
 #include "scanner.h"
 
 #ifdef DEBUG_PRINT_CODE
@@ -53,7 +54,7 @@ typedef struct {
 } Upvalue;
 
 
-typedef struct Compiler {
+struct Compiler {
     ObjFunction* function;
     FunctionType type;
 
@@ -62,8 +63,8 @@ typedef struct Compiler {
     int16_t localCount;
     int16_t scopeDepth;
 
-    struct Compiler* enclosing;
-} Compiler;
+    Compiler* enclosing;
+};
 
 
 typedef void (*ParseFn)(VM* vm, Compiler* compiler, Parser*, Scanner*, bool canAssign);
@@ -149,19 +150,19 @@ static void consume(
 }
 
 
-static void emitByte(Compiler* compiler, Parser* parser, uint8_t byte) {
-    writeChunk(currentChunk(compiler), byte, parser->previous.line);
+static void emitByte(VM* restrict vm, Compiler* compiler, Parser* parser, uint8_t byte) {
+    writeChunk(vm, currentChunk(compiler), byte, parser->previous.line);
 }
 
 
-static void emitBytes(Compiler* compiler, Parser* parser, uint8_t byte1, uint8_t byte2) {
-    emitByte(compiler, parser, byte1);
-    emitByte(compiler, parser, byte2);
+static void emitBytes(VM* restrict vm, Compiler* compiler, Parser* parser, uint8_t byte1, uint8_t byte2) {
+    emitByte(vm, compiler, parser, byte1);
+    emitByte(vm, compiler, parser, byte2);
 }
 
 
-static uint8_t makeConstant(Compiler* compiler, Parser* parser, Value value) {
-    uint32_t constant = addConstant(currentChunk(compiler), value);
+static uint8_t makeConstant(VM* restrict vm, Compiler* compiler, Parser* parser, Value value) {
+    uint32_t constant = addConstant(vm, currentChunk(compiler), value);
     if (constant > UINT8_MAX) {
         error(parser, "Too many constants in one chunk.");
         return 0;
@@ -171,21 +172,21 @@ static uint8_t makeConstant(Compiler* compiler, Parser* parser, Value value) {
 }
 
 
-static void emitConstant(Compiler* compiler, Parser* parser, Value value) {
-    emitBytes(compiler, parser, OP_CONSTANT, makeConstant(compiler, parser, value));
+static void emitConstant(VM* restrict vm, Compiler* compiler, Parser* parser, Value value) {
+    emitBytes(vm, compiler, parser, OP_CONSTANT, makeConstant(vm, compiler, parser, value));
 }
 
 
-static void emitReturn(Compiler* compiler, Parser* parser) {
-    emitByte(compiler, parser, OP_NIL);  /* TODO: change to emitBytes if nothing is gonna go in between */
-    emitByte(compiler, parser, OP_RETURN);
+static void emitReturn(VM* restrict vm, Compiler* compiler, Parser* parser) {
+    emitByte(vm, compiler, parser, OP_NIL);  /* TODO: change to emitBytes if nothing is gonna go in between */
+    emitByte(vm, compiler, parser, OP_RETURN);
 }
 
 
-static uint32_t emitJump(Compiler* compiler, Parser* parser, OpCode instruction) {
-    emitByte(compiler, parser, instruction);
-    emitByte(compiler, parser, 0xff);
-    emitByte(compiler, parser, 0xff);
+static uint32_t emitJump(VM* restrict vm, Compiler* compiler, Parser* parser, OpCode instruction) {
+    emitByte(vm, compiler, parser, instruction);
+    emitByte(vm, compiler, parser, 0xff);
+    emitByte(vm, compiler, parser, 0xff);
 
     return currentChunk(compiler)->count - 2;
 }
@@ -203,16 +204,16 @@ static void patchJump(Compiler* compiler, Parser* parser, uint32_t offset) {
 }
 
 
-static void emitLoop(Compiler* compiler, Parser* parser, uint32_t loopStart) {
-    emitByte(compiler, parser, OP_LOOP);
+static void emitLoop(VM* restrict vm, Compiler* compiler, Parser* parser, uint32_t loopStart) {
+    emitByte(vm, compiler, parser, OP_LOOP);
 
     uint32_t offset = currentChunk(compiler)->count - loopStart + 2;
     if (offset > UINT16_MAX) {
         error(parser, "Loop body too large.");
     }
 
-    emitByte(compiler, parser, (offset >> 8) & 0xff);
-    emitByte(compiler, parser, offset & 0xff);
+    emitByte(vm, compiler, parser, (offset >> 8) & 0xff);
+    emitByte(vm, compiler, parser, offset & 0xff);
 }
 
 
@@ -244,8 +245,8 @@ static void initCompiler(
 }
 
 
-static ObjFunction* endCompiler(Compiler* compiler, Parser* parser) {
-    emitReturn(compiler, parser);
+static ObjFunction* endCompiler(VM* restrict vm, Compiler* compiler, Parser* parser) {
+    emitReturn(vm, compiler, parser);
 
     ObjFunction* function = compiler->function;
 
@@ -264,7 +265,7 @@ static void beginScope(Compiler* compiler) {
 }
 
 
-static void endScope(Compiler* compiler, Parser* parser) {
+static void endScope(VM* restrict vm, Compiler* compiler, Parser* parser) {
     compiler->scopeDepth--;
 
     while (
@@ -272,17 +273,17 @@ static void endScope(Compiler* compiler, Parser* parser) {
         compiler->locals[compiler->localCount - 1].depth > compiler->scopeDepth
     ) {
         if (compiler->locals[compiler->localCount - 1].isCaptured) {
-            emitByte(compiler, parser, OP_CLOSE_UPVALUE);
+            emitByte(vm, compiler, parser, OP_CLOSE_UPVALUE);
         } else {
-            emitByte(compiler, parser, OP_POP);
+            emitByte(vm, compiler, parser, OP_POP);
         }
         compiler->localCount--;
     }
 }
 
 
-static uint8_t identifierConstant(VM* vm, Compiler* compiler, Parser* parser, Token* name) {
-    return makeConstant(compiler, parser,
+static uint8_t identifierConstant(VM* restrict vm, Compiler* compiler, Parser* parser, Token* name) {
+    return makeConstant(vm, compiler, parser,
                         objVal((Obj*)copyString(vm, name->start, name->length)));
 }
 
@@ -409,13 +410,13 @@ static void markInitialized(Compiler* compiler) {
 }
 
 
-static void defineVariable(Compiler* compiler, Parser* parser, uint8_t global) {
+static void defineVariable(VM* restrict vm, Compiler* compiler, Parser* parser, uint8_t global) {
     if (compiler->scopeDepth > 0) {
         markInitialized(compiler);
         return;
     }
 
-    emitBytes(compiler, parser, OP_DEFINE_GLOBAL, global);
+    emitBytes(vm, compiler, parser, OP_DEFINE_GLOBAL, global);
 }
 
 
@@ -445,28 +446,28 @@ static void synchronize(Parser* parser,  Scanner* scanner) {
 
 
 static void number(
-    [[maybe_unused]] VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     [[maybe_unused]] Scanner* scanner,
     [[maybe_unused]] bool canAssign
 ) {
     double value = strtod(parser->previous.start, nullptr);
-    emitConstant(compiler, parser, numberVal(value));
+    emitConstant(vm, compiler, parser, numberVal(value));
 }
 
 
 static void literal(
-    [[maybe_unused]] VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     [[maybe_unused]] Scanner* scanner,
     [[maybe_unused]] bool canAssign
 ) {
     switch (parser->previous.type) {
-        case TOKEN_FALSE: emitByte(compiler, parser, OP_FALSE); break;
-        case TOKEN_NIL:   emitByte(compiler, parser, OP_NIL);   break;
-        case TOKEN_TRUE:  emitByte(compiler, parser, OP_TRUE);  break;
+        case TOKEN_FALSE: emitByte(vm, compiler, parser, OP_FALSE); break;
+        case TOKEN_NIL:   emitByte(vm, compiler, parser, OP_NIL);   break;
+        case TOKEN_TRUE:  emitByte(vm, compiler, parser, OP_TRUE);  break;
         default:
             unreachable();
             return;
@@ -475,13 +476,13 @@ static void literal(
 
 
 static void string(
-    [[maybe_unused]] VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     [[maybe_unused]] Scanner* scanner,
     [[maybe_unused]] bool canAssign
 ) {
-    emitConstant(compiler, parser,
+    emitConstant(vm, compiler, parser,
                  objVal((Obj*)copyString(vm, parser->previous.start + 1,
                                          parser->previous.length - 2)));
 }
@@ -523,14 +524,14 @@ static uint8_t argumentList(
 
 
 static void call(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner,
     [[maybe_unused]] bool canAssign
 ) {
     uint8_t argCount = argumentList(vm, compiler, parser, scanner);
-    emitBytes(compiler, parser, OP_CALL, argCount);
+    emitBytes(vm, compiler, parser, OP_CALL, argCount);
 }
 
 
@@ -635,7 +636,7 @@ static void grouping(
 
 
 static void unary(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     [[maybe_unused]] Scanner* scanner,
@@ -646,8 +647,8 @@ static void unary(
     parsePrecedence(vm, compiler, parser, scanner, PREC_UNARY);
 
     switch (operatorType) {
-        case TOKEN_BANG:  emitByte(compiler, parser, OP_NOT);    break;
-        case TOKEN_MINUS: emitByte(compiler, parser, OP_NEGATE); break;
+        case TOKEN_BANG:  emitByte(vm, compiler, parser, OP_NOT);    break;
+        case TOKEN_MINUS: emitByte(vm, compiler, parser, OP_NEGATE); break;
         default:
             unreachable();
             return;
@@ -656,7 +657,7 @@ static void unary(
 
 
 static void binary(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     [[maybe_unused]] Scanner* scanner,
@@ -667,16 +668,16 @@ static void binary(
     parsePrecedence(vm, compiler, parser, scanner, (Precedence)(rule->precedence + 1));
 
     switch (operatorType) {
-        case TOKEN_BANG_EQUAL:    emitBytes(compiler, parser, OP_EQUAL, OP_NOT);   break;
-        case TOKEN_EQUAL_EQUAL:   emitByte(compiler, parser, OP_EQUAL);            break;
-        case TOKEN_GREATER:       emitByte(compiler, parser, OP_GREATER);          break;
-        case TOKEN_GREATER_EQUAL: emitBytes(compiler, parser, OP_LESS, OP_NOT);    break;
-        case TOKEN_LESS:          emitByte(compiler, parser, OP_LESS);             break;
-        case TOKEN_LESS_EQUAL:    emitBytes(compiler, parser, OP_GREATER, OP_NOT); break;
-        case TOKEN_PLUS:          emitByte(compiler, parser, OP_ADD);              break;
-        case TOKEN_MINUS:         emitByte(compiler, parser, OP_SUBTRACT);         break;
-        case TOKEN_STAR:          emitByte(compiler, parser, OP_MULTIPLY);         break;
-        case TOKEN_SLASH:         emitByte(compiler, parser, OP_DIVIDE);           break;
+        case TOKEN_BANG_EQUAL:    emitBytes(vm, compiler, parser, OP_EQUAL, OP_NOT);   break;
+        case TOKEN_EQUAL_EQUAL:   emitByte(vm, compiler, parser, OP_EQUAL);            break;
+        case TOKEN_GREATER:       emitByte(vm, compiler, parser, OP_GREATER);          break;
+        case TOKEN_GREATER_EQUAL: emitBytes(vm, compiler, parser, OP_LESS, OP_NOT);    break;
+        case TOKEN_LESS:          emitByte(vm, compiler, parser, OP_LESS);             break;
+        case TOKEN_LESS_EQUAL:    emitBytes(vm, compiler, parser, OP_GREATER, OP_NOT); break;
+        case TOKEN_PLUS:          emitByte(vm, compiler, parser, OP_ADD);              break;
+        case TOKEN_MINUS:         emitByte(vm, compiler, parser, OP_SUBTRACT);         break;
+        case TOKEN_STAR:          emitByte(vm, compiler, parser, OP_MULTIPLY);         break;
+        case TOKEN_SLASH:         emitByte(vm, compiler, parser, OP_DIVIDE);           break;
         default:
             unreachable();
             return;
@@ -685,15 +686,15 @@ static void binary(
 
 
 static void and_(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner,
     [[maybe_unused]] bool canAssign
 ) {
-    uint32_t endJump = emitJump(compiler, parser, OP_JUMP_IF_FALSE);
+    uint32_t endJump = emitJump(vm, compiler, parser, OP_JUMP_IF_FALSE);
 
-    emitByte(compiler, parser, OP_POP);
+    emitByte(vm, compiler, parser, OP_POP);
     parsePrecedence(vm, compiler, parser, scanner, PREC_AND);
 
     patchJump(compiler, parser, endJump);
@@ -701,17 +702,17 @@ static void and_(
 
 
 static void or_(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner,
     [[maybe_unused]] bool canAssign
 ) {
-    uint32_t elseJump = emitJump(compiler, parser, OP_JUMP_IF_FALSE);
-    uint32_t endJump = emitJump(compiler, parser, OP_JUMP);
+    uint32_t elseJump = emitJump(vm, compiler, parser, OP_JUMP_IF_FALSE);
+    uint32_t endJump = emitJump(vm, compiler, parser, OP_JUMP);
 
     patchJump(compiler, parser, elseJump);
-    emitByte(compiler, parser, OP_POP);
+    emitByte(vm, compiler, parser, OP_POP);
 
     parsePrecedence(vm, compiler, parser, scanner, PREC_OR);
     patchJump(compiler, parser, endJump);
@@ -743,9 +744,9 @@ static void namedVariable(
 
     if (canAssign && match(parser, scanner, TOKEN_EQUAL)) {
         expression(vm, compiler, parser, scanner);
-        emitBytes(compiler, parser, setOp, (uint8_t)arg);
+        emitBytes(vm, compiler, parser, setOp, (uint8_t)arg);
     } else
-        emitBytes(compiler, parser, getOp, (uint8_t)arg);
+        emitBytes(vm, compiler, parser, getOp, (uint8_t)arg);
 }
 
 
@@ -761,26 +762,26 @@ static void variable(
 
 
 static void printStatement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
 ) {
     expression(vm, compiler, parser, scanner);
     consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after value.");
-    emitByte(compiler, parser, OP_PRINT);
+    emitByte(vm, compiler, parser, OP_PRINT);
 }
 
 
 static void expressionStatement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
 ) {
     expression(vm, compiler, parser, scanner);
     consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after expression.");
-    emitByte(compiler, parser, OP_POP);
+    emitByte(vm, compiler, parser, OP_POP);
 }
 
 
@@ -797,23 +798,23 @@ static void block(
 }
 
 
-static void varDeclaration(VM* vm, Compiler* compiler, Parser* parser, Scanner* scanner) {
+static void varDeclaration(VM* restrict vm,  Compiler* compiler, Parser* parser, Scanner* scanner) {
     uint8_t global = parseVariable(vm, compiler, parser, scanner, "Expect variable name.");
 
     if (match(parser, scanner, TOKEN_EQUAL)) {
         expression(vm, compiler, parser, scanner);
     } else {
-        emitByte(compiler, parser, OP_NIL);
+        emitByte(vm, compiler, parser, OP_NIL);
     }
 
     consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after variable declaration.");
 
-    defineVariable(compiler, parser, global);
+    defineVariable(vm, compiler, parser, global);
 }
 
 
 static void ifStatement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
@@ -822,13 +823,13 @@ static void ifStatement(
     expression(vm, compiler, parser, scanner);
     consume(parser, scanner, TOKEN_RIGHT_PAREN, "Expect ')' after condition.");
 
-    uint32_t thenJump = emitJump(compiler, parser, OP_JUMP_IF_FALSE);
-    emitByte(compiler, parser, OP_POP);
+    uint32_t thenJump = emitJump(vm, compiler, parser, OP_JUMP_IF_FALSE);
+    emitByte(vm, compiler, parser, OP_POP);
     statement(vm, compiler, parser, scanner);
 
-    uint32_t elseJump = emitJump(compiler, parser, OP_JUMP);
+    uint32_t elseJump = emitJump(vm, compiler, parser, OP_JUMP);
     patchJump(compiler, parser, thenJump);
-    emitByte(compiler, parser, OP_POP);
+    emitByte(vm, compiler, parser, OP_POP);
 
     if (match(parser, scanner, TOKEN_ELSE)) {
         statement(vm, compiler, parser, scanner);
@@ -838,7 +839,7 @@ static void ifStatement(
 
 
 static void whileStatement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
@@ -849,19 +850,19 @@ static void whileStatement(
     expression(vm, compiler, parser, scanner);
     consume(parser, scanner, TOKEN_RIGHT_PAREN, "Expect ')' after condition.");
 
-    uint32_t exitJump = emitJump(compiler, parser, OP_JUMP_IF_FALSE);
-    emitByte(compiler, parser, OP_POP);
+    uint32_t exitJump = emitJump(vm, compiler, parser, OP_JUMP_IF_FALSE);
+    emitByte(vm, compiler, parser, OP_POP);
     statement(vm, compiler, parser, scanner);
 
-    emitLoop(compiler, parser, loopStart);
+    emitLoop(vm, compiler, parser, loopStart);
 
     patchJump(compiler, parser, exitJump);
-    emitByte(compiler, parser, OP_POP);
+    emitByte(vm, compiler, parser, OP_POP);
 }
 
 
 static void forStatement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
@@ -884,38 +885,38 @@ static void forStatement(
         expression(vm, compiler, parser, scanner);
         consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after loop condition.");
 
-        exitJump = emitJump(compiler, parser, OP_JUMP_IF_FALSE);
-        emitByte(compiler, parser, OP_POP);
+        exitJump = emitJump(vm, compiler, parser, OP_JUMP_IF_FALSE);
+        emitByte(vm, compiler, parser, OP_POP);
     }
 
     if (!match(parser, scanner, TOKEN_RIGHT_PAREN)) {
-        uint32_t bodyJump = emitJump(compiler, parser, OP_JUMP);
+        uint32_t bodyJump = emitJump(vm, compiler, parser, OP_JUMP);
         uint32_t incrementStart = currentChunk(compiler)->count;
 
         expression(vm, compiler, parser, scanner);
-        emitByte(compiler, parser, OP_POP);
+        emitByte(vm, compiler, parser, OP_POP);
 
         consume(parser, scanner, TOKEN_RIGHT_PAREN, "Expect ')' after for clauses.");
 
-        emitLoop(compiler, parser, loopStart);
+        emitLoop(vm, compiler, parser, loopStart);
         loopStart = incrementStart;
         patchJump(compiler, parser, bodyJump);
     }
 
     statement(vm, compiler, parser, scanner);
 
-    emitLoop(compiler, parser, loopStart);
+    emitLoop(vm, compiler, parser, loopStart);
     if (haveCondition) {
         patchJump(compiler, parser, exitJump);
-        emitByte(compiler, parser, OP_POP);
+        emitByte(vm, compiler, parser, OP_POP);
     }
 
-    endScope(compiler, parser);
+    endScope(vm, compiler, parser);
 }
 
 
 static void returnStatement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
@@ -925,17 +926,17 @@ static void returnStatement(
     }
 
     if (match(parser, scanner, TOKEN_SEMICOLON)) {
-        emitReturn(compiler, parser);
+        emitReturn(vm, compiler, parser);
     } else {
         expression(vm, compiler, parser, scanner);
         consume(parser, scanner, TOKEN_SEMICOLON, "Expect ';' after return value.");
-        emitByte(compiler, parser, OP_RETURN);
+        emitByte(vm, compiler, parser, OP_RETURN);
     }
 }
 
 
 static void statement(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
@@ -953,14 +954,14 @@ static void statement(
     } else if (match(parser, scanner, TOKEN_LEFT_BRACE)) {
         beginScope(compiler);
         block(vm, compiler, parser, scanner);
-        endScope(compiler, parser);
+        endScope(vm, compiler, parser);
     } else
         expressionStatement(vm, compiler, parser, scanner);
 }
 
 
 static void function(
-    VM* vm,
+    VM* restrict vm,
     Compiler* enclosing,
     Parser* parser,
     Scanner* scanner,
@@ -979,7 +980,7 @@ static void function(
                 errorAtCurrent(parser, "Can't have more than 255 parameters.");
             }
             uint8_t constant = parseVariable(vm, &compiler, parser, scanner, "Expect parameter name.");
-            defineVariable(&compiler, parser, constant);
+            defineVariable(vm, &compiler, parser, constant);
         } while (match(parser, scanner, TOKEN_COMMA));
     }
     consume(parser, scanner, TOKEN_RIGHT_PAREN, "Expect ')' after parameters.");
@@ -987,19 +988,19 @@ static void function(
     consume(parser, scanner, TOKEN_LEFT_BRACE, "Expect '{' before function body.");
     block(vm, &compiler, parser, scanner);
 
-    ObjFunction* function = endCompiler(&compiler, parser);
-    emitBytes(enclosing, parser, OP_CLOSURE,
-              makeConstant(enclosing, parser, objVal((Obj*)function)));
+    ObjFunction* function = endCompiler(vm, &compiler, parser);
+    emitBytes(vm, enclosing, parser, OP_CLOSURE,
+              makeConstant(vm, enclosing, parser, objVal((Obj*)function)));
 
     for (uint8_t i = 0; i < function->upvalueCount; i++) {
-        emitByte(enclosing, parser, compiler.upvalues[i].isLocal);
-        emitByte(enclosing, parser, compiler.upvalues[i].index);
+        emitByte(vm, enclosing, parser, compiler.upvalues[i].isLocal);
+        emitByte(vm, enclosing, parser, compiler.upvalues[i].index);
     }
 }
 
 
 static void funDeclaration(
-    VM* vm,
+    VM* restrict vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
@@ -1007,7 +1008,7 @@ static void funDeclaration(
     uint8_t global = parseVariable(vm, compiler, parser, scanner, "Expect function name.");
     markInitialized(compiler);
     function(vm, compiler, parser, scanner, TYPE_FUNCTION);
-    defineVariable(compiler, parser, global);
+    defineVariable(vm, compiler, parser, global);
 }
 
 
@@ -1031,7 +1032,15 @@ static void declaration(
 }
 
 
-ObjFunction* compile(VM* vm, char const* source) {
+void markCompilerRoots(VM* restrict vm, Compiler* compiler) {
+    while (compiler) {
+        markObject(vm, (Obj*)compiler->function);
+        compiler = compiler->enclosing;
+    }
+}
+
+
+ObjFunction* compile(VM* restrict vm, char const* source) {
     Scanner scanner;
     Parser parser = {
         .hadError = false,
@@ -1047,6 +1056,6 @@ ObjFunction* compile(VM* vm, char const* source) {
         declaration(vm, &compiler, &parser, &scanner);
     }
 
-    ObjFunction* function = endCompiler(&compiler, &parser);
+    ObjFunction* function = endCompiler(vm, &compiler, &parser);
     return parser.hadError ? nullptr : function;
 }

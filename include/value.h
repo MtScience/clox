@@ -75,8 +75,8 @@ static inline Value objVal(Obj* value) {
 /* Interface */
 
 void initValueArray(ValueArray* restrict array);
-void freeValueArray(ValueArray* restrict array);
-void writeValueArray(ValueArray* array, Value value);
+void freeValueArray(VM* restrict vm, ValueArray* restrict array);
+void writeValueArray(VM* restrict vm, ValueArray* array, Value value);
 bool valuesEqual(Value a, Value b);
 void printValue(Value value);
 

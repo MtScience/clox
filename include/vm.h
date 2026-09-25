@@ -32,6 +32,13 @@ struct VM {
     Obj* objects;
 
     ObjUpvalue* openUpvalues;
+
+    size_t bytesAllocated;
+    size_t nextGC;
+
+    uint32_t grayCount;
+    uint32_t grayCapacity;
+    Obj** grayStack;
 };
 
 

@@ -13,24 +13,31 @@
 #define ALLOCATE_OBJ(vm, type, objectType) (type*)allocateObject(vm, sizeof(type), objectType)
 
 
-static Obj* allocateObject(VM* vm, size_t size, ObjType type) {
-    Obj* object = reallocate(nullptr, 0, size);
+static Obj* allocateObject(VM* restrict vm, size_t size, ObjType type) {
+    Obj* object = reallocate(vm, nullptr, 0, size);
     object->type = type;
+    object->isMarked = false;
 
     object->next = vm->objects;
     vm->objects = object;
+
+#ifdef DEBUG_LOG_GC
+    printf("%p allocate %zu for %u\n", (void*)object, size, type);
+#endif
 
     return object;
 }
 
 
-static ObjString* allocateString(VM* vm, char* chars, uint32_t length, uint32_t hash) {
+static ObjString* allocateString(VM* restrict vm, char* chars, uint32_t length, uint32_t hash) {
     ObjString* string = ALLOCATE_OBJ(vm, ObjString, OBJ_STRING);
     string->length = length;
     string->chars = chars;
     string->hash = hash;
 
-    tableSet(&vm->strings, string, nilVal());
+    push(vm, objVal((Obj*)string));
+    tableSet(vm, &vm->strings, string, nilVal());
+    pop(vm);
 
     return string;
 }
@@ -58,14 +65,14 @@ static void printFunction(ObjFunction* function) {
 
 /* Public functions */
 
-ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
+ObjString* copyString(VM* restrict vm, char const* chars, uint32_t length) {
     uint32_t hash = hashString(chars, length);
 
     ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
     if (interned)
         return interned;
 
-    char* heapChars = ALLOCATE(char, length + 1);
+    char* heapChars = ALLOCATE(vm, char, length + 1);
     memcpy(heapChars, chars, length);
     heapChars[length] = '\0';
 
@@ -73,12 +80,12 @@ ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
 }
 
 
-ObjString* takeString(VM* vm, char* chars, uint32_t length) {
+ObjString* takeString(VM* restrict vm, char* chars, uint32_t length) {
     uint32_t hash = hashString(chars, length);
 
     ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
     if (interned) {
-        assert(FREE_ARRAY(char, chars, length + 1) == nullptr);
+        assert(FREE_ARRAY(vm, char, chars, length + 1) == nullptr);
         return interned;
     }
 
@@ -86,7 +93,7 @@ ObjString* takeString(VM* vm, char* chars, uint32_t length) {
 }
 
 
-ObjUpvalue* newUpvalue(VM* vm, Value* slot) {
+ObjUpvalue* newUpvalue(VM* restrict vm, Value* slot) {
     ObjUpvalue* upvalue = ALLOCATE_OBJ(vm, ObjUpvalue, OBJ_UPVALUE);
     upvalue->location = slot;
     upvalue->closed = nilVal();
@@ -96,7 +103,7 @@ ObjUpvalue* newUpvalue(VM* vm, Value* slot) {
 }
 
 
-ObjFunction* newFunction(VM* vm) {
+ObjFunction* newFunction(VM* restrict vm) {
     ObjFunction* function = ALLOCATE_OBJ(vm, ObjFunction, OBJ_FUNCTION);
     function->arity = 0;
     function->upvalueCount = 0;
@@ -107,15 +114,15 @@ ObjFunction* newFunction(VM* vm) {
 }
 
 
-ObjNative* newNative(VM* vm, NativeFn function) {
+ObjNative* newNative(VM* restrict vm, NativeFn function) {
     ObjNative* native = ALLOCATE_OBJ(vm, ObjNative, OBJ_NATIVE);
     native->function = function;
 
     return native;
 }
 
-ObjClosure* newClosure(VM* vm, ObjFunction* function) {
-    ObjUpvalue** upvalues = ALLOCATE(ObjUpvalue*, function->upvalueCount);
+ObjClosure* newClosure(VM* restrict vm, ObjFunction* function) {
+    ObjUpvalue** upvalues = ALLOCATE(vm, ObjUpvalue*, function->upvalueCount);
     for (uint8_t i = 0; i < function->upvalueCount; i++) {
         upvalues[i] = nullptr;
     }

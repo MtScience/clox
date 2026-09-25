@@ -8,7 +8,7 @@
 #include "value.h"
 
 
-void defineNative(VM* vm, char const* name, NativeFn function);
+void defineNative(VM* restrict vm, char const* name, NativeFn function);
 
 Value clockNative(uint8_t argCount, Value* args);
 
