@@ -47,6 +47,16 @@ static void freeObject(VM* restrict vm, Obj* restrict object) {
                 assert(FREE(vm, ObjString, object) == nullptr);
                 break;
             }
+        case OBJ_CLASS: {
+                assert(FREE(vm, ObjClass, object) == nullptr);
+                break;
+            }
+        case OBJ_INSTANCE: {
+                ObjInstance* instance = (ObjInstance*)object;
+                freeTable(vm, &instance->fields);
+                assert(FREE(vm, ObjInstance, object) == nullptr);
+                break;
+            }
     }
 }
 
@@ -82,6 +92,17 @@ static void blackenObject(VM* restrict vm, Obj* object) {
             }
         case OBJ_UPVALUE: {
                 markValue(vm, ((ObjUpvalue*)object)->closed);
+                break;
+            }
+        case OBJ_CLASS: {
+                ObjClass* class = (ObjClass*)object;
+                markObject(vm, (Obj*)class->name);
+                break;
+            }
+        case OBJ_INSTANCE: {
+                ObjInstance* instance = (ObjInstance*)object;
+                markObject(vm, (Obj*)instance->class);
+                markTable(vm, &instance->fields);
                 break;
             }
         case OBJ_NATIVE:

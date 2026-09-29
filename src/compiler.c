@@ -535,13 +535,31 @@ static void call(
 }
 
 
+static void dot(
+    VM* restrict vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner,
+    bool canAssign
+) {
+    consume(parser, scanner, TOKEN_IDENTIFIER, "Expect property name after '.'.");
+    uint8_t name = identifierConstant(vm, compiler, parser, &parser->previous);
+    if (canAssign && match(parser, scanner, TOKEN_EQUAL)) {
+        expression(vm, compiler, parser, scanner);
+        emitBytes(vm, compiler, parser, OP_SET_PROPERTY, name);
+    } else {
+        emitBytes(vm, compiler, parser, OP_GET_PROPERTY, name);
+    }
+}
+
+
 static ParseRule rules[] = {
     [TOKEN_LEFT_PAREN]    = {grouping, call,    PREC_CALL},
     [TOKEN_RIGHT_PAREN]   = {nullptr,  nullptr, PREC_NONE},
     [TOKEN_LEFT_BRACE]    = {nullptr,  nullptr, PREC_NONE},
     [TOKEN_RIGHT_BRACE]   = {nullptr,  nullptr, PREC_NONE},
     [TOKEN_COMMA]         = {nullptr,  nullptr, PREC_NONE},
-    [TOKEN_DOT]           = {nullptr,  nullptr, PREC_NONE},
+    [TOKEN_DOT]           = {nullptr,  dot,     PREC_CALL},
     [TOKEN_MINUS]         = {unary,    binary,  PREC_TERM},
     [TOKEN_PLUS]          = {nullptr,  binary,  PREC_TERM},
     [TOKEN_SEMICOLON]     = {nullptr,  nullptr, PREC_NONE},
@@ -791,8 +809,9 @@ static void block(
     Parser* parser,
     Scanner* scanner
 ) {
-    while (!check(parser, TOKEN_RIGHT_BRACE) && !check(parser, TOKEN_EOF))
+    while (!check(parser, TOKEN_RIGHT_BRACE) && !check(parser, TOKEN_EOF)) {
         declaration(vm, compiler, parser, scanner);
+    }
 
     consume(parser, scanner, TOKEN_RIGHT_BRACE, "Expect '}' after block.");
 }
@@ -1012,13 +1031,33 @@ static void funDeclaration(
 }
 
 
+static void classDeclaration(
+    VM* restrict vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner
+) {
+    consume(parser, scanner, TOKEN_IDENTIFIER, "Expect class name.");
+    uint8_t nameConstant = identifierConstant(vm, compiler, parser, &parser->previous);
+    declareVariable(compiler, parser);
+
+    emitBytes(vm, compiler, parser, OP_CLASS, nameConstant);
+    defineVariable(vm, compiler, parser, nameConstant);
+
+    consume(parser, scanner, TOKEN_LEFT_BRACE, "Expect '{' before class body.");
+    consume(parser, scanner, TOKEN_RIGHT_BRACE, "Expect '}' after class body.");
+}
+
+
 static void declaration(
     VM* vm,
     Compiler* compiler,
     Parser* parser,
     Scanner* scanner
 ) {
-    if (match(parser, scanner, TOKEN_FUN)) {
+    if (match(parser, scanner, TOKEN_CLASS)) {
+        classDeclaration(vm, compiler, parser, scanner);
+    } else if (match(parser, scanner, TOKEN_FUN)) {
         funDeclaration(vm, compiler, parser, scanner);
     } else if (match(parser, scanner, TOKEN_VAR)) {
         varDeclaration(vm, compiler, parser, scanner);

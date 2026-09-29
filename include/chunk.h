@@ -20,6 +20,8 @@ typedef enum : uint8_t {
     OP_SET_LOCAL,
     OP_GET_UPVALUE,
     OP_SET_UPVALUE,
+    OP_GET_PROPERTY,
+    OP_SET_PROPERTY,
     OP_GET_GLOBAL,
     OP_SET_GLOBAL,
     OP_DEFINE_GLOBAL,
@@ -39,6 +41,7 @@ typedef enum : uint8_t {
     OP_CLOSURE,
     OP_CLOSE_UPVALUE,
     OP_RETURN,
+    OP_CLASS,
 } OpCode;
 
 

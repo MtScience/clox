@@ -136,6 +136,23 @@ ObjClosure* newClosure(VM* restrict vm, ObjFunction* function) {
 }
 
 
+ObjClass* newClass(VM* restrict vm, ObjString* name) {
+    ObjClass* class = ALLOCATE_OBJ(vm, ObjClass, OBJ_CLASS);
+    class->name = name;
+
+    return class;
+}
+
+
+ObjInstance* newInstance(VM* restrict vm, ObjClass* class) {
+    ObjInstance* instance = ALLOCATE_OBJ(vm, ObjInstance, OBJ_INSTANCE);
+    instance->class = class;
+    initTable(&instance->fields);
+
+    return instance;
+}
+
+
 void printObject(Value value) {
     switch (objType(value)) {
         case OBJ_FUNCTION: printFunction(asFunction(value));          break;
@@ -143,5 +160,9 @@ void printObject(Value value) {
         case OBJ_CLOSURE:  printFunction(asClosure(value)->function); break;
         case OBJ_STRING:   printf("%s", asCString(value));            break;
         case OBJ_UPVALUE:  printf("upvalue");                         break;
+        case OBJ_CLASS:    printf("%s", asClass(value)->name->chars); break;
+        case OBJ_INSTANCE:
+            printf("%s instance", asInstance(value)->class->name->chars);
+            break;
     }
 }

@@ -4,6 +4,7 @@
 
 #include "common.h"
 #include "chunk.h"
+#include "table.h"
 #include "value.h"
 #include "vm.h"
 
@@ -15,6 +16,8 @@ typedef enum : uint8_t {
     OBJ_CLOSURE,
     OBJ_STRING,
     OBJ_UPVALUE,
+    OBJ_CLASS,
+    OBJ_INSTANCE,
 } ObjType;
 
 
@@ -67,6 +70,19 @@ struct ObjClosure {
 };
 
 
+typedef struct {
+    Obj obj;
+    ObjString* name;
+} ObjClass;
+
+
+typedef struct {
+    Obj obj;
+    ObjClass* class;
+    Table fields;
+} ObjInstance;
+
+
 /* Type checks */
 
 static inline
@@ -74,20 +90,24 @@ bool isObjType(Value value, ObjType type) {
     return isObj(value) && asObj(value)->type == type;
 }
 
-static inline ObjType objType(Value value) { return asObj(value)->type; }
-static inline bool isString(Value value)   { return isObjType(value, OBJ_STRING); }
+static inline ObjType objType(Value value) { return asObj(value)->type;             }
+static inline bool isString(Value value)   { return isObjType(value, OBJ_STRING);   }
 static inline bool isFunction(Value value) { return isObjType(value, OBJ_FUNCTION); }
-static inline bool isNative(Value value)   { return isObjType(value, OBJ_NATIVE); }
-static inline bool isClosure(Value value)  { return isObjType(value, OBJ_CLOSURE); }
+static inline bool isNative(Value value)   { return isObjType(value, OBJ_NATIVE);   }
+static inline bool isClosure(Value value)  { return isObjType(value, OBJ_CLOSURE);  }
+static inline bool isClass(Value value)    { return isObjType(value, OBJ_CLASS);    }
+static inline bool isInstance(Value value) { return isObjType(value, OBJ_INSTANCE); }
 
 
 /* Type conversions */
 
-static inline char*        asCString(Value value)  { return ((ObjString*)asObj(value))->chars; }
-static inline ObjString*   asString(Value value)   { return (ObjString*)asObj(value); }
-static inline ObjFunction* asFunction(Value value) { return (ObjFunction*)asObj(value); }
+static inline char*        asCString(Value value)  { return ((ObjString*)asObj(value))->chars;    }
+static inline ObjString*   asString(Value value)   { return (ObjString*)asObj(value);             }
+static inline ObjFunction* asFunction(Value value) { return (ObjFunction*)asObj(value);           }
 static inline NativeFn     asNative(Value value)   { return ((ObjNative*)asObj(value))->function; }
-static inline ObjClosure*  asClosure(Value value)  { return (ObjClosure*)asObj(value); }
+static inline ObjClosure*  asClosure(Value value)  { return (ObjClosure*)asObj(value);            }
+static inline ObjClass*    asClass(Value value)    { return (ObjClass*)asObj(value);              }
+static inline ObjInstance* asInstance(Value value) { return (ObjInstance*)asObj(value);           }
 
 
 /* Interface */
@@ -99,6 +119,8 @@ ObjUpvalue*  newUpvalue(VM* restrict vm, Value* slot);
 ObjFunction* newFunction(VM* restrict vm);
 ObjNative*   newNative(VM* restrict vm, NativeFn function);
 ObjClosure*  newClosure(VM* restrict vm, ObjFunction* function);
+ObjClass*    newClass(VM* restrict vm, ObjString* name);
+ObjInstance* newInstance(VM* restrict vm, ObjClass* class);
 
 void printObject(Value value);
 

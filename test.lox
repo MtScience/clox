@@ -1,16 +1,8 @@
-{
-  var a = 1;
-  fun f() {
-    print a;
-  }
-  var b = 2;
-  fun g() {
-    print b;
-  }
-  var c = 3;
-  fun h() {
-    print c;
-  }
+class Pair {}
 
-  h();
-}
+var pair = Pair();
+
+pair.first = 1;
+pair.second = 2;
+
+print pair.first + pair.second;

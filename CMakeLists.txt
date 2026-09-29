@@ -5,11 +5,6 @@ project(clox
     LANGUAGES C
 )
 
-# Require GCC.
-if (NOT CMAKE_C_COMPILER_ID STREQUAL "GNU")
-    message(FATAL_ERROR "This project requires GCC.")
-endif()
-
 # Use the C23 standard.
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -46,7 +41,7 @@ target_include_directories(clox
 )
 
 # Build flags
-option(DEBUG_TRACE_EXECUTION "Trace execution" ON)
+option(DEBUG_TRACE_EXECUTION "Trace execution" OFF)
 option(DEBUG_PRINT_CODE "Print compiled chunks" ON)
 option(DEBUG_GC "Garbage-collection debugging mode" OFF)
 
