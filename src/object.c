@@ -154,6 +154,19 @@ ObjInstance* newInstance(VM* restrict vm, ObjClass* class) {
 }
 
 
+ObjBoundMethod* newBoundMethod(
+    VM* restrict vm,
+    Value receiver,
+    ObjClosure* method
+) {
+    ObjBoundMethod* bound = ALLOCATE_OBJ(vm, ObjBoundMethod, OBJ_BOUND_METHOD);
+    bound->receiver = receiver;
+    bound->method = method;
+
+    return bound;
+}
+
+
 void printObject(Value value) {
     switch (objType(value)) {
         case OBJ_FUNCTION: printFunction(asFunction(value));          break;
@@ -164,6 +177,9 @@ void printObject(Value value) {
         case OBJ_CLASS:    printf("%s", asClass(value)->name->chars); break;
         case OBJ_INSTANCE:
             printf("%s instance", asInstance(value)->class->name->chars);
+            break;
+        case OBJ_BOUND_METHOD:
+            printFunction(asBoundMethod(value)->method->function);
             break;
     }
 }

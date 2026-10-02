@@ -110,6 +110,10 @@ static bool callValue(VM* vm, Value callee, uint8_t argCount) {
                     vm->stackTop[-argCount - 1] = objVal((Obj*)newInstance(vm, class));
                     return true;
                 }
+            case OBJ_BOUND_METHOD: {
+                    ObjBoundMethod* bound = asBoundMethod(callee);
+                    return call(vm, bound->method, argCount);
+                }
             default:
                 break;
         }
@@ -159,6 +163,20 @@ static void defineMethod(VM* restrict vm, ObjString* name) {
     ObjClass* class = asClass(peek(vm, 1));
     tableSet(vm, &class->methods, name, method);
     pop(vm);
+}
+
+
+static bool bindMethod(VM* restrict vm, ObjClass* class, ObjString* name) {
+    Value method;
+    if (!tableGet(&class->methods, name, &method)) {
+        runtimeError(vm, "Undefined property '%s'.", name->chars);
+        return false;
+    }
+
+    ObjBoundMethod* bound = newBoundMethod(vm, peek(vm, 0), asClosure(method));
+    pop(vm);
+    push(vm, objVal((Obj*)bound));
+    return true;
 }
 
 
@@ -245,8 +263,10 @@ static InterpretResult run(VM* restrict vm) {
                     break;
                 }
 
-                runtimeError(vm, "Undefined property '%s'.", name->chars);
-                return INTERPRET_RUNTIME_ERROR;
+                if (!bindMethod(vm, instance->class, name)) {
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+                break;
             }
             case OP_SET_PROPERTY: {
                 if (!isInstance(peek(vm, 1))) {

@@ -59,6 +59,10 @@ static void freeObject(VM* restrict vm, Obj* restrict object) {
                 assert(FREE(vm, ObjInstance, object) == nullptr);
                 break;
             }
+        case OBJ_BOUND_METHOD: {
+                assert(FREE(vm, ObjBoundMethod, object) == nullptr);
+                break;
+            }
     }
 }
 
@@ -106,6 +110,12 @@ static void blackenObject(VM* restrict vm, Obj* object) {
                 ObjInstance* instance = (ObjInstance*)object;
                 markObject(vm, (Obj*)instance->class);
                 markTable(vm, &instance->fields);
+                break;
+            }
+        case OBJ_BOUND_METHOD: {
+                ObjBoundMethod* bound = (ObjBoundMethod*)object;
+                markValue(vm, bound->receiver);
+                markObject(vm, (Obj*)bound->method);
                 break;
             }
         case OBJ_NATIVE:
