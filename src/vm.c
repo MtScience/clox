@@ -154,6 +154,14 @@ static void closeUpvalues(VM* vm, Value* last) {
 }
 
 
+static void defineMethod(VM* restrict vm, ObjString* name) {
+    Value method = peek(vm, 0);
+    ObjClass* class = asClass(peek(vm, 1));
+    tableSet(vm, &class->methods, name, method);
+    pop(vm);
+}
+
+
 static InterpretResult run(VM* restrict vm) {
     CallFrame* frame = &vm->frames[vm->frameCount - 1];
 
@@ -374,6 +382,10 @@ static InterpretResult run(VM* restrict vm) {
                 }
             case OP_CLASS: {
                     push(vm, objVal((Obj*)newClass(vm, READ_STRING())));
+                    break;
+                }
+            case OP_METHOD: {
+                    defineMethod(vm, READ_STRING());
                     break;
                 }
         }

@@ -48,6 +48,8 @@ static void freeObject(VM* restrict vm, Obj* restrict object) {
                 break;
             }
         case OBJ_CLASS: {
+                ObjClass* class = (ObjClass*)object;
+                freeTable(vm, &class->methods);
                 assert(FREE(vm, ObjClass, object) == nullptr);
                 break;
             }
@@ -97,6 +99,7 @@ static void blackenObject(VM* restrict vm, Obj* object) {
         case OBJ_CLASS: {
                 ObjClass* class = (ObjClass*)object;
                 markObject(vm, (Obj*)class->name);
+                markTable(vm, &class->methods);
                 break;
             }
         case OBJ_INSTANCE: {

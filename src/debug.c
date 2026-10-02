@@ -71,6 +71,7 @@ uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset) {
     switch (instruction) {
         case OP_CONSTANT:      return constantInstruction("OP_CONSTANT",      chunk, offset);
         case OP_CLASS:         return constantInstruction("OP_CLASS",         chunk, offset);
+        case OP_METHOD:        return constantInstruction("OP_METHOD",        chunk, offset);
         case OP_GET_PROPERTY:  return constantInstruction("OP_GET_PROPERTY",  chunk, offset);
         case OP_SET_PROPERTY:  return constantInstruction("OP_SET_PROPERTY",  chunk, offset);
         case OP_GET_GLOBAL:    return constantInstruction("OP_GET_GLOBAL",    chunk, offset);

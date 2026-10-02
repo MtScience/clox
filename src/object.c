@@ -139,6 +139,7 @@ ObjClosure* newClosure(VM* restrict vm, ObjFunction* function) {
 ObjClass* newClass(VM* restrict vm, ObjString* name) {
     ObjClass* class = ALLOCATE_OBJ(vm, ObjClass, OBJ_CLASS);
     class->name = name;
+    initTable(&class->methods);
 
     return class;
 }

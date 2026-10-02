@@ -42,6 +42,7 @@ typedef enum : uint8_t {
     OP_CLOSE_UPVALUE,
     OP_RETURN,
     OP_CLASS,
+    OP_METHOD,
 } OpCode;
 
 

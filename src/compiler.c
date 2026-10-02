@@ -1031,6 +1031,21 @@ static void funDeclaration(
 }
 
 
+static void method(
+    VM* restrict vm,
+    Compiler* compiler,
+    Parser* parser,
+    Scanner* scanner
+) {
+    consume(parser, scanner, TOKEN_IDENTIFIER, "Expect method name.");
+    uint8_t constant = identifierConstant(vm, compiler, parser, &parser->previous);
+
+    FunctionType type = TYPE_FUNCTION;
+    function(vm, compiler, parser, scanner, type);
+    emitBytes(vm, compiler, parser, OP_METHOD, constant);
+}
+
+
 static void classDeclaration(
     VM* restrict vm,
     Compiler* compiler,
@@ -1038,14 +1053,20 @@ static void classDeclaration(
     Scanner* scanner
 ) {
     consume(parser, scanner, TOKEN_IDENTIFIER, "Expect class name.");
+    Token className = parser->previous;
     uint8_t nameConstant = identifierConstant(vm, compiler, parser, &parser->previous);
     declareVariable(compiler, parser);
 
     emitBytes(vm, compiler, parser, OP_CLASS, nameConstant);
     defineVariable(vm, compiler, parser, nameConstant);
 
+    namedVariable(vm, compiler, parser, scanner, className, false);
     consume(parser, scanner, TOKEN_LEFT_BRACE, "Expect '{' before class body.");
+    while (!check(parser, TOKEN_RIGHT_BRACE) && !check(parser, TOKEN_EOF)) {
+        method(vm, compiler, parser, scanner);
+    }
     consume(parser, scanner, TOKEN_RIGHT_BRACE, "Expect '}' after class body.");
+    emitByte(vm, compiler, parser, OP_POP);
 }
 
 
