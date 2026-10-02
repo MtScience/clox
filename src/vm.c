@@ -112,6 +112,7 @@ static bool callValue(VM* vm, Value callee, uint8_t argCount) {
                 }
             case OBJ_BOUND_METHOD: {
                     ObjBoundMethod* bound = asBoundMethod(callee);
+                    vm->stackTop[-argCount - 1] = bound->receiver;
                     return call(vm, bound->method, argCount);
                 }
             default:

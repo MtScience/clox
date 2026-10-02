@@ -1,8 +1,19 @@
 class Scone {
     topping(first, second) {
-        print "Scone with " + first + " and " + second + ".";
+        print this.name + " with " + first + " and " + second + ".";
+    }
+}
+
+class Pie {
+    type() {
+        return "Pie with " + this.filling;
     }
 }
 
 var scone = Scone();
+scone.name = "Scone";
 scone.topping("cream", "berries");
+
+var pie = Pie();
+pie.filling = "apple jam";
+print pie.type();

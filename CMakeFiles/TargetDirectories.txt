@@ -1,3 +1,0 @@
-/home/matvey/Code/clox/CMakeFiles/clox.dir
-/home/matvey/Code/clox/CMakeFiles/edit_cache.dir
-/home/matvey/Code/clox/CMakeFiles/rebuild_cache.dir
