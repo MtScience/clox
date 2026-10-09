@@ -31,6 +31,7 @@ struct VM {
     Table globals;
     Obj* objects;
 
+    ObjString* initString;
     ObjUpvalue* openUpvalues;
 
     size_t bytesAllocated;

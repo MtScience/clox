@@ -108,6 +108,15 @@ static bool callValue(VM* vm, Value callee, uint8_t argCount) {
             case OBJ_CLASS: {
                     ObjClass* class = asClass(callee);
                     vm->stackTop[-argCount - 1] = objVal((Obj*)newInstance(vm, class));
+
+                    Value initializer;
+                    if (tableGet(&class->methods, vm->initString, &initializer)) {
+                        return call(vm, asClosure(initializer), argCount);
+                    } else if (argCount) {
+                        runtimeError(vm, "Expected 0 arguments but got %u.", argCount);
+                        return false;
+                    }
+
                     return true;
                 }
             case OBJ_BOUND_METHOD: {
@@ -178,6 +187,36 @@ static bool bindMethod(VM* restrict vm, ObjClass* class, ObjString* name) {
     pop(vm);
     push(vm, objVal((Obj*)bound));
     return true;
+}
+
+
+static bool invokeFromClass(VM* restrict vm, ObjClass* class, ObjString* name, uint8_t argCount) {
+    Value method;
+    if (!tableGet(&class->methods, name, &method)) {
+        runtimeError(vm, "Undefined property '%s'.", name->chars);
+        return false;
+    }
+    return call(vm, asClosure(method), argCount);
+}
+
+
+static bool invoke(VM* restrict vm, ObjString* name, uint8_t argCount) {
+    Value receiver = peek(vm, argCount);
+
+    if (!isInstance(receiver)) {
+        runtimeError(vm, "Only instances have methods.");
+        return false;
+    }
+
+    ObjInstance* instance = asInstance(receiver);
+
+    Value value;
+    if (tableGet(&instance->fields, name, &value)) {
+        vm->stackTop[-argCount - 1] = value;
+        return callValue(vm, value, argCount);
+    }
+
+    return invokeFromClass(vm, instance->class, name, argCount);
 }
 
 
@@ -409,6 +448,15 @@ static InterpretResult run(VM* restrict vm) {
                     defineMethod(vm, READ_STRING());
                     break;
                 }
+            case OP_INVOKE: {
+                    ObjString* method = READ_STRING();
+                    uint8_t argCount = READ_BYTE();
+                    if (!invoke(vm, method, argCount)) {
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+                    frame = &vm->frames[vm->frameCount - 1];
+                    break;
+                }
         }
     }
 
@@ -433,6 +481,9 @@ void initVM(VM* restrict vm) {
     vm->grayCapacity = 0;
     vm->grayStack = nullptr;
 
+    vm->initString = nullptr;
+    vm->initString = copyString(vm, "init", 4);
+
     vm->bytesAllocated = 0;
     vm->nextGC = 1024 * 1024;
 
@@ -443,6 +494,9 @@ void initVM(VM* restrict vm) {
 void freeVM(VM* restrict vm) {
     freeTable(vm, &vm->strings);
     freeTable(vm, &vm->globals);
+
+    vm->initString = nullptr;
+
     freeObjects(vm);
 }
 

@@ -1,3 +1,12 @@
+/*
+ * NOTE:
+ * Memory allocations in this module: only copyString and newFunction.
+ * Need to understand, which of the allocated objects retain, and how
+ * to mark them, without rewriting just about everything (since the
+ * compiler) gets dropped as soon as it finishes.
+ */
+
+
 #include <stdio.h>   /* For fprintf, stderr */
 #include <stdlib.h>  /* For strtod */
 #include <string.h>  /* For memcmp */
@@ -31,6 +40,7 @@ typedef enum : uint8_t {
     TYPE_SCRIPT,
     TYPE_FUNCTION,
     TYPE_METHOD,
+    TYPE_INITIALIZER,
 } FunctionType;
 
 
@@ -196,7 +206,11 @@ static void emitConstant(CompilationState state, Value value) {
 
 
 static void emitReturn(CompilationState state) {
-    emitByte(state, OP_NIL);  /* TODO: change to emitBytes if nothing is gonna go in between */
+    if (state.compiler->type == TYPE_INITIALIZER) {
+        emitBytes(state, OP_GET_LOCAL, 0);
+    } else {
+        emitByte(state, OP_NIL);
+    }
     emitByte(state, OP_RETURN);
 }
 
@@ -534,6 +548,10 @@ static void dot(CompilationState state, bool canAssign) {
     if (canAssign && match(state.parser, state.scanner, TOKEN_EQUAL)) {
         expression(state);
         emitBytes(state, OP_SET_PROPERTY, name);
+    } else if (match(state.parser, state.scanner, TOKEN_LEFT_PAREN)) {
+        uint8_t argCount = argumentList(state);
+        emitBytes(state, OP_INVOKE, name);
+        emitByte(state, argCount);
     } else {
         emitBytes(state, OP_GET_PROPERTY, name);
     }
@@ -854,6 +872,10 @@ static void returnStatement(CompilationState state) {
     if (match(state.parser, state.scanner, TOKEN_SEMICOLON)) {
         emitReturn(state);
     } else {
+        if (state.compiler->type == TYPE_INITIALIZER) {
+            error(state.parser, "Can't return a value from an initializer.");
+        }
+
         expression(state);
         consume(state.parser, state.scanner, TOKEN_SEMICOLON, "Expect ';' after return value.");
         emitByte(state, OP_RETURN);
@@ -930,6 +952,12 @@ static void method(CompilationState state) {
     uint8_t constant = identifierConstant(state, &state.parser->previous);
 
     FunctionType type = TYPE_METHOD;
+    if (
+        state.parser->previous.length == 4 &&
+        !memcmp(state.parser->previous.start, "init", 4)
+    ) {
+        type = TYPE_INITIALIZER;
+    }
     function(state, type);
     emitBytes(state, OP_METHOD, constant);
 }

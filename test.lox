@@ -1,19 +1,12 @@
-class Scone {
-    topping(first, second) {
-        print this.name + " with " + first + " and " + second + ".";
+class Oops {
+    init() {
+        fun f() {
+            print "not a method";
+        }
+
+        this.field = f;
     }
 }
 
-class Pie {
-    type() {
-        return "Pie with " + this.filling;
-    }
-}
-
-var scone = Scone();
-scone.name = "Scone";
-scone.topping("cream", "berries");
-
-var pie = Pie();
-pie.filling = "apple jam";
-print pie.type();
+var oops = Oops();
+oops.field();

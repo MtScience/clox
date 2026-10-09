@@ -21,9 +21,8 @@ static Entry* findEntry(Entry* entries, uint32_t capacity, ObjString* key) {
         if (!entry->key) {
             if (isNil(entry->value)) {
                 return tombstone ? tombstone : entry;
-            } else {
-                if (!tombstone)
-                    tombstone = entry;
+            } else if (!tombstone) {
+                tombstone = entry;
             }
         } else if (entry->key == key) {
             return entry;

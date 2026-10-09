@@ -49,6 +49,17 @@ static uint32_t simpleInstruction(char const* name, uint32_t offset) {
 }
 
 
+static uint32_t invokeInstruction(char const* name, Chunk* chunk, uint32_t offset) {
+    uint8_t constant = chunk->code[offset + 1];
+    uint8_t argCount = chunk->code[offset + 2];
+    printf("%-16s (%u args) %4u '", name, argCount, constant);
+    printValue(chunk->constants.values[constant]);
+    puts("'");
+
+    return offset + 3;
+}
+
+
 void disassembleChunk(Chunk* chunk, char const* name) {
     printf("== %s ==\n", name);
 
@@ -85,6 +96,7 @@ uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset) {
         case OP_GET_UPVALUE:   return byteInstruction("OP_GET_UPVALUE", chunk, offset);
         case OP_SET_UPVALUE:   return byteInstruction("OP_SET_UPVALUE", chunk, offset);
         case OP_CALL:          return byteInstruction("OP_CALL",        chunk, offset);
+        case OP_INVOKE:        return invokeInstruction("OP_INVOKE",    chunk, offset);
         case OP_NIL:           return simpleInstruction("OP_NIL",           offset);
         case OP_TRUE:          return simpleInstruction("OP_TRUE",          offset);
         case OP_FALSE:         return simpleInstruction("OP_FALSE",         offset);

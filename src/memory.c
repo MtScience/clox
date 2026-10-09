@@ -143,6 +143,14 @@ static void markRoots(VM* restrict vm) {
     }
 
     markTable(vm, &vm->globals);
+    /* markCompilerRoots() */
+    /*
+     * TODO: Fix this!!! Since I don't have a global Compiler, I can't really
+     * use 'markCompilerRoots' all the time. The only real place I can do this
+     * is from inside 'compile'. Also, I need to carefully check
+     * where there're memory allocations to ensure there are no leaks.
+     */
+    markObject(vm,  (Obj*)vm->initString);
 }
 
 
