@@ -47,9 +47,9 @@ typedef struct {
 } Token;
 
 
-void initScanner(Scanner* scanner, char const* source);
+void initScanner(Scanner scanner[static 1], char const* source);
 
-Token scanToken(Scanner* scanner);
+Token scanToken(Scanner scanner[static 1]);
 
 
 #endif

@@ -5,7 +5,7 @@
 #include "scanner.h"
 
 
-static bool isAtEnd(Scanner* scanner) {
+static bool isAtEnd(Scanner scanner[static 1]) {
     return *scanner->current == '\0';
 }
 
@@ -20,7 +20,7 @@ static bool isAlphaNum(char c) [[unsequenced]] {
 }
 
 
-static Token makeToken(Scanner* scanner, TokenType type) {
+static Token makeToken(Scanner scanner[static 1], TokenType type) {
     return (Token){
         .type = type,
         .start = scanner->start,
@@ -30,7 +30,7 @@ static Token makeToken(Scanner* scanner, TokenType type) {
 }
 
 
-static Token errorToken(Scanner* scanner, char const* message) {
+static Token errorToken(Scanner scanner[static 1], char const* message) {
     return (Token){
         .type = TOKEN_ERROR,
         .start = message,
@@ -40,13 +40,13 @@ static Token errorToken(Scanner* scanner, char const* message) {
 }
 
 
-static char advance(Scanner* scanner) {
+static char advance(Scanner scanner[static 1]) {
     scanner->current++;
     return scanner->current[-1];
 }
 
 
-static bool match(Scanner* scanner, char expected) {
+static bool match(Scanner scanner[static 1], char expected) {
     if (isAtEnd(scanner) || *scanner->current != expected)
         return false;
 
@@ -55,17 +55,17 @@ static bool match(Scanner* scanner, char expected) {
 }
 
 
-static char peek(Scanner* scanner) {
+static char peek(Scanner scanner[static 1]) {
     return *scanner->current;
 }
 
 
-static char peekNext(Scanner* scanner) {
+static char peekNext(Scanner scanner[static 1]) {
     return isAtEnd(scanner) ? '\0': scanner->current[1];
 }
 
 
-static void skipWhitespace(Scanner* scanner) {
+static void skipWhitespace(Scanner scanner[static 1]) {
     for (char c; (c = peek(scanner)); )
         switch (c) {
             case '\n':
@@ -91,7 +91,7 @@ static void skipWhitespace(Scanner* scanner) {
 }
 
 
-static Token string(Scanner* scanner) {
+static Token string(Scanner scanner[static 1]) {
     for (char c; !isAtEnd(scanner) && (c = peek(scanner)) != '"'; ) {
         if (c == '\n')
             scanner->line++;
@@ -106,7 +106,7 @@ static Token string(Scanner* scanner) {
 }
 
 
-static Token number(Scanner* scanner) {
+static Token number(Scanner scanner[static 1]) {
     while (isdigit(peek(scanner)))
         advance(scanner);
 
@@ -122,7 +122,7 @@ static Token number(Scanner* scanner) {
 
 
 static TokenType checkKeyword(
-    Scanner* scanner,
+    Scanner scanner[static 1],
     uint32_t start,
     uint32_t length,
     char const* rest,
@@ -136,7 +136,7 @@ static TokenType checkKeyword(
 }
 
 
-static TokenType identifierType(Scanner* scanner) {
+static TokenType identifierType(Scanner scanner[static 1]) {
     switch (scanner->start[0]) {
         case 'a': return checkKeyword(scanner, 1, 2, "nd", TOKEN_AND);
         case 'c': return checkKeyword(scanner, 1, 4, "lass", TOKEN_CLASS);
@@ -172,7 +172,7 @@ static TokenType identifierType(Scanner* scanner) {
 }
 
 
-static Token identifier(Scanner* scanner) {
+static Token identifier(Scanner scanner[static 1]) {
     for (char c = peek(scanner); isAlphaNum(c); c = peek(scanner))
         advance(scanner);
 
@@ -180,7 +180,7 @@ static Token identifier(Scanner* scanner) {
 }
 
 
-void initScanner(Scanner* scanner, char const* source) {
+void initScanner(Scanner scanner[static 1], char const* source) {
     *scanner = (Scanner) {
         .start = source,
         .current = source,
@@ -189,7 +189,7 @@ void initScanner(Scanner* scanner, char const* source) {
 }
 
 
-Token scanToken(Scanner* scanner) {
+Token scanToken(Scanner scanner[static 1]) {
     skipWhitespace(scanner);
     scanner->start = scanner->current;
 

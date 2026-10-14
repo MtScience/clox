@@ -15,7 +15,7 @@ constexpr uint32_t GCHeapGrowthFactor = 2;
 
 /* Local functions */
 
-static void freeObject(VM* restrict vm, Obj* restrict object) {
+static void freeObject(VM* vm, Obj* restrict object) {
 #ifdef DEBUG_LOG_GC
     printf("%p free type %u\n", (void*)object, object->type);
 #endif
@@ -67,14 +67,14 @@ static void freeObject(VM* restrict vm, Obj* restrict object) {
 }
 
 
-static void markArray(VM* restrict vm, ValueArray* array) {
+static void markArray(VM* vm, ValueArray* array) {
     for (uint32_t i = 0; i < array->count; i++) {
         markValue(vm, array->values[i]);
     }
 }
 
 
-static void blackenObject(VM* restrict vm, Obj* object) {
+static void blackenObject(VM* vm, Obj* object) {
 #ifdef DEBUG_LOG_GC
     printf("%p blacken ", (void*)object);
     printValue(objVal(object));
@@ -125,7 +125,7 @@ static void blackenObject(VM* restrict vm, Obj* object) {
 }
 
 
-static void markRoots(VM* restrict vm) {
+static void markRoots(VM* vm) {
     for (Value* slot = vm->stack; slot < vm->stackTop; slot++) {
         markValue(vm, *slot);
     }
@@ -154,7 +154,7 @@ static void markRoots(VM* restrict vm) {
 }
 
 
-static void traceReferences(VM* restrict vm) {
+static void traceReferences(VM* vm) {
     while (vm->grayCount > 0) {
         Obj* object = vm->grayStack[--vm->grayCount];
         blackenObject(vm, object);
@@ -162,7 +162,7 @@ static void traceReferences(VM* restrict vm) {
 }
 
 
-static void sweep(VM* restrict vm) {
+static void sweep(VM* vm) {
     Obj* previous = nullptr;
     Obj* object = vm->objects;
     while (object) {
@@ -187,7 +187,7 @@ static void sweep(VM* restrict vm) {
 
 /* Public functions */
 
-void* reallocate(VM* restrict vm, void* pointer, size_t oldSize, size_t newSize) {
+void* reallocate(VM* vm, void* pointer, size_t oldSize, size_t newSize) {
     vm->bytesAllocated += newSize - oldSize;
     if (newSize > oldSize) {
 #ifdef DEBUG_STRESS_GC
@@ -212,7 +212,7 @@ void* reallocate(VM* restrict vm, void* pointer, size_t oldSize, size_t newSize)
 }
 
 
-void freeObjects(VM* restrict vm) {
+void freeObjects(VM* vm) {
     Obj* object = vm->objects;
     while (object) {
         Obj* next = object->next;
@@ -224,12 +224,10 @@ void freeObjects(VM* restrict vm) {
 }
 
 
-void markObject(VM* restrict vm, Obj* object) {
-    if (!object)
+void markObject(VM* vm, Obj* object) {
+    if (!object || object->isMarked) {
         return;
-
-    if (object->isMarked)
-        return;
+    }
 
 #ifdef DEBUG_LOG_GC
     printf("%p mark ", (void*)object);
@@ -247,21 +245,23 @@ void markObject(VM* restrict vm, Obj* object) {
          * immediately if allocation fails anyway, so it doesn't really matter.
          */
 
-        if (!vm->grayStack)
+        if (!vm->grayStack) {
             exit(EXIT_FAILURE);
+        }
     }
 
     vm->grayStack[vm->grayCount++] = object;
 }
 
 
-void markValue(VM* restrict vm, Value value) {
-    if (isObj(value))
+void markValue(VM* vm, Value value) {
+    if (isObj(value)) {
         markObject(vm, asObj(value));
+    }
 }
 
 
-void collectGarbage(VM* restrict vm) {
+void collectGarbage(VM* vm) {
 #ifdef DEBUG_LOG_GC
     puts("-- gc begin");
     size_t before = vm->bytesAllocated;

@@ -19,18 +19,18 @@ typedef struct {
 } Table;
 
 
-void initTable(Table* restrict table);
-void freeTable(VM* restrict vm, Table* restrict table);
+void initTable(Table table[restrict static 1]);
+void freeTable(VM* vm, Table table[restrict static 1]);
 
-bool tableSet(VM* restrict vm, Table* table, ObjString* key, Value value);
-bool tableGet(Table* table, ObjString* key, Value* value);
-void tableAddAll(VM* restrict vm, Table* from, Table* to);
-bool tableDelete(Table* table, ObjString* key);
+bool tableSet(VM* vm, Table table[static 1], ObjString* key, Value value);
+bool tableGet(Table table[static 1], ObjString* key, Value* value);
+void tableAddAll(VM* vm, Table from[static 1], Table to[static 1]);
+bool tableDelete(Table table[static 1], ObjString* key);
 
-ObjString* tableFindString(Table* table, char const* chars, uint32_t length, uint32_t hash);
+ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t length, uint32_t hash);
 
-void markTable(VM* restrict vm, Table* restrict table);
-void tableRemoveWhite(Table* restrict table);
+void markTable(VM* vm, Table table[static 1]);
+void tableRemoveWhite(Table table[static 1]);
 
 
 #endif

@@ -10,3 +10,15 @@ class Oops {
 
 var oops = Oops();
 oops.field();
+
+
+fun f1(a) {
+    fun closure(b) {
+        return a + b;
+    }
+
+    return closure;
+}
+
+var a = f1(10);
+print a(10);

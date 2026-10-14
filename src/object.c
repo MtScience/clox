@@ -13,7 +13,7 @@
 #define ALLOCATE_OBJ(vm, type, objectType) (type*)allocateObject(vm, sizeof(type), objectType)
 
 
-static Obj* allocateObject(VM* restrict vm, size_t size, ObjType type) {
+static Obj* allocateObject(VM* vm, size_t size, ObjType type) {
     Obj* object = reallocate(vm, nullptr, 0, size);
     object->type = type;
     object->isMarked = false;
@@ -29,7 +29,7 @@ static Obj* allocateObject(VM* restrict vm, size_t size, ObjType type) {
 }
 
 
-static ObjString* allocateString(VM* restrict vm, char* chars, uint32_t length, uint32_t hash) {
+static ObjString* allocateString(VM* vm, char* chars, uint32_t length, uint32_t hash) {
     ObjString* string = ALLOCATE_OBJ(vm, ObjString, OBJ_STRING);
     string->length = length;
     string->chars = chars;
@@ -54,7 +54,7 @@ static uint32_t hashString(char const* key, uint32_t length) {
 }
 
 
-static void printFunction(ObjFunction* function) {
+static void printFunction(ObjFunction function[static 1]) {
     if (!function->name) {
         printf("<script>");
         return;
@@ -65,7 +65,7 @@ static void printFunction(ObjFunction* function) {
 
 /* Public functions */
 
-ObjString* copyString(VM* restrict vm, char const* chars, uint32_t length) {
+ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
     uint32_t hash = hashString(chars, length);
 
     ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
@@ -80,7 +80,7 @@ ObjString* copyString(VM* restrict vm, char const* chars, uint32_t length) {
 }
 
 
-ObjString* takeString(VM* restrict vm, char* chars, uint32_t length) {
+ObjString* takeString(VM* vm, char* chars, uint32_t length) {
     uint32_t hash = hashString(chars, length);
 
     ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
@@ -93,7 +93,7 @@ ObjString* takeString(VM* restrict vm, char* chars, uint32_t length) {
 }
 
 
-ObjUpvalue* newUpvalue(VM* restrict vm, Value* slot) {
+ObjUpvalue* newUpvalue(VM* vm, Value* slot) {
     ObjUpvalue* upvalue = ALLOCATE_OBJ(vm, ObjUpvalue, OBJ_UPVALUE);
     upvalue->location = slot;
     upvalue->closed = nilVal();
@@ -103,7 +103,7 @@ ObjUpvalue* newUpvalue(VM* restrict vm, Value* slot) {
 }
 
 
-ObjFunction* newFunction(VM* restrict vm) {
+ObjFunction* newFunction(VM* vm) {
     ObjFunction* function = ALLOCATE_OBJ(vm, ObjFunction, OBJ_FUNCTION);
     function->arity = 0;
     function->upvalueCount = 0;
@@ -114,14 +114,14 @@ ObjFunction* newFunction(VM* restrict vm) {
 }
 
 
-ObjNative* newNative(VM* restrict vm, NativeFn function) {
+ObjNative* newNative(VM* vm, NativeFn function) {
     ObjNative* native = ALLOCATE_OBJ(vm, ObjNative, OBJ_NATIVE);
     native->function = function;
 
     return native;
 }
 
-ObjClosure* newClosure(VM* restrict vm, ObjFunction* function) {
+ObjClosure* newClosure(VM* vm, ObjFunction function[static 1]) {
     ObjUpvalue** upvalues = ALLOCATE(vm, ObjUpvalue*, function->upvalueCount);
     for (uint8_t i = 0; i < function->upvalueCount; i++) {
         upvalues[i] = nullptr;
@@ -136,7 +136,7 @@ ObjClosure* newClosure(VM* restrict vm, ObjFunction* function) {
 }
 
 
-ObjClass* newClass(VM* restrict vm, ObjString* name) {
+ObjClass* newClass(VM* vm, ObjString* name) {
     ObjClass* class = ALLOCATE_OBJ(vm, ObjClass, OBJ_CLASS);
     class->name = name;
     initTable(&class->methods);
@@ -145,7 +145,7 @@ ObjClass* newClass(VM* restrict vm, ObjString* name) {
 }
 
 
-ObjInstance* newInstance(VM* restrict vm, ObjClass* class) {
+ObjInstance* newInstance(VM* vm, ObjClass* class) {
     ObjInstance* instance = ALLOCATE_OBJ(vm, ObjInstance, OBJ_INSTANCE);
     instance->class = class;
     initTable(&instance->fields);
@@ -155,7 +155,7 @@ ObjInstance* newInstance(VM* restrict vm, ObjClass* class) {
 
 
 ObjBoundMethod* newBoundMethod(
-    VM* restrict vm,
+    VM* vm,
     Value receiver,
     ObjClosure* method
 ) {

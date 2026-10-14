@@ -8,7 +8,7 @@
 
 /* Public functions */
 
-void initValueArray(ValueArray* restrict array) {
+void initValueArray(ValueArray array[restrict static 1]) {
     *array = (ValueArray){
         .capacity = 0,
         .count = 0,
@@ -17,13 +17,13 @@ void initValueArray(ValueArray* restrict array) {
 }
 
 
-void freeValueArray(VM* restrict vm, ValueArray* restrict array) {
+void freeValueArray(VM* vm, ValueArray array[restrict static 1]) {
     assert(FREE_ARRAY(vm, Value, array->values, array->capacity) == nullptr);
     initValueArray(array);
 }
 
 
-void writeValueArray(VM* restrict vm, ValueArray* array, Value value) {
+void writeValueArray(VM* vm, ValueArray array[static 1], Value value) {
     if (array->capacity < array->count + 1) {
         uint32_t oldCapacity = array->capacity;
         array->capacity = growCapacity(oldCapacity);

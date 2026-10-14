@@ -12,7 +12,7 @@ constexpr double tableMaxLoad = 0.75;
 
 /* Local functions */
 
-static Entry* findEntry(Entry* entries, uint32_t capacity, ObjString* key) {
+static Entry* findEntry(Entry entries[], uint32_t capacity, ObjString* key) {
     uint32_t index = key->hash % capacity;
     Entry* tombstone = nullptr;
 
@@ -33,7 +33,7 @@ static Entry* findEntry(Entry* entries, uint32_t capacity, ObjString* key) {
 }
 
 
-static void adjustCapacity(VM* restrict vm, Table* table, uint32_t capacity) {
+static void adjustCapacity(VM* vm, Table table[static 1], uint32_t capacity) {
     Entry* entries = ALLOCATE(vm, Entry, capacity);
 
     for (uint32_t i = 0; i < capacity; i++) {
@@ -63,7 +63,7 @@ static void adjustCapacity(VM* restrict vm, Table* table, uint32_t capacity) {
 
 /* Public functions */
 
-void initTable(Table* restrict table) {
+void initTable(Table table[restrict static 1]) {
     *table = (Table){
         .count = 0,
         .capacity = 0,
@@ -72,13 +72,13 @@ void initTable(Table* restrict table) {
 }
 
 
-void freeTable(VM* restrict vm, Table* restrict table) {
+void freeTable(VM* vm, Table table[restrict static 1]) {
     assert(FREE_ARRAY(vm, Entry, table->entries, table->capacity) == nullptr);
     initTable(table);
 }
 
 
-bool tableSet(VM* restrict vm, Table* table, ObjString* key, Value value) {
+bool tableSet(VM* vm, Table table[static 1], ObjString* key, Value value) {
     if (table->count + 1 > table->capacity * tableMaxLoad) {
         uint32_t capacity = growCapacity(table->capacity);
         adjustCapacity(vm, table, capacity);
@@ -100,20 +100,22 @@ bool tableSet(VM* restrict vm, Table* table, ObjString* key, Value value) {
 }
 
 
-bool tableGet(Table* table, ObjString* key, Value* value) {
-    if (table->count == 0)
+bool tableGet(Table table[static 1], ObjString* key, Value* value) {
+    if (table->count == 0) {
         return false;
+    }
 
     Entry* entry = findEntry(table->entries, table->capacity, key);
-    if (!entry->key)
+    if (!entry->key) {
         return false;
+    }
 
     *value = entry->value;
     return true;
 }
 
 
-void tableAddAll(VM* restrict vm, Table* from, Table* to) {
+void tableAddAll(VM* vm, Table from[static 1], Table to[static 1]) {
     for (uint32_t i = 0; i < from->capacity; i++) {
         Entry* entry = &from->entries[i];
         if (entry->key) {
@@ -123,13 +125,15 @@ void tableAddAll(VM* restrict vm, Table* from, Table* to) {
 }
 
 
-bool tableDelete(Table* table, ObjString* key) {
-    if (table->count == 0)
+bool tableDelete(Table table[static 1], ObjString* key) {
+    if (table->count == 0) {
         return false;
+    }
 
     Entry* entry = findEntry(table->entries, table->capacity, key);
-    if (!entry->key)
+    if (!entry->key) {
         return false;
+    }
 
     *entry = (Entry){
         .key = nullptr,
@@ -139,16 +143,18 @@ bool tableDelete(Table* table, ObjString* key) {
 }
 
 
-ObjString* tableFindString(Table* table, char const* chars, uint32_t length, uint32_t hash) {
-    if (table->count == 0)
+ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t length, uint32_t hash) {
+    if (table->count == 0) {
         return nullptr;
+    }
 
     uint32_t index = hash % table->capacity;
     for (;;) {
         Entry* entry = &table->entries[index];
         if (!entry->key) {
-            if (isNil(entry->value))
+            if (isNil(entry->value)) {
                 return nullptr;
+            }
         } else if (
             entry->key->length == length &&
             entry->key->hash == hash &&
@@ -162,7 +168,7 @@ ObjString* tableFindString(Table* table, char const* chars, uint32_t length, uin
 }
 
 
-void markTable(VM* restrict vm, Table* restrict table) {
+void markTable(VM* vm,Table table[static 1]) {
     for (uint32_t i = 0; i < table->capacity; i++) {
         Entry* entry = &table->entries[i];
         markObject(vm, (Obj*)entry->key);
@@ -171,7 +177,7 @@ void markTable(VM* restrict vm, Table* restrict table) {
 }
 
 
-void tableRemoveWhite(Table* restrict table) {
+void tableRemoveWhite(Table table[static 1]) {
     for (uint32_t i = 0; i < table->capacity; i++) {
         Entry* entry = &table->entries[i];
         if (entry->key && !entry->key->obj.isMarked) {

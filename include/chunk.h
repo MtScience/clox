@@ -56,10 +56,10 @@ typedef struct {
 } Chunk;
 
 
-void initChunk(Chunk* restrict chunk);
-void freeChunk(VM* restrict vm, Chunk* restrict chunk);
-void writeChunk(VM* restrict vm, Chunk* chunk, uint8_t byte, uint32_t line);
-uint32_t addConstant(VM* restrict vm, Chunk* chunk, Value value);
+void initChunk(Chunk chunk[restrict static 1]);
+void freeChunk(VM* restrict vm, Chunk chunk[restrict static 1]);
+void writeChunk(VM* restrict vm, Chunk chunk[static 1], uint8_t byte, uint32_t line);
+uint32_t addConstant(VM* restrict vm, Chunk chunk[static 1], Value value);
 
 
 #endif

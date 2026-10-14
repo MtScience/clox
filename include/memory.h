@@ -26,12 +26,12 @@ static inline uint32_t growCapacity(uint32_t capacity) {
 
 
 [[nodiscard("pointer to allocated memory dropped")]]
-void* reallocate(VM* restrict vm, void* pointer, size_t oldSize, size_t newSize);
+void* reallocate(VM* vm, void* pointer, size_t oldSize, size_t newSize);
 
-void freeObjects(VM* restrict vm);
+void freeObjects(VM* vm);
 
-void markObject(VM* restrict vm, Obj* object);
-void markValue(VM* restrict vm, Value value);
-void collectGarbage(VM* restrict vm);
+void markObject(VM* vm, Obj* object);
+void markValue(VM* vm, Value value);
+void collectGarbage(VM* vm);
 
 #endif

@@ -50,13 +50,13 @@ typedef enum : uint8_t {
 } InterpretResult;
 
 
-void initVM(VM* restrict vm);
-void freeVM(VM* restrict vm);
+void initVM(VM vm[restrict static 1]);
+void freeVM(VM vm[restrict static 1]);
 
-InterpretResult interpret(VM* restrict vm, char const* source);
+InterpretResult interpret(VM vm[static 1], char const* source);
 
-void push(VM*, Value value);
-Value pop(VM* vm);
+void push(VM vm[static 1], Value value);
+Value pop(VM vm[static 1]);
 
 
 #endif

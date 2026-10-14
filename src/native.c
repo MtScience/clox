@@ -5,7 +5,7 @@
 #include "table.h"
 
 
-void defineNative(VM* restrict vm, char const* name, NativeFn function) {
+void defineNative(VM vm[static 1], char const* name, NativeFn function) {
     push(vm, objVal((Obj*)copyString(vm, name, (uint32_t)strlen(name))));
     push(vm, objVal((Obj*)newNative(vm, function)));
 

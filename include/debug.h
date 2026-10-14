@@ -5,8 +5,8 @@
 #include "chunk.h"
 
 
-void disassembleChunk(Chunk* chunk, char const* name);
-uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset);
+void disassembleChunk(Chunk chunk[static 1], char const* name);
+uint32_t disassembleInstruction(Chunk chunk[static 1], uint32_t offset);
 
 
 #endif

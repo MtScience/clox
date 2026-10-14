@@ -5,7 +5,7 @@
 #include "memory.h"
 
 
-void initChunk(Chunk* restrict chunk) {
+void initChunk(Chunk chunk[restrict static 1]) {
     chunk->capacity = 0;
     chunk->count = 0;
     chunk->code = nullptr;
@@ -15,7 +15,7 @@ void initChunk(Chunk* restrict chunk) {
 }
 
 
-void freeChunk(VM* restrict vm, Chunk* restrict chunk) {
+void freeChunk(VM* restrict vm, Chunk chunk[restrict static 1]) {
     assert(FREE_ARRAY(vm, uint8_t, chunk->code, chunk->capacity) == nullptr);
     assert(FREE_ARRAY(vm, uint32_t, chunk->lines, chunk->capacity) == nullptr);
 
@@ -24,7 +24,7 @@ void freeChunk(VM* restrict vm, Chunk* restrict chunk) {
 }
 
 
-void writeChunk(VM* restrict vm, Chunk* chunk, uint8_t byte, uint32_t line) {
+void writeChunk(VM* restrict vm, Chunk chunk[static 1], uint8_t byte, uint32_t line) {
     if (chunk->capacity < chunk->count + 1) {
         uint32_t oldCapacity = chunk->capacity;
         chunk->capacity = growCapacity(oldCapacity);
@@ -39,7 +39,7 @@ void writeChunk(VM* restrict vm, Chunk* chunk, uint8_t byte, uint32_t line) {
 }
 
 
-uint32_t addConstant(VM* restrict vm, Chunk* chunk, Value value) {
+uint32_t addConstant(VM* restrict vm, Chunk chunk[static 1], Value value) {
     push(vm, value);
     writeValueArray(vm, &chunk->constants, value);
     pop(vm);

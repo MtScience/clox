@@ -13,14 +13,14 @@
 #endif
 
 
-static void resetStack(VM* restrict vm) {
+static void resetStack(VM vm[restrict static 1]) {
     vm->stackTop = vm->stack;
     vm->frameCount = 0;
     vm->openUpvalues = nullptr;
 }
 
 
-static Value peek(VM* vm, int distance) {
+static Value peek(VM vm[static 1], int distance) {
     return vm->stackTop[-1 - distance];
 }
 
@@ -30,7 +30,7 @@ static bool isFalsey(Value value) [[unsequenced]] {
 }
 
 
-static void concatenate(VM* restrict vm) {
+static void concatenate(VM vm[static 1]) {
     ObjString* b = asString(peek(vm, 0));
     ObjString* a = asString(peek(vm, 1));
 
@@ -47,7 +47,7 @@ static void concatenate(VM* restrict vm) {
 }
 
 
-static void runtimeError(VM* restrict vm, char const* format, ...) {
+static void runtimeError(VM vm[static 1], char const* format, ...) {
     va_list args;
     va_start(args, format);
     vfprintf(stderr, format, args);
@@ -71,7 +71,7 @@ static void runtimeError(VM* restrict vm, char const* format, ...) {
 }
 
 
-static bool call(VM*vm, ObjClosure* closure, uint8_t argCount) {
+static bool call(VM vm[static 1], ObjClosure closure[static 1], uint8_t argCount) {
     if (argCount != closure->function->arity) {
         runtimeError(vm, "Expected %u arguments but got %u.",
                      closure->function->arity, argCount);
@@ -93,7 +93,7 @@ static bool call(VM*vm, ObjClosure* closure, uint8_t argCount) {
 }
 
 
-static bool callValue(VM* vm, Value callee, uint8_t argCount) {
+static bool callValue(VM vm[static 1], Value callee, uint8_t argCount) {
     if (isObj(callee)) {
         switch (objType(callee)) {
             case OBJ_CLOSURE:
@@ -133,7 +133,7 @@ static bool callValue(VM* vm, Value callee, uint8_t argCount) {
 }
 
 
-static ObjUpvalue* captureUpvalue(VM* vm, Value* local) {
+static ObjUpvalue* captureUpvalue(VM vm[static 1], Value local[static 1]) {
     ObjUpvalue* prevUpvalue = nullptr;
     ObjUpvalue* upvalue = vm->openUpvalues;
     while (upvalue && upvalue->location > local) {
@@ -158,7 +158,7 @@ static ObjUpvalue* captureUpvalue(VM* vm, Value* local) {
 }
 
 
-static void closeUpvalues(VM* vm, Value* last) {
+static void closeUpvalues(VM vm[static 1], Value last[static 1]) {
     while (vm->openUpvalues && vm->openUpvalues->location >= last) {
         ObjUpvalue* upvalue = vm->openUpvalues;
         upvalue->closed = *upvalue->location;
@@ -168,7 +168,7 @@ static void closeUpvalues(VM* vm, Value* last) {
 }
 
 
-static void defineMethod(VM* restrict vm, ObjString* name) {
+static void defineMethod(VM vm[static 1], ObjString* name) {
     Value method = peek(vm, 0);
     ObjClass* class = asClass(peek(vm, 1));
     tableSet(vm, &class->methods, name, method);
@@ -176,7 +176,7 @@ static void defineMethod(VM* restrict vm, ObjString* name) {
 }
 
 
-static bool bindMethod(VM* restrict vm, ObjClass* class, ObjString* name) {
+static bool bindMethod(VM vm[static 1], ObjClass* class, ObjString* name) {
     Value method;
     if (!tableGet(&class->methods, name, &method)) {
         runtimeError(vm, "Undefined property '%s'.", name->chars);
@@ -190,7 +190,7 @@ static bool bindMethod(VM* restrict vm, ObjClass* class, ObjString* name) {
 }
 
 
-static bool invokeFromClass(VM* restrict vm, ObjClass* class, ObjString* name, uint8_t argCount) {
+static bool invokeFromClass(VM vm[static 1], ObjClass* class, ObjString* name, uint8_t argCount) {
     Value method;
     if (!tableGet(&class->methods, name, &method)) {
         runtimeError(vm, "Undefined property '%s'.", name->chars);
@@ -200,7 +200,7 @@ static bool invokeFromClass(VM* restrict vm, ObjClass* class, ObjString* name, u
 }
 
 
-static bool invoke(VM* restrict vm, ObjString* name, uint8_t argCount) {
+static bool invoke(VM vm[static 1], ObjString* name, uint8_t argCount) {
     Value receiver = peek(vm, argCount);
 
     if (!isInstance(receiver)) {
@@ -220,7 +220,7 @@ static bool invoke(VM* restrict vm, ObjString* name, uint8_t argCount) {
 }
 
 
-static InterpretResult run(VM* restrict vm) {
+static InterpretResult run(VM vm[static 1]) {
     CallFrame* frame = &vm->frames[vm->frameCount - 1];
 
 #define READ_BYTE()     (*frame->ip++)
@@ -471,7 +471,7 @@ static InterpretResult run(VM* restrict vm) {
 }
 
 
-void initVM(VM* restrict vm) {
+void initVM(VM vm [restrict static 1]) {
     resetStack(vm);
     vm->objects = nullptr;
     initTable(&vm->globals);
@@ -491,7 +491,7 @@ void initVM(VM* restrict vm) {
 }
 
 
-void freeVM(VM* restrict vm) {
+void freeVM(VM vm [restrict static 1]) {
     freeTable(vm, &vm->strings);
     freeTable(vm, &vm->globals);
 
@@ -501,7 +501,7 @@ void freeVM(VM* restrict vm) {
 }
 
 
-InterpretResult interpret(VM* restrict vm, char const* source) {
+InterpretResult interpret(VM vm[static 1], char const* source) {
     ObjFunction* function = compile(vm, source);
 
     if (!function)
@@ -517,13 +517,13 @@ InterpretResult interpret(VM* restrict vm, char const* source) {
 }
 
 
-void push(VM* vm, Value value) {
+void push(VM vm[static 1], Value value) {
     *vm->stackTop = value;
     vm->stackTop++;
 }
 
 
-Value pop(VM* vm) {
+Value pop(VM vm[static 1]) {
     vm->stackTop--;
     return *vm->stackTop;
 }

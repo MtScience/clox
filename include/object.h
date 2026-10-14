@@ -123,16 +123,16 @@ static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMetho
 
 /* Interface */
 
-ObjString* copyString(VM* restrict vm, char const* chars, uint32_t length);
-ObjString* takeString(VM* restrict vm, char* chars, uint32_t length);
+ObjString* copyString(VM* vm, char const* chars, uint32_t length);
+ObjString* takeString(VM* vm, char* chars, uint32_t length);
 
-ObjUpvalue*     newUpvalue(VM* restrict vm, Value* slot);
-ObjFunction*    newFunction(VM* restrict vm);
-ObjNative*      newNative(VM* restrict vm, NativeFn function);
-ObjClosure*     newClosure(VM* restrict vm, ObjFunction* function);
-ObjClass*       newClass(VM* restrict vm, ObjString* name);
-ObjInstance*    newInstance(VM* restrict vm, ObjClass* class);
-ObjBoundMethod* newBoundMethod(VM* restrict vm, Value receiver, ObjClosure* method);
+ObjUpvalue*     newUpvalue(VM* vm, Value* slot);
+ObjFunction*    newFunction(VM* vm);
+ObjNative*      newNative(VM* vm, NativeFn function);
+ObjClosure*     newClosure(VM* vm, ObjFunction function[static 1]);
+ObjClass*       newClass(VM* vm, ObjString* name);
+ObjInstance*    newInstance(VM* vm, ObjClass* class);
+ObjBoundMethod* newBoundMethod(VM* vm, Value receiver, ObjClosure* method);
 
 void printObject(Value value);
 

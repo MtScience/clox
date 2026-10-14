@@ -9,9 +9,9 @@
 typedef struct Compiler Compiler;
 
 
-ObjFunction* compile(VM* restrict vm, char const* source);
+ObjFunction* compile(VM vm[static 1], char const* source);
 
-void markCompilerRoots(VM* restrict vm, Compiler* compiler);
+void markCompilerRoots(VM vm[static 1], Compiler* compiler);
 
 
 #endif

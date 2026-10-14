@@ -5,7 +5,7 @@
 #include "value.h"
 
 
-static uint32_t constantInstruction(char const* name, Chunk* chunk, uint32_t offset) {
+static uint32_t constantInstruction(char const* name, Chunk chunk[static 1], uint32_t offset) {
     uint8_t constant = chunk->code[offset + 1];
     printf("%-16s %4u '", name, constant);
     printValue(chunk->constants.values[constant]);
@@ -15,7 +15,7 @@ static uint32_t constantInstruction(char const* name, Chunk* chunk, uint32_t off
 }
 
 
-static uint32_t byteInstruction(char const* name, Chunk* chunk, uint32_t offset) {
+static uint32_t byteInstruction(char const* name, Chunk chunk[static 1], uint32_t offset) {
     uint8_t slot = chunk->code[offset + 1];
     printf("%-16s %4u\n", name, slot);
 
@@ -23,13 +23,13 @@ static uint32_t byteInstruction(char const* name, Chunk* chunk, uint32_t offset)
 }
 
 
-static uint32_t jumpInstruction(char const* name, int8_t sign, Chunk* chunk, uint32_t offset) {
+static uint32_t jumpInstruction(char const* name, int8_t sign, Chunk chunk[static 1], uint32_t offset) {
     uint16_t jump = (uint16_t)(chunk->code[offset + 1] << 8);
     jump |= chunk->code[offset + 2];
 
     /*
      * NOTE: Doing this instead of just (offset + 3 + sign * jump)
-     * in order to avoidpotentially dangerous implicit cast.
+     * in order to avoid potentially dangerous implicit cast
      */
     uint32_t target = offset + 3;
     if (sign > 0)
@@ -49,7 +49,7 @@ static uint32_t simpleInstruction(char const* name, uint32_t offset) {
 }
 
 
-static uint32_t invokeInstruction(char const* name, Chunk* chunk, uint32_t offset) {
+static uint32_t invokeInstruction(char const* name, Chunk chunk[static 1], uint32_t offset) {
     uint8_t constant = chunk->code[offset + 1];
     uint8_t argCount = chunk->code[offset + 2];
     printf("%-16s (%u args) %4u '", name, argCount, constant);
@@ -60,7 +60,7 @@ static uint32_t invokeInstruction(char const* name, Chunk* chunk, uint32_t offse
 }
 
 
-void disassembleChunk(Chunk* chunk, char const* name) {
+void disassembleChunk(Chunk chunk[static 1], char const* name) {
     printf("== %s ==\n", name);
 
     for (uint32_t offset = 0; offset < chunk->count; ) {
@@ -69,7 +69,7 @@ void disassembleChunk(Chunk* chunk, char const* name) {
 }
 
 
-uint32_t disassembleInstruction(Chunk* chunk, uint32_t offset) {
+uint32_t disassembleInstruction(Chunk chunk[static 1], uint32_t offset) {
     printf("%04u ", offset);
 
     if (offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1]) {
