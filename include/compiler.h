@@ -6,12 +6,7 @@
 #include "vm.h"
 
 
-typedef struct Compiler Compiler;
-
-
 ObjFunction* compile(VM vm[static 1], char const* source);
-
-void markCompilerRoots(VM vm[static 1], Compiler* compiler);
 
 
 #endif

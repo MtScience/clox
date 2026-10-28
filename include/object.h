@@ -4,9 +4,9 @@
 
 #include "common.h"
 #include "chunk.h"
+#include "vm.h"
 #include "table.h"
 #include "value.h"
-#include "vm.h"
 
 
 
@@ -126,13 +126,13 @@ static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMetho
 ObjString* copyString(VM* vm, char const* chars, uint32_t length);
 ObjString* takeString(VM* vm, char* chars, uint32_t length);
 
-ObjUpvalue*     newUpvalue(VM* vm, Value* slot);
-ObjFunction*    newFunction(VM* vm);
-ObjNative*      newNative(VM* vm, NativeFn function);
-ObjClosure*     newClosure(VM* vm, ObjFunction function[static 1]);
-ObjClass*       newClass(VM* vm, ObjString* name);
-ObjInstance*    newInstance(VM* vm, ObjClass* class);
-ObjBoundMethod* newBoundMethod(VM* vm, Value receiver, ObjClosure* method);
+ObjUpvalue*     newUpvalue(GC* gc, Value* slot);
+ObjFunction*    newFunction(GC* gc);
+ObjNative*      newNative(GC* gc, NativeFn function);
+ObjClosure*     newClosure(GC* gc, ObjFunction function[static 1]);
+ObjClass*       newClass(GC* gc, ObjString* name);
+ObjInstance*    newInstance(GC* gc, ObjClass* class);
+ObjBoundMethod* newBoundMethod(GC* gc, Value receiver, ObjClosure* method);
 
 void printObject(Value value);
 

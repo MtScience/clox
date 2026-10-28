@@ -20,16 +20,16 @@ typedef struct {
 
 
 void initTable(Table table[restrict static 1]);
-void freeTable(VM* vm, Table table[restrict static 1]);
+void freeTable(GC* gc, Table table[restrict static 1]);
 
-bool tableSet(VM* vm, Table table[static 1], ObjString* key, Value value);
+bool tableSet(GC* gc, Table table[static 1], ObjString* key, Value value);
 bool tableGet(Table table[static 1], ObjString* key, Value* value);
-void tableAddAll(VM* vm, Table from[static 1], Table to[static 1]);
+void tableAddAll(GC* gc, Table from[static 1], Table to[static 1]);
 bool tableDelete(Table table[static 1], ObjString* key);
 
 ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t length, uint32_t hash);
 
-void markTable(VM* vm, Table table[static 1]);
+void markTable(GC* gc, Table table[static 1]);
 void tableRemoveWhite(Table table[static 1]);
 
 

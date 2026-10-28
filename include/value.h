@@ -5,6 +5,8 @@
 #include "common.h"
 
 
+typedef struct GC GC;
+
 typedef struct Obj Obj;
 typedef struct ObjString ObjString;
 typedef struct ObjFunction ObjFunction;
@@ -75,8 +77,8 @@ static inline Value objVal(Obj* value) {
 /* Interface */
 
 void initValueArray(ValueArray array[restrict static 1]);
-void freeValueArray(VM* vm, ValueArray array[restrict static 1]);
-void writeValueArray(VM* vm, ValueArray array[static 1], Value value);
+void freeValueArray(GC* gc, ValueArray array[restrict static 1]);
+void writeValueArray(GC* gc, ValueArray array[static 1], Value value);
 bool valuesEqual(Value a, Value b);
 void printValue(Value value);
 

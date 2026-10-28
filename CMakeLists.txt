@@ -32,6 +32,7 @@ add_executable(clox
     src/object.c
     src/table.c
     src/native.c
+    src/gc.c
 )
 
 # Include project headers, if any.

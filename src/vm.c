@@ -35,7 +35,7 @@ static void concatenate(VM vm[static 1]) {
     ObjString* a = asString(peek(vm, 1));
 
     uint32_t length = a->length + b->length;
-    char* chars = ALLOCATE(vm, char, length + 1);
+    char* chars = ALLOCATE(&vm->gc, char, length + 1);
     memcpy(chars, a->chars, a->length);
     memcpy(chars + a->length, b->chars, b->length);
     chars[length + 1] = '\0';
@@ -107,7 +107,7 @@ static bool callValue(VM vm[static 1], Value callee, uint8_t argCount) {
                 }
             case OBJ_CLASS: {
                     ObjClass* class = asClass(callee);
-                    vm->stackTop[-argCount - 1] = objVal((Obj*)newInstance(vm, class));
+                    vm->stackTop[-argCount - 1] = objVal((Obj*)newInstance(&vm->gc, class));
 
                     Value initializer;
                     if (tableGet(&class->methods, vm->initString, &initializer)) {
@@ -145,7 +145,7 @@ static ObjUpvalue* captureUpvalue(VM vm[static 1], Value local[static 1]) {
         return upvalue;
     }
 
-    ObjUpvalue* createdUpvalue = newUpvalue(vm, local);
+    ObjUpvalue* createdUpvalue = newUpvalue(&vm->gc, local);
     createdUpvalue->next = upvalue;
 
     if (!prevUpvalue) {
@@ -171,7 +171,7 @@ static void closeUpvalues(VM vm[static 1], Value last[static 1]) {
 static void defineMethod(VM vm[static 1], ObjString* name) {
     Value method = peek(vm, 0);
     ObjClass* class = asClass(peek(vm, 1));
-    tableSet(vm, &class->methods, name, method);
+    tableSet(&vm->gc, &class->methods, name, method);
     pop(vm);
 }
 
@@ -183,7 +183,7 @@ static bool bindMethod(VM vm[static 1], ObjClass* class, ObjString* name) {
         return false;
     }
 
-    ObjBoundMethod* bound = newBoundMethod(vm, peek(vm, 0), asClosure(method));
+    ObjBoundMethod* bound = newBoundMethod(&vm->gc, peek(vm, 0), asClosure(method));
     pop(vm);
     push(vm, objVal((Obj*)bound));
     return true;
@@ -315,7 +315,7 @@ static InterpretResult run(VM vm[static 1]) {
                 }
 
                 ObjInstance* instance = asInstance(peek(vm, 1));
-                tableSet(vm, &instance->fields, READ_STRING(), peek(vm, 0));
+                tableSet(&vm->gc, &instance->fields, READ_STRING(), peek(vm, 0));
                 Value value = pop(vm);
                 pop(vm);
                 push(vm, value);
@@ -333,7 +333,7 @@ static InterpretResult run(VM vm[static 1]) {
                 }
             case OP_SET_GLOBAL: {
                     ObjString* name = READ_STRING();
-                    if (tableSet(vm, &vm->globals, name, peek(vm, 0))) {
+                    if (tableSet(&vm->gc, &vm->globals, name, peek(vm, 0))) {
                         tableDelete(&vm->globals, name);
                         runtimeError(vm, "Undefined variable '%s'.", name->chars);
                         return INTERPRET_RUNTIME_ERROR;
@@ -342,7 +342,7 @@ static InterpretResult run(VM vm[static 1]) {
                 }
             case OP_DEFINE_GLOBAL: {
                     ObjString* name = READ_STRING();
-                    tableSet(vm, &vm->globals, name, peek(vm, 0));
+                    tableSet(&vm->gc, &vm->globals, name, peek(vm, 0));
                     pop(vm);
                     break;
                 }
@@ -405,7 +405,7 @@ static InterpretResult run(VM vm[static 1]) {
                 }
             case OP_CLOSURE: {
                     ObjFunction* function = asFunction(READ_CONSTANT());
-                    ObjClosure* closure = newClosure(vm, function);
+                    ObjClosure* closure = newClosure(&vm->gc, function);
                     push(vm, objVal((Obj*)closure));
 
                     for (uint8_t i = 0; i < closure->upvalueCount; i++) {
@@ -441,7 +441,7 @@ static InterpretResult run(VM vm[static 1]) {
                     break;
                 }
             case OP_CLASS: {
-                    push(vm, objVal((Obj*)newClass(vm, READ_STRING())));
+                    push(vm, objVal((Obj*)newClass(&vm->gc, READ_STRING())));
                     break;
                 }
             case OP_METHOD: {
@@ -471,44 +471,67 @@ static InterpretResult run(VM vm[static 1]) {
 }
 
 
+static void markVMRoots(GC gc[static 1], void* arg) {
+    VM* vm = arg;
+
+    for (Value* slot = vm->stack; slot < vm->stackTop; slot++) {
+        markValue(gc, *slot);
+    }
+
+    for (uint16_t i = 0; i < vm->frameCount; i++) {
+        markObject(gc, (Obj*)vm->frames[i].closure);
+    }
+
+    for (
+        ObjUpvalue* upvalue = vm->openUpvalues;
+        upvalue;
+        upvalue = upvalue->next
+    ) {
+        markObject(gc, (Obj*)upvalue);
+    }
+
+    markTable(gc, &vm->globals);
+    markObject(gc, (Obj*)vm->initString);
+}
+
+
 void initVM(VM vm [restrict static 1]) {
     resetStack(vm);
-    vm->objects = nullptr;
     initTable(&vm->globals);
     initTable(&vm->strings);
 
-    vm->grayCount = 0;
-    vm->grayCapacity = 0;
-    vm->grayStack = nullptr;
+    initGC(&vm->gc);
+    vm->gc.markRoots = markVMRoots;
+    vm->gc.markArg = vm;
+    vm->gc.cleanupWeakRefs = (void (*)(void*))tableRemoveWhite;
+    vm->gc.weakArg = &vm->strings;
 
     vm->initString = nullptr;
     vm->initString = copyString(vm, "init", 4);
-
-    vm->bytesAllocated = 0;
-    vm->nextGC = 1024 * 1024;
 
     defineNative(vm, "clock", clockNative);
 }
 
 
 void freeVM(VM vm [restrict static 1]) {
-    freeTable(vm, &vm->strings);
-    freeTable(vm, &vm->globals);
+    freeTable(&vm->gc, &vm->strings);
+    freeTable(&vm->gc, &vm->globals);
 
     vm->initString = nullptr;
 
-    freeObjects(vm);
+    freeGC(&vm->gc);
 }
 
 
 InterpretResult interpret(VM vm[static 1], char const* source) {
     ObjFunction* function = compile(vm, source);
 
-    if (!function)
+    if (!function) {
         return INTERPRET_COMPILE_ERROR;
+    }
 
     push(vm, objVal((Obj*)function));
-    ObjClosure* closure = newClosure(vm, function);
+    ObjClosure* closure = newClosure(&vm->gc, function);
     pop(vm);
     push(vm, objVal((Obj*)closure));
     call(vm, closure, 0);

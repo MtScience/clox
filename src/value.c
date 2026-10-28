@@ -17,17 +17,17 @@ void initValueArray(ValueArray array[restrict static 1]) {
 }
 
 
-void freeValueArray(VM* vm, ValueArray array[restrict static 1]) {
-    assert(FREE_ARRAY(vm, Value, array->values, array->capacity) == nullptr);
+void freeValueArray(GC* gc, ValueArray array[restrict static 1]) {
+    assert(FREE_ARRAY(gc, Value, array->values, array->capacity) == nullptr);
     initValueArray(array);
 }
 
 
-void writeValueArray(VM* vm, ValueArray array[static 1], Value value) {
+void writeValueArray(GC* gc, ValueArray array[static 1], Value value) {
     if (array->capacity < array->count + 1) {
         uint32_t oldCapacity = array->capacity;
         array->capacity = growCapacity(oldCapacity);
-        array->values = GROW_ARRAY(vm, Value, array->values, oldCapacity, array->capacity);
+        array->values = GROW_ARRAY(gc, Value, array->values, oldCapacity, array->capacity);
     }
 
     array->values[array->count++] = value;

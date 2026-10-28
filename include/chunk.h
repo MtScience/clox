@@ -7,6 +7,7 @@ typedef struct VM VM;
 
 #include "common.h"
 #include "value.h"
+#include "gc.h"
 
 
 typedef enum : uint8_t {
@@ -57,9 +58,9 @@ typedef struct {
 
 
 void initChunk(Chunk chunk[restrict static 1]);
-void freeChunk(VM* restrict vm, Chunk chunk[restrict static 1]);
-void writeChunk(VM* restrict vm, Chunk chunk[static 1], uint8_t byte, uint32_t line);
-uint32_t addConstant(VM* restrict vm, Chunk chunk[static 1], Value value);
+void freeChunk(GC gc[restrict static 1], Chunk chunk[restrict static 1]);
+void writeChunk(GC gc[restrict static 1], Chunk chunk[static 1], uint8_t byte, uint32_t line);
+uint32_t addConstant(VM* vm, Chunk chunk[static 1], Value value);
 
 
 #endif

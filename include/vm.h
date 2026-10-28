@@ -5,6 +5,7 @@
 typedef struct VM VM;
 
 
+#include "gc.h"
 #include "object.h"
 #include "table.h"
 #include "value.h"
@@ -29,17 +30,12 @@ struct VM {
     Value* stackTop;
     Table strings;
     Table globals;
-    Obj* objects;
+
 
     ObjString* initString;
     ObjUpvalue* openUpvalues;
 
-    size_t bytesAllocated;
-    size_t nextGC;
-
-    uint32_t grayCount;
-    uint32_t grayCapacity;
-    Obj** grayStack;
+    GC gc;
 };
 
 

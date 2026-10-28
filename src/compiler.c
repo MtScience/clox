@@ -1,18 +1,3 @@
-/*
- * NOTE:
- * Memory allocations in this module: only copyString and newFunction.
- * Need to understand, which of the allocated objects retain, and how
- * to mark them, without rewriting just about everything (since the
- * compiler gets dropped as soon as it finishes).
- */
-
-
-/*
- * TODO: Find out WTF is going on with pointers and why merely editing
- *'function' results in segfaults.
- */
-
-
 #include <stdio.h>   /* For fprintf, stderr */
 #include <stdlib.h>  /* For strtod */
 #include <string.h>  /* For memcmp */
@@ -20,6 +5,7 @@
 #include "common.h"
 #include "compiler.h"
 #include "memory.h"
+#include "table.h"
 #include "scanner.h"
 
 #ifdef DEBUG_PRINT_CODE
@@ -71,7 +57,7 @@ typedef struct {
 } Upvalue;
 
 
-struct Compiler {
+typedef struct Compiler {
     ObjFunction* function;
     FunctionType type;
 
@@ -80,8 +66,8 @@ struct Compiler {
     int16_t localCount;
     int16_t scopeDepth;
 
-    Compiler* enclosing;
-};
+    struct Compiler* enclosing;
+} Compiler;
 
 
 typedef struct ClassCompiler {
@@ -95,6 +81,11 @@ typedef struct {
     ClassCompiler* classCompiler;
     Parser* parser;
     Scanner* scanner;
+
+    void (*prevMarkRoots)(GC* gc, void* arg);
+    void* prevMarkArg;
+    void (*prevCleanupWeakRefs)(void* arg);
+    void* prevWeakArg;
 } CompilationState;
 
 
@@ -191,7 +182,7 @@ static void consume(
 
 
 static void emitByte(CompilationState state[static 1], uint8_t byte) {
-    writeChunk(state->vm,
+    writeChunk(&state->vm->gc,
                currentChunk(state->compiler),
                byte,
                state->parser->previous.line);
@@ -267,26 +258,24 @@ static void emitLoop(CompilationState state[static 1], uint32_t loopStart) {
     emitByte(state, offset & 0xff);
 }
 
-
 static void initCompiler(
-    VM vm[static 1],
+    CompilationState state[static 1],
     Compiler compiler[static 1],
-    Compiler* enclosing,
-    Parser parser[static 1],
     FunctionType type
 ) {
-    /* TODO: Switch to designated initializer */
+    compiler->enclosing = state->compiler;
     compiler->function = nullptr;
     compiler->type = type;
     compiler->localCount = 0;
     compiler->scopeDepth = 0;
-    compiler->enclosing = enclosing;
-    compiler->function = newFunction(vm);
+    compiler->function = newFunction(&state->vm->gc);
+
+    state->compiler = compiler;
 
     if (type != TYPE_SCRIPT) {
-        compiler->function->name = copyString(vm,
-                                              parser->previous.start,
-                                              parser->previous.length);
+        compiler->function->name = copyString(state->vm,
+                                              state->parser->previous.start,
+                                              state->parser->previous.length);
     }
 
     Local* local = &compiler->locals[compiler->localCount++];
@@ -313,6 +302,8 @@ static ObjFunction* endCompiler(CompilationState state[static 1]) {
                          function->name ? function->name->chars : "<script>");
     }
 #endif
+
+    state->compiler = state->compiler->enclosing;
 
     return function;
 }
@@ -948,30 +939,27 @@ static void statement(CompilationState state[static 1]) {
 
 static void function(CompilationState state[static 1], FunctionType type) {
     Compiler compiler;
-    initCompiler(state->vm, &compiler, state->compiler, state->parser, type);
+    initCompiler(state, &compiler, type);
 
     beginScope(&compiler);
 
-    CompilationState newState = *state;
-    newState.compiler = &compiler;
-
-    consume(newState.parser, newState.scanner, TOKEN_LEFT_PAREN, "Expect '(' after function name.");
-    if (!check(newState.parser, TOKEN_RIGHT_PAREN)) {
+    consume(state->parser, state->scanner, TOKEN_LEFT_PAREN, "Expect '(' after function name.");
+    if (!check(state->parser, TOKEN_RIGHT_PAREN)) {
         do {
             compiler.function->arity++;
             if (compiler.function->arity > UINT8_MAX) {
-                errorAtCurrent(newState.parser, "Can't have more than 255 parameters.");
+                errorAtCurrent(state->parser, "Can't have more than 255 parameters.");
             }
-            uint8_t constant = parseVariable(&newState, "Expect parameter name.");
-            defineVariable(&newState, constant);
-        } while (match(newState.parser, newState.scanner, TOKEN_COMMA));
+            uint8_t constant = parseVariable(state, "Expect parameter name.");
+            defineVariable(state, constant);
+        } while (match(state->parser, state->scanner, TOKEN_COMMA));
     }
-    consume(newState.parser, newState.scanner, TOKEN_RIGHT_PAREN, "Expect ')' after parameters.");
+    consume(state->parser, state->scanner, TOKEN_RIGHT_PAREN, "Expect ')' after parameters.");
 
-    consume(newState.parser, newState.scanner, TOKEN_LEFT_BRACE, "Expect '{' before function body.");
-    block(&newState);
+    consume(state->parser, state->scanner, TOKEN_LEFT_BRACE, "Expect '{' before function body.");
+    block(state);
 
-    ObjFunction* function = endCompiler(&newState);
+    ObjFunction* function = endCompiler(state);
     emitBytes(state, OP_CLOSURE,
               makeConstant(state, objVal((Obj*)function)));
 
@@ -1045,37 +1033,90 @@ static void declaration(CompilationState state[static 1]) {
 }
 
 
-void markCompilerRoots(VM vm[static 1], Compiler* compiler) {
+static void markCompilerRoots(GC gc[static 1], void* arg) {
+    CompilationState* state = arg;
+    Compiler* compiler = state->compiler;
+
     while (compiler) {
-        markObject(vm, (Obj*)compiler->function);
+        markObject(gc, (Obj*)compiler->function);
         compiler = compiler->enclosing;
     }
+
+    if (state->prevMarkRoots && state->prevMarkArg) {
+        state->prevMarkRoots(gc, state->prevMarkArg);
+    }
+}
+
+
+static void cleanupCompilerWeakRefs(void* arg) {
+    CompilationState* state = arg;
+
+    tableRemoveWhite(&state->vm->strings);
+
+    if (state->prevCleanupWeakRefs && state->prevWeakArg) {
+        state->prevCleanupWeakRefs(state->prevWeakArg);
+    }
+}
+
+
+static void configureGC(GC gc[static 1], CompilationState state[static 1]) {
+    state->prevMarkRoots = gc->markRoots;
+    state->prevMarkArg = gc->markArg;
+    state->prevCleanupWeakRefs = gc->cleanupWeakRefs;
+    state->prevWeakArg = gc->weakArg;
+
+    gc->markRoots = markCompilerRoots;
+    gc->markArg = state;
+    if (
+        gc->cleanupWeakRefs != (void (*)(void*))tableRemoveWhite ||
+        gc->weakArg != &state->vm->strings
+    ) {
+        gc->cleanupWeakRefs = cleanupCompilerWeakRefs;
+        gc->weakArg = state;
+    }
+}
+
+
+static void resetGC(CompilationState state[static 1]) {
+    GC* gc = &state->vm->gc;
+
+    gc->markRoots = state->prevMarkRoots;
+    gc->markArg = state->prevMarkArg;
+    gc->cleanupWeakRefs = state->prevCleanupWeakRefs;
+    gc->weakArg = state->prevWeakArg;
 }
 
 
 ObjFunction* compile(VM vm[static 1], char const* source) {
     Scanner scanner;
+    initScanner(&scanner, source);
+
     Parser parser = {
         .hadError = false,
         .panicMode = false,
     };
-    Compiler compiler;
 
-    initScanner(&scanner, source);
-    initCompiler(vm, &compiler, nullptr, &parser, TYPE_SCRIPT);
-
-    advance(&parser, &scanner);
     CompilationState state = {
         .vm = vm,
-        .compiler = &compiler,
+        .compiler = nullptr,
         .classCompiler = nullptr,
         .parser = &parser,
         .scanner = &scanner,
     };
+
+    configureGC(&vm->gc, &state);
+
+    Compiler compiler;
+    initCompiler(&state, &compiler, TYPE_SCRIPT);
+
+    advance(&parser, &scanner);
     while (!match(&parser, &scanner, TOKEN_EOF)) {
         declaration(&state);
     }
 
     ObjFunction* function = endCompiler(&state);
+
+    resetGC(&state);
+
     return parser.hadError ? nullptr : function;
 }
