@@ -88,6 +88,7 @@ uint32_t disassembleInstruction(Chunk chunk[static 1], uint32_t offset) {
         case OP_GET_GLOBAL:    return constantInstruction("OP_GET_GLOBAL",    chunk, offset);
         case OP_SET_GLOBAL:    return constantInstruction("OP_SET_GLOBAL",    chunk, offset);
         case OP_DEFINE_GLOBAL: return constantInstruction("OP_DEFINE_GLOBAL", chunk, offset);
+        case OP_GET_SUPER:     return constantInstruction("OP_GET_SUPER",     chunk, offset);
         case OP_LOOP:          return jumpInstruction("OP_LOOP",          -1, chunk, offset);
         case OP_JUMP:          return jumpInstruction("OP_JUMP",          1,  chunk, offset);
         case OP_JUMP_IF_FALSE: return jumpInstruction("OP_JUMP_IF_FALSE", 1,  chunk, offset);
@@ -96,7 +97,8 @@ uint32_t disassembleInstruction(Chunk chunk[static 1], uint32_t offset) {
         case OP_GET_UPVALUE:   return byteInstruction("OP_GET_UPVALUE", chunk, offset);
         case OP_SET_UPVALUE:   return byteInstruction("OP_SET_UPVALUE", chunk, offset);
         case OP_CALL:          return byteInstruction("OP_CALL",        chunk, offset);
-        case OP_INVOKE:        return invokeInstruction("OP_INVOKE",    chunk, offset);
+        case OP_INVOKE:        return invokeInstruction("OP_INVOKE",       chunk, offset);
+        case OP_SUPER_INVOKE:  return invokeInstruction("OP_SUPER_INVOKE", chunk, offset);
         case OP_NIL:           return simpleInstruction("OP_NIL",           offset);
         case OP_TRUE:          return simpleInstruction("OP_TRUE",          offset);
         case OP_FALSE:         return simpleInstruction("OP_FALSE",         offset);
@@ -112,6 +114,7 @@ uint32_t disassembleInstruction(Chunk chunk[static 1], uint32_t offset) {
         case OP_LESS:          return simpleInstruction("OP_LESS",          offset);
         case OP_PRINT:         return simpleInstruction("OP_PRINT",         offset);
         case OP_RETURN:        return simpleInstruction("OP_RETURN",        offset);
+        case OP_INHERIT:       return simpleInstruction("OP_INHERIT",       offset);
         case OP_CLOSE_UPVALUE: return simpleInstruction("OP_CLOSE_UPVALUE", offset);
         case OP_CLOSURE: {
                 offset++;

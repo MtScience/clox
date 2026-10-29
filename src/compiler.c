@@ -72,6 +72,7 @@ typedef struct Compiler {
 
 typedef struct ClassCompiler {
     struct ClassCompiler* enclosing;
+    bool hasSuperclass;
 } ClassCompiler;
 
 
@@ -97,6 +98,15 @@ typedef struct {
     ParseFn infix;
     Precedence precedence;
 } ParseRule;
+
+
+static Token syntheticToken(char const* text) {
+    return (Token){
+        .start = text,
+        .length = (uint16_t)strlen(text),
+        0,
+    };
+}
 
 
 static Chunk* currentChunk(Compiler* compiler) {
@@ -544,6 +554,7 @@ static void variable(CompilationState state[static 1], bool canAssign);
 static void this(CompilationState state[static 1], bool canAssign);
 static void and_(CompilationState state[static 1], bool canAssign);
 static void or_(CompilationState state[static 1], bool canAssign);
+static void super(CompilationState[static 1], bool canAssign);
 
 static void expression(CompilationState state[static 1]);
 static void declaration(CompilationState state[static 1]);
@@ -624,7 +635,7 @@ static ParseRule rules[] = {
     [TOKEN_OR]            = {nullptr,  or_,     PREC_OR},
     [TOKEN_PRINT]         = {nullptr,  nullptr, PREC_NONE},
     [TOKEN_RETURN]        = {nullptr,  nullptr, PREC_NONE},
-    [TOKEN_SUPER]         = {nullptr,  nullptr, PREC_NONE},
+    [TOKEN_SUPER]         = {super,    nullptr, PREC_NONE},
     [TOKEN_THIS]          = {this,     nullptr, PREC_NONE},
     [TOKEN_TRUE]          = {literal,  nullptr, PREC_NONE},
     [TOKEN_VAR]           = {nullptr,  nullptr, PREC_NONE},
@@ -769,6 +780,30 @@ static void this(CompilationState state[static 1], [[maybe_unused]] bool canAssi
         return;
     }
     variable(state, false);
+}
+
+
+static void super(CompilationState state[static 1], [[maybe_unused]] bool canAssign) {
+    if (!state->classCompiler) {
+        error(state->parser, "Can't use 'super' outside of a class.");
+    } else if (!state->classCompiler->hasSuperclass) {
+        error(state->parser, "Can't use 'super' in a class with no superclass.");
+    }
+
+    consume(state->parser, state->scanner, TOKEN_DOT, "Expect '.' after 'super'.");
+    consume(state->parser, state->scanner, TOKEN_IDENTIFIER, "Expect superclass method name.");
+    uint8_t name = identifierConstant(state, &state->parser->previous);
+
+    namedVariable(state, syntheticToken("this"), false);
+    if (match(state->parser, state->scanner, TOKEN_LEFT_PAREN)) {
+        uint8_t argCount = argumentList(state);
+        namedVariable(state, syntheticToken("super"), false);
+        emitBytes(state, OP_SUPER_INVOKE, name);
+        emitByte(state, argCount);
+    } else {
+        namedVariable(state, syntheticToken("super"), false);
+        emitBytes(state, OP_GET_SUPER, name);
+    }
 }
 
 
@@ -1003,8 +1038,29 @@ static void classDeclaration(CompilationState state[static 1]) {
     emitBytes(state, OP_CLASS, nameConstant);
     defineVariable(state, nameConstant);
 
-    ClassCompiler classCompiler = { .enclosing = state->classCompiler };
+    ClassCompiler classCompiler = {
+        .enclosing = state->classCompiler,
+        .hasSuperclass = false,
+    };
     state->classCompiler = &classCompiler;
+
+    if (match(state->parser, state->scanner, TOKEN_LESS)) {
+        consume(state->parser, state->scanner, TOKEN_IDENTIFIER, "Expect superclass name.");
+        variable(state, false);
+
+        if (identifiersEqual(&className, &state->parser->previous)) {
+            error(state->parser, "A class can't inherit from itself.");
+        }
+
+        beginScope(state->compiler);
+        addLocal(state->compiler, state->parser, syntheticToken("super"));
+        defineVariable(state, 0);
+
+        namedVariable(state, className, false);
+        emitByte(state, OP_INHERIT);
+
+        classCompiler.hasSuperclass = true;
+    }
 
     namedVariable(state, className, false);
     consume(state->parser, state->scanner, TOKEN_LEFT_BRACE, "Expect '{' before class body.");
@@ -1013,6 +1069,12 @@ static void classDeclaration(CompilationState state[static 1]) {
     }
     consume(state->parser, state->scanner, TOKEN_RIGHT_BRACE, "Expect '}' after class body.");
     emitByte(state, OP_POP);
+
+    if (classCompiler.hasSuperclass) {
+        endScope(state);
+    }
+
+    state->classCompiler = state->classCompiler->enclosing;
 }
 
 

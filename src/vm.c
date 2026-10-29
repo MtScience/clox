@@ -457,6 +457,39 @@ static InterpretResult run(VM vm[static 1]) {
                     frame = &vm->frames[vm->frameCount - 1];
                     break;
                 }
+            case OP_SUPER_INVOKE: {
+                    ObjString* method = READ_STRING();
+                    uint8_t argCount = READ_BYTE();
+                    ObjClass* superclass = asClass(pop(vm));
+
+                    if (!invokeFromClass(vm, superclass, method, argCount)) {
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+                    frame = &vm->frames[vm->frameCount - 1];
+                    break;
+                }
+            case OP_INHERIT: {
+                    Value superclass = peek(vm, 1);
+                    if (!isClass(superclass)) {
+                        runtimeError(vm, "Superclass must be a class.");
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+
+                    ObjClass* subclass = asClass(peek(vm, 0));
+                    tableAddAll(&vm->gc, &asClass(superclass)->methods, &subclass->methods);
+                    pop(vm);
+                    break;
+                }
+            case OP_GET_SUPER: {
+                    ObjString* name = READ_STRING();
+                    ObjClass* superclass = asClass(pop(vm));
+
+                    if (!bindMethod(vm, superclass, name)) {
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+
+                    break;
+                }
         }
     }
 

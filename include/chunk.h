@@ -45,6 +45,9 @@ typedef enum : uint8_t {
     OP_CLASS,
     OP_METHOD,
     OP_INVOKE,
+    OP_SUPER_INVOKE,
+    OP_INHERIT,
+    OP_GET_SUPER,
 } OpCode;
 
 
