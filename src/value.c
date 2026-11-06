@@ -35,6 +35,13 @@ void writeValueArray(GC* gc, ValueArray array[static 1], Value value) {
 
 
 bool valuesEqual(Value a, Value b) [[reproducible]] {
+#ifdef NAN_BOXING
+    if (isNumber(a) && isNumber(b)) {
+        return asNumber(a) == asNumber(b);
+    }
+
+    return a == b;
+#else
     if (a.type != b.type) {
         return false;
     }
@@ -48,14 +55,27 @@ bool valuesEqual(Value a, Value b) [[reproducible]] {
             unreachable();
             return false;
     }
+#endif
 }
 
 
 void printValue(Value value) {
+#ifdef NAN_BOXING
+    if (isBool(value)) {
+        printf(asBool(value) ? "true" : "false");
+    } else if (isNil(value)) {
+        printf("nil");
+    } else if (isNumber(value)) {
+        printf("%g", asNumber(value));
+    } else if (isObj(value)) {
+        printObject(value);
+    }
+#else
     switch (value.type) {
         case VAL_BOOL:   printf(asBool(value) ? "true" : "false"); break;
         case VAL_NIL:    printf("nil");                            break;
         case VAL_NUMBER: printf("%g", asNumber(value));            break;
         case VAL_OBJ:    printObject(value);                       break;
     }
+#endif
 }

@@ -43,8 +43,9 @@ target_include_directories(clox
 
 # Build flags
 option(DEBUG_TRACE_EXECUTION "Trace execution" OFF)
-option(DEBUG_PRINT_CODE "Print compiled chunks" ON)
+option(DEBUG_PRINT_CODE "Print compiled chunks" OFF)
 option(DEBUG_GC "Garbage-collection debugging mode" OFF)
+option(NAN_BOXING "Use NaN boxing optimization" ON)
 
 if (DEBUG_TRACE_EXECUTION)
     target_compile_definitions(clox PRIVATE DEBUG_TRACE_EXECUTION)
@@ -60,6 +61,10 @@ if (DEBUG_GC)
             DEBUG_STRESS_GC
             DEBUG_LOG_GC
     )
+endif()
+
+if (NAN_BOXING)
+    target_compile_definitions(clox PRIVATE NAN_BOXING)
 endif()
 
 

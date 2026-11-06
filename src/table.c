@@ -13,7 +13,7 @@ constexpr double tableMaxLoad = 0.75;
 /* Local functions */
 
 static Entry* findEntry(Entry entries[static 1], uint32_t capacity, ObjString* key) {
-    uint32_t index = key->hash % capacity;
+    uint32_t index = key->hash & (capacity - 1);
     Entry* tombstone = nullptr;
 
     for (;;) {
@@ -28,7 +28,7 @@ static Entry* findEntry(Entry entries[static 1], uint32_t capacity, ObjString* k
             return entry;
         }
 
-        index = (index + 1) % capacity;
+        index = (index + 1) & (capacity - 1);
     }
 }
 
@@ -149,7 +149,7 @@ ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t le
         return nullptr;
     }
 
-    uint32_t index = hash % table->capacity;
+    uint32_t index = hash & (table->capacity - 1);
     for (;;) {
         Entry* entry = &table->entries[index];
         if (!entry->key) {
@@ -164,7 +164,7 @@ ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t le
             return entry->key;
         }
 
-        index = (index + 1) % table->capacity;
+        index = (index + 1) & (table->capacity - 1);
     }
 }
 

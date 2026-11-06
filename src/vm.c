@@ -170,7 +170,7 @@ static void closeUpvalues(VM vm[static 1], Value last[static 1]) {
 }
 
 
-static void defineMethod(VM vm[static 1], ObjString* name) {
+static void defineMethod(VM vm[static 1], ObjString name[static 1]) {
     Value method = peek(vm, 0);
     ObjClass* class = asClass(peek(vm, 1));
     tableSet(&vm->gc, &class->methods, name, method);
@@ -178,7 +178,7 @@ static void defineMethod(VM vm[static 1], ObjString* name) {
 }
 
 
-static bool bindMethod(VM vm[static 1], ObjClass* class, ObjString* name) {
+static bool bindMethod(VM vm[static 1], ObjClass class[static 1], ObjString name[static 1]) {
     Value method;
     if (!tableGet(&class->methods, name, &method)) {
         runtimeError(vm, "Undefined property '%s'.", name->chars);
@@ -192,7 +192,7 @@ static bool bindMethod(VM vm[static 1], ObjClass* class, ObjString* name) {
 }
 
 
-static bool invokeFromClass(VM vm[static 1], ObjClass* class, ObjString* name, uint8_t argCount) {
+static bool invokeFromClass(VM vm[static 1], ObjClass class[static 1], ObjString name[static 1], uint8_t argCount) {
     Value method;
     if (!tableGet(&class->methods, name, &method)) {
         runtimeError(vm, "Undefined property '%s'.", name->chars);
@@ -202,7 +202,7 @@ static bool invokeFromClass(VM vm[static 1], ObjClass* class, ObjString* name, u
 }
 
 
-static bool invoke(VM vm[static 1], ObjString* name, uint8_t argCount) {
+static bool invoke(VM vm[static 1], ObjString name[static 1], uint8_t argCount) {
     Value receiver = peek(vm, argCount);
 
     if (!isInstance(receiver)) {
