@@ -58,10 +58,20 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
+    - name: Setup msys2
+      uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.sys-env }}
+        update: true
+        install: >-
+          mingw-w64-${{ matrix.pack-env }}-toolchain
+          mingw-w64-${{ matrix.pack-env }}-cmake
+          mingw-w64-${{ matrix.pack-env }}-ninja
+
     - name: Configure CMake
       shell: msys2 {0}
       run: |
-        cmake -G Ninja -B ${{ steps.strings.outputs.build-output-dir }}
+        cmake -S . -G Ninja -B ${{ steps.strings.outputs.build-output-dir }}
         -DCMAKE_C_COMPILER=${{ matrix.c_compiler }}
         -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
 
