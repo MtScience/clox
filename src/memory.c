@@ -24,43 +24,43 @@ static void freeObject(GC* gc, Obj* restrict object) {
         case OBJ_FUNCTION: {
                 ObjFunction* function = (ObjFunction*)object;
                 freeChunk(gc, &function->chunk);
-                assert(FREE(gc, ObjFunction, object) == nullptr);
+                FREE(gc, ObjFunction, object);
                 break;
             }
         case OBJ_NATIVE: {
-                assert(FREE(gc, ObjNative, object) == nullptr);
+                FREE(gc, ObjNative, object);
                 break;
             }
         case OBJ_CLOSURE: {
                 ObjClosure* closure = (ObjClosure*)object;
-                assert(FREE_ARRAY(gc, ObjUpvalue*, closure->upvalues, closure->upvalueCount) == nullptr);
-                assert(FREE(gc, ObjClosure, object) == nullptr);
+                FREE_ARRAY(gc, ObjUpvalue*, closure->upvalues, closure->upvalueCount);
+                FREE(gc, ObjClosure, object);
                 break;
             }
         case OBJ_UPVALUE: {
-                assert(FREE(gc, ObjUpvalue, object) == nullptr);
+                FREE(gc, ObjUpvalue, object);
                 break;
             }
         case OBJ_STRING: {
                 ObjString* string = (ObjString*)object;
-                assert(FREE_ARRAY(gc, char, string->chars, string->length + 1) == nullptr);
-                assert(FREE(gc, ObjString, object) == nullptr);
+                FREE_ARRAY(gc, char, string->chars, string->length + 1);
+                FREE(gc, ObjString, object);
                 break;
             }
         case OBJ_CLASS: {
                 ObjClass* class = (ObjClass*)object;
                 freeTable(gc, &class->methods);
-                assert(FREE(gc, ObjClass, object) == nullptr);
+                FREE(gc, ObjClass, object);
                 break;
             }
         case OBJ_INSTANCE: {
                 ObjInstance* instance = (ObjInstance*)object;
                 freeTable(gc, &instance->fields);
-                assert(FREE(gc, ObjInstance, object) == nullptr);
+                FREE(gc, ObjInstance, object);
                 break;
             }
         case OBJ_BOUND_METHOD: {
-                assert(FREE(gc, ObjBoundMethod, object) == nullptr);
+                FREE(gc, ObjBoundMethod, object);
                 break;
             }
     }

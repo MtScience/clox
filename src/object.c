@@ -90,7 +90,7 @@ ObjString* takeString(VM* vm, char* chars, uint32_t length) {
 
     ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
     if (interned) {
-        assert(FREE_ARRAY(&vm->gc, char, chars, length + 1) == nullptr);
+        FREE_ARRAY(&vm->gc, char, chars, length + 1);
         return interned;
     }
 

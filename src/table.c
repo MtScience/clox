@@ -56,7 +56,7 @@ static void adjustCapacity(GC* gc, Table table[static 1], uint32_t capacity) {
         table->count++;
     }
 
-    assert(FREE_ARRAY(gc, Entry, table->entries, table->capacity) == nullptr);
+    FREE_ARRAY(gc, Entry, table->entries, table->capacity);
     table->entries = entries;
     table->capacity = capacity;
 }
@@ -74,7 +74,7 @@ void initTable(Table table[restrict static 1]) {
 
 
 void freeTable(GC* gc, Table table[restrict static 1]) {
-    assert(FREE_ARRAY(gc, Entry, table->entries, table->capacity) == nullptr);
+    FREE_ARRAY(gc, Entry, table->entries, table->capacity);
     initTable(table);
 }
 

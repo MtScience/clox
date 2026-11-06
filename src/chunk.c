@@ -15,8 +15,8 @@ void initChunk(Chunk chunk[restrict static 1]) {
 
 
 void freeChunk(GC gc[restrict static 1], Chunk chunk[restrict static 1]) {
-    assert(FREE_ARRAY(gc, uint8_t, chunk->code, chunk->capacity) == nullptr);
-    assert(FREE_ARRAY(gc, uint32_t, chunk->lines, chunk->capacity) == nullptr);
+    FREE_ARRAY(gc, uint8_t, chunk->code, chunk->capacity);
+    FREE_ARRAY(gc, uint32_t, chunk->lines, chunk->capacity);
 
     freeValueArray(gc, &chunk->constants);
     initChunk(chunk);

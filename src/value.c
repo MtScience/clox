@@ -18,7 +18,7 @@ void initValueArray(ValueArray array[restrict static 1]) {
 
 
 void freeValueArray(GC* gc, ValueArray array[restrict static 1]) {
-    assert(FREE_ARRAY(gc, Value, array->values, array->capacity) == nullptr);
+    FREE_ARRAY(gc, Value, array->values, array->capacity);
     initValueArray(array);
 }
 

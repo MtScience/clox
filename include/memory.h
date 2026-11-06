@@ -24,7 +24,6 @@ static inline uint32_t growCapacity(uint32_t capacity) {
 }
 
 
-[[nodiscard("pointer to allocated memory dropped")]]
 void* reallocate(GC* gc, void* pointer, size_t oldSize, size_t newSize);
 
 void freeObjects(GC* gc);
