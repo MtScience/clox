@@ -11,4 +11,14 @@ This is a reimplementation of clox in C23 (as opposed to C99 used for the origin
 
 ## Building and running
 
-This project uses CMake for building. The compiler I used is GCC 15.3
+This project uses CMake for building. To build this, you will need:
+- CMake 3.25,
+- GCC 15.3 or Clang 21.1.8. I suggest GCC, since it provides the fullest support of the C23 standard.
+
+To build, clone the repo and run (from root directory):
+```console
+$ cmake -S . -B ./build
+$ cmake --build build/
+```
+
+For Windows users: this project uses C23 features that are not supported by MSVC (such as enumeration type specifiers). Therefore, it will not compile without modifications. If you want to build it on Windows, use MinGW or Clang.
