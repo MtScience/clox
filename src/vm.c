@@ -25,7 +25,11 @@ static Value peek(VM vm[static 1], int distance) {
 }
 
 
-static bool isFalsey(Value value) [[unsequenced]] {
+static bool isFalsey(Value value)
+#if __has_c_attribute(unsequenced)
+[[unsequenced]]
+#endif
+{
     return isNil(value) || (isBool(value) && !asBool(value));
 }
 
