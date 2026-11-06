@@ -5,6 +5,18 @@ project(clox
     LANGUAGES C
 )
 
+# Refusing MSVC, since it doesn't support proper C23
+if(NOT CMAKE_C_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$")
+    message(FATAL_ERROR
+        "\n[Error] This project uses C23 features that are not supported by"
+        "\nMSVC yet. Use GCC (preferably) or Clang instead."
+    )
+endif()
+
+if(MSVC)
+    message(FATAL_ERROR "\n[Error] MSVC is not supported. Use GCC or Clang.")
+endif()
+
 # Use the C23 standard.
 set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
@@ -61,21 +73,13 @@ if (NAN_BOXING)
 endif()
 
 # Compilation flags
-if (MSVC)
-    target_compile_options(clox
-        PRIVATE
-            /W4
-            /std:clatest
-    )
-else()
-    target_compile_options(clox
-        PRIVATE
-            -Werror
-            -Wall
-            -Wextra
-            -Wpedantic
-            -Wconversion
-            -Wsign-conversion
-    )
-endif()
+target_compile_options(clox
+    PRIVATE
+        -Werror
+        -Wall
+        -Wextra
+        -Wpedantic
+        -Wconversion
+        -Wsign-conversion
+)
 
