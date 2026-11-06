@@ -23,33 +23,33 @@ typedef enum : uint8_t {
 
 
 struct Obj {
-    ObjType type;
-    bool isMarked;
+    ObjType     type;
+    bool        isMarked;
     struct Obj* next;
 };
 
 
 struct ObjString {
-    Obj obj;
+    Obj      obj;
     uint32_t length;
     uint32_t hash;
-    char* chars;
+    char*    chars;
 };
 
 
 struct ObjUpvalue {
-    Obj obj;
-    Value* location;
-    Value closed;
+    Obj                obj;
+    Value*             location;
+    Value              closed;
     struct ObjUpvalue* next;
 };
 
 
 struct ObjFunction {
-    Obj obj;
-    uint16_t arity;
-    uint8_t upvalueCount;
-    Chunk chunk;
+    Obj        obj;
+    uint16_t   arity;
+    uint8_t    upvalueCount;
+    Chunk      chunk;
     ObjString* name;
 };
 
@@ -58,36 +58,36 @@ typedef Value (*NativeFn)(uint8_t arg, Value* args);
 
 
 typedef struct {
-    Obj obj;
+    Obj      obj;
     NativeFn function;
 } ObjNative;
 
 
 struct ObjClosure {
-    Obj obj;
+    Obj          obj;
     ObjFunction* function;
     ObjUpvalue** upvalues;
-    uint8_t upvalueCount;
+    uint8_t      upvalueCount;
 };
 
 
 typedef struct {
-    Obj obj;
+    Obj        obj;
     ObjString* name;
-    Table methods;
+    Table      methods;
 } ObjClass;
 
 
 typedef struct {
-    Obj obj;
+    Obj       obj;
     ObjClass* class;
-    Table fields;
+    Table     fields;
 } ObjInstance;
 
 
 typedef struct {
-    Obj obj;
-    Value receiver;
+    Obj         obj;
+    Value       receiver;
     ObjClosure* method;
 } ObjBoundMethod;
 
@@ -99,14 +99,14 @@ bool isObjType(Value value, ObjType type) {
     return isObj(value) && asObj(value)->type == type;
 }
 
-static inline ObjType objType(Value value)    { return asObj(value)->type;                 }
-static inline bool isString(Value value)      { return isObjType(value, OBJ_STRING);       }
-static inline bool isFunction(Value value)    { return isObjType(value, OBJ_FUNCTION);     }
-static inline bool isNative(Value value)      { return isObjType(value, OBJ_NATIVE);       }
-static inline bool isClosure(Value value)     { return isObjType(value, OBJ_CLOSURE);      }
-static inline bool isClass(Value value)       { return isObjType(value, OBJ_CLASS);        }
-static inline bool isInstance(Value value)    { return isObjType(value, OBJ_INSTANCE);     }
-static inline bool isBoundMethod(Value value) { return isObjType(value, OBJ_BOUND_METHOD); }
+static inline ObjType objType(Value value)       { return asObj(value)->type;                 }
+static inline bool    isString(Value value)      { return isObjType(value, OBJ_STRING);       }
+static inline bool    isFunction(Value value)    { return isObjType(value, OBJ_FUNCTION);     }
+static inline bool    isNative(Value value)      { return isObjType(value, OBJ_NATIVE);       }
+static inline bool    isClosure(Value value)     { return isObjType(value, OBJ_CLOSURE);      }
+static inline bool    isClass(Value value)       { return isObjType(value, OBJ_CLASS);        }
+static inline bool    isInstance(Value value)    { return isObjType(value, OBJ_INSTANCE);     }
+static inline bool    isBoundMethod(Value value) { return isObjType(value, OBJ_BOUND_METHOD); }
 
 
 /* Type conversions */

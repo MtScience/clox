@@ -94,42 +94,44 @@ static bool call(VM vm[static 1], ObjClosure closure[static 1], uint8_t argCount
 
 
 static bool callValue(VM vm[static 1], Value callee, uint8_t argCount) {
-    if (isObj(callee)) {
-        switch (objType(callee)) {
-            case OBJ_CLOSURE:
-                return call(vm, asClosure(callee), argCount);
-            case OBJ_NATIVE: {
-                    NativeFn native = asNative(callee);
-                    Value result = native(argCount, vm->stackTop - argCount);
-                    vm->stackTop -= argCount + 1;
-                    push(vm, result);
-                    return true;
-                }
-            case OBJ_CLASS: {
-                    ObjClass* class = asClass(callee);
-                    vm->stackTop[-argCount - 1] = objVal((Obj*)newInstance(&vm->gc, class));
-
-                    Value initializer;
-                    if (tableGet(&class->methods, vm->initString, &initializer)) {
-                        return call(vm, asClosure(initializer), argCount);
-                    } else if (argCount) {
-                        runtimeError(vm, "Expected 0 arguments but got %u.", argCount);
-                        return false;
-                    }
-
-                    return true;
-                }
-            case OBJ_BOUND_METHOD: {
-                    ObjBoundMethod* bound = asBoundMethod(callee);
-                    vm->stackTop[-argCount - 1] = bound->receiver;
-                    return call(vm, bound->method, argCount);
-                }
-            default:
-                break;
-        }
+    if (!isObj(callee)) {
+        runtimeError(vm, "Can only call functions and classes.");
+        return false;
     }
-    runtimeError(vm, "Can only call functions and classes.");
-    return false;
+
+    switch (objType(callee)) {
+        case OBJ_CLOSURE:
+            return call(vm, asClosure(callee), argCount);
+        case OBJ_NATIVE: {
+                NativeFn native = asNative(callee);
+                Value result = native(argCount, vm->stackTop - argCount);
+                vm->stackTop -= argCount + 1;
+                push(vm, result);
+                return true;
+            }
+        case OBJ_CLASS: {
+                ObjClass* class = asClass(callee);
+                vm->stackTop[-argCount - 1] = objVal((Obj*)newInstance(&vm->gc, class));
+
+                Value initializer;
+                if (tableGet(&class->methods, vm->initString, &initializer)) {
+                    return call(vm, asClosure(initializer), argCount);
+                } else if (argCount) {
+                    runtimeError(vm, "Expected 0 arguments but got %u.", argCount);
+                    return false;
+                }
+
+                return true;
+            }
+        case OBJ_BOUND_METHOD: {
+                ObjBoundMethod* bound = asBoundMethod(callee);
+                vm->stackTop[-argCount - 1] = bound->receiver;
+                return call(vm, bound->method, argCount);
+            }
+        default:
+            return false;
+    }
+
 }
 
 

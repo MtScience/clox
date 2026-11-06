@@ -5,7 +5,7 @@
 typedef struct {
     char const* start;
     char const* current;
-    uint32_t line;
+    uint32_t    line;
 } Scanner;
 
 
@@ -41,9 +41,9 @@ typedef enum : uint8_t {
 
 typedef struct {
     char const* start;
-    uint32_t line;
-    uint16_t length;
-    TokenType type;
+    uint32_t    line;
+    uint16_t    length;
+    TokenType   type;
 } Token;
 
 

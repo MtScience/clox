@@ -52,17 +52,17 @@ typedef enum : uint8_t {
 
 
 typedef struct {
-    uint32_t count;
-    uint32_t capacity;
-    uint8_t* code;
-    uint32_t* lines;
+    uint32_t   count;
+    uint32_t   capacity;
+    uint8_t*   code;
+    uint32_t*  lines;
     ValueArray constants;
 } Chunk;
 
 
-void initChunk(Chunk chunk[restrict static 1]);
-void freeChunk(GC gc[restrict static 1], Chunk chunk[restrict static 1]);
-void writeChunk(GC gc[restrict static 1], Chunk chunk[static 1], uint8_t byte, uint32_t line);
+void     initChunk(Chunk chunk[restrict static 1]);
+void     freeChunk(GC gc[restrict static 1], Chunk chunk[restrict static 1]);
+void     writeChunk(GC gc[restrict static 1], Chunk chunk[static 1], uint8_t byte, uint32_t line);
 uint32_t addConstant(VM* vm, Chunk chunk[static 1], Value value);
 
 

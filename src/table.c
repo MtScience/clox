@@ -44,8 +44,9 @@ static void adjustCapacity(GC* gc, Table table[static 1], uint32_t capacity) {
     table->count = 0;
     for (uint32_t i = 0; i < table->capacity; i++) {
         Entry* entry = &table->entries[i];
-        if (!entry->key)
+        if (!entry->key) {
             continue;
+        }
 
         Entry* dest = findEntry(entries, capacity, entry->key);
         *dest = (Entry){

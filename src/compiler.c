@@ -39,32 +39,32 @@ typedef enum : uint8_t {
 typedef struct {
     Token current;
     Token previous;
-    bool hadError;
-    bool panicMode;
+    bool  hadError;
+    bool  panicMode;
 } Parser;
 
 
 typedef struct {
-    Token name;
+    Token   name;
     int32_t depth;
-    bool isCaptured;
+    bool    isCaptured;
 } Local;
 
 
 typedef struct {
     uint8_t index;
-    bool isLocal;
+    bool    isLocal;
 } Upvalue;
 
 
 typedef struct Compiler {
-    ObjFunction* function;
-    FunctionType type;
+    ObjFunction*     function;
+    FunctionType     type;
 
-    Upvalue upvalues[uint8Count];
-    Local locals[uint8Count];
-    int16_t localCount;
-    int16_t scopeDepth;
+    Upvalue          upvalues[uint8Count];
+    Local            locals[uint8Count];
+    int16_t          localCount;
+    int16_t          scopeDepth;
 
     struct Compiler* enclosing;
 } Compiler;
@@ -72,20 +72,20 @@ typedef struct Compiler {
 
 typedef struct ClassCompiler {
     struct ClassCompiler* enclosing;
-    bool hasSuperclass;
+    bool                  hasSuperclass;
 } ClassCompiler;
 
 
 typedef struct {
-    VM* vm;
-    Compiler* compiler;
+    VM*            vm;
+    Compiler*      compiler;
     ClassCompiler* classCompiler;
-    Parser* parser;
-    Scanner* scanner;
+    Parser*        parser;
+    Scanner*       scanner;
 
-    void (*prevMarkRoots)(GC* gc, void* arg);
+    void  (*prevMarkRoots)(GC* gc, void* arg);
     void* prevMarkArg;
-    void (*prevCleanupWeakRefs)(void* arg);
+    void  (*prevCleanupWeakRefs)(void* arg);
     void* prevWeakArg;
 } CompilationState;
 
@@ -94,8 +94,8 @@ typedef void (*ParseFn)(CompilationState state[static 1], bool canAssign);
 
 
 typedef struct {
-    ParseFn prefix;
-    ParseFn infix;
+    ParseFn    prefix;
+    ParseFn    infix;
     Precedence precedence;
 } ParseRule;
 

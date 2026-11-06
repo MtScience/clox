@@ -32,10 +32,11 @@ static uint32_t jumpInstruction(char const* name, int8_t sign, Chunk chunk[stati
      * in order to avoid potentially dangerous implicit cast
      */
     uint32_t target = offset + 3;
-    if (sign > 0)
+    if (sign > 0) {
         target += jump;
-    else
+    } else {
         target -= jump;
+    }
 
     printf("%-16s %4u -> %u\n", name, offset, target);
 

@@ -47,8 +47,9 @@ static char advance(Scanner scanner[static 1]) {
 
 
 static bool match(Scanner scanner[static 1], char expected) {
-    if (isAtEnd(scanner) || *scanner->current != expected)
+    if (isAtEnd(scanner) || *scanner->current != expected) {
         return false;
+    }
 
     scanner->current++;
     return true;
@@ -93,13 +94,15 @@ static void skipWhitespace(Scanner scanner[static 1]) {
 
 static Token string(Scanner scanner[static 1]) {
     for (char c; !isAtEnd(scanner) && (c = peek(scanner)) != '"'; ) {
-        if (c == '\n')
+        if (c == '\n') {
             scanner->line++;
+        }
         advance(scanner);
     }
 
-    if (isAtEnd(scanner))
+    if (isAtEnd(scanner)) {
         return errorToken(scanner, "Unterminated string");
+    }
 
     advance(scanner);
     return makeToken(scanner, TOKEN_STRING);
@@ -107,8 +110,9 @@ static Token string(Scanner scanner[static 1]) {
 
 
 static Token number(Scanner scanner[static 1]) {
-    while (isdigit(peek(scanner)))
+    while (isdigit(peek(scanner))) {
         advance(scanner);
+    }
 
     if (peek(scanner) == '.' && isdigit(peekNext(scanner))) {
         advance(scanner);
@@ -129,8 +133,9 @@ static TokenType checkKeyword(
     TokenType type
 ) {
     bool lengthEqual = scanner->current - scanner->start == start + length;
-    if (lengthEqual && !memcmp(scanner->start + start, rest, length))
+    if (lengthEqual && !memcmp(scanner->start + start, rest, length)) {
         return type;
+    }
 
     return TOKEN_IDENTIFIER;
 }
@@ -173,8 +178,9 @@ static TokenType identifierType(Scanner scanner[static 1]) {
 
 
 static Token identifier(Scanner scanner[static 1]) {
-    for (char c = peek(scanner); isAlphaNum(c); c = peek(scanner))
+    for (char c = peek(scanner); isAlphaNum(c); c = peek(scanner)) {
         advance(scanner);
+    }
 
     return makeToken(scanner, identifierType(scanner));
 }
@@ -193,14 +199,17 @@ Token scanToken(Scanner scanner[static 1]) {
     skipWhitespace(scanner);
     scanner->start = scanner->current;
 
-    if (isAtEnd(scanner))
+    if (isAtEnd(scanner)) {
         return makeToken(scanner, TOKEN_EOF);
+    }
 
     char c = advance(scanner);
-    if (isdigit(c))
+    if (isdigit(c)) {
         return number(scanner);
-    if (isAlpha(c))
+    }
+    if (isAlpha(c)) {
         return identifier(scanner);
+    }
 
     switch (c) {
         case '(': return makeToken(scanner, TOKEN_LEFT_PAREN);

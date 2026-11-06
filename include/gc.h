@@ -9,19 +9,19 @@ typedef struct Obj Obj;
 
 
 typedef struct GC {
-    Obj* objects;
+    Obj*     objects;
 
-    size_t bytesAllocated;
-    size_t nextGC;
+    size_t   bytesAllocated;
+    size_t   nextGC;
 
     uint32_t grayCount;
     uint32_t grayCapacity;
-    Obj** grayStack;
+    Obj**    grayStack;
 
-    void (*markRoots)(struct GC* gc, void* arg);
-    void* markArg;
-    void (*cleanupWeakRefs)(void* arg);
-    void* weakArg;
+    void     (*markRoots)(struct GC* gc, void* arg);
+    void*    markArg;
+    void     (*cleanupWeakRefs)(void* arg);
+    void*    weakArg;
 } GC;
 
 

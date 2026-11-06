@@ -8,14 +8,14 @@
 
 typedef struct {
     ObjString* key;
-    Value value;
+    Value      value;
 } Entry;
 
 
 typedef struct {
     uint32_t count;
     uint32_t capacity;
-    Entry* entries;
+    Entry*   entries;
 } Table;
 
 

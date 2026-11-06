@@ -35,8 +35,9 @@ void writeValueArray(GC* gc, ValueArray array[static 1], Value value) {
 
 
 bool valuesEqual(Value a, Value b) [[reproducible]] {
-    if (a.type != b.type)
+    if (a.type != b.type) {
         return false;
+    }
 
     switch (a.type) {
         case VAL_BOOL:   return asBool(a) == asBool(b);

@@ -17,25 +17,24 @@ constexpr uint16_t stackMax = framesMax * uint8Count;
 
 typedef struct {
     ObjClosure* closure;
-    uint8_t* ip;
-    Value* slots;
+    uint8_t*    ip;
+    Value*      slots;
 } CallFrame;
 
 
 struct VM {
-    CallFrame frames[framesMax];
-    uint16_t frameCount;
+    CallFrame   frames[framesMax];
+    uint16_t    frameCount;
 
-    Value stack[stackMax];
-    Value* stackTop;
-    Table strings;
-    Table globals;
+    Value       stack[stackMax];
+    Value*      stackTop;
+    Table       strings;
+    Table       globals;
 
-
-    ObjString* initString;
+    ObjString*  initString;
     ObjUpvalue* openUpvalues;
 
-    GC gc;
+    GC          gc;
 };
 
 
@@ -51,7 +50,7 @@ void freeVM(VM vm[restrict static 1]);
 
 InterpretResult interpret(VM vm[static 1], char const* source);
 
-void push(VM vm[static 1], Value value);
+void  push(VM vm[static 1], Value value);
 Value pop(VM vm[static 1]);
 
 

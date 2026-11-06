@@ -24,9 +24,9 @@ typedef enum : uint8_t {
 
 typedef struct {
     union {
-        bool boolean;
+        bool   boolean;
         double number;
-        Obj* obj;
+        Obj*   obj;
     } as;
     ValueType type;
 } Value;
@@ -35,7 +35,7 @@ typedef struct {
 typedef struct {
     uint32_t count;
     uint32_t capacity;
-    Value* values;
+    Value*   values;
 } ValueArray;
 
 
