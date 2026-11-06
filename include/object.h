@@ -33,7 +33,7 @@ struct ObjString {
     Obj      obj;
     uint32_t length;
     uint32_t hash;
-    char*    chars;
+    char     chars[];
 };
 
 
@@ -130,7 +130,7 @@ ObjUpvalue*     newUpvalue(GC gc[static 1], Value slot[static 1]);
 ObjFunction*    newFunction(GC gc[static 1]);
 ObjNative*      newNative(GC gc[static 1], NativeFn function);
 ObjClosure*     newClosure(GC gc[static 1], ObjFunction function[static 1]);
-ObjClass*       newClass(GC gc[static 1], ObjString name[static 1]);
+ObjClass*       newClass(GC gc[static 1], ObjString* name);
 ObjInstance*    newInstance(GC gc[static 1], ObjClass class[static 1]);
 ObjBoundMethod* newBoundMethod(GC gc[static 1], Value receiver, ObjClosure method[static 1]);
 

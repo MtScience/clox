@@ -13,7 +13,7 @@
 #define ALLOCATE_OBJ(gc, type, objectType) (type*)allocateObject(gc, sizeof(type), objectType)
 
 
-static Obj* allocateObject(GC* gc, size_t size, ObjType type) {
+static Obj* allocateObject(GC gc[static 1], size_t size, ObjType type) {
     Obj* object = reallocate(gc, nullptr, 0, size);
     object->type = type;
     object->isMarked = false;
@@ -29,10 +29,12 @@ static Obj* allocateObject(GC* gc, size_t size, ObjType type) {
 }
 
 
-static ObjString* allocateString(VM* vm, char* chars, uint32_t length, uint32_t hash) {
-    ObjString* string = ALLOCATE_OBJ(&vm->gc, ObjString, OBJ_STRING);
+static ObjString* allocateString(VM vm[static 1], char* chars, uint32_t length, uint32_t hash) {
+    ObjString* string = (ObjString*)allocateObject(&vm->gc,
+                                                   sizeof(ObjString) + sizeof(char[length]),
+                                                   OBJ_STRING);
     string->length = length;
-    string->chars = chars;
+    memcpy(string->chars, chars, sizeof(char[length]));
     string->hash = hash;
 
     push(vm, objVal((Obj*)string));
@@ -139,7 +141,7 @@ ObjClosure* newClosure(GC gc[static 1], ObjFunction function[static 1]) {
 }
 
 
-ObjClass* newClass(GC gc[static 1], ObjString name[static 1]) {
+ObjClass* newClass(GC gc[static 1], ObjString* name) {
     ObjClass* class = ALLOCATE_OBJ(gc, ObjClass, OBJ_CLASS);
     class->name = name;
     initTable(&class->methods);
