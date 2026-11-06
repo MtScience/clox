@@ -20,19 +20,21 @@ add_compile_options(
 )
 
 # Main executable.
-add_executable(clox
-    src/main.c
-    src/chunk.c
-    src/memory.c
-    src/debug.c
-    src/value.c
-    src/vm.c
-    src/compiler.c
-    src/scanner.c
-    src/object.c
-    src/table.c
-    src/native.c
-    src/gc.c
+add_executable(clox)
+target_sources(clox
+    PRIVATE
+        src/main.c
+        src/chunk.c
+        src/memory.c
+        src/debug.c
+        src/value.c
+        src/vm.c
+        src/compiler.c
+        src/scanner.c
+        src/object.c
+        src/table.c
+        src/native.c
+        src/gc.c
 )
 
 # Include project headers, if any.

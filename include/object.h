@@ -126,13 +126,13 @@ static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMetho
 ObjString* copyString(VM* vm, char const* chars, uint32_t length);
 ObjString* takeString(VM* vm, char* chars, uint32_t length);
 
-ObjUpvalue*     newUpvalue(GC* gc, Value* slot);
-ObjFunction*    newFunction(GC* gc);
-ObjNative*      newNative(GC* gc, NativeFn function);
-ObjClosure*     newClosure(GC* gc, ObjFunction function[static 1]);
-ObjClass*       newClass(GC* gc, ObjString* name);
-ObjInstance*    newInstance(GC* gc, ObjClass* class);
-ObjBoundMethod* newBoundMethod(GC* gc, Value receiver, ObjClosure* method);
+ObjUpvalue*     newUpvalue(GC gc[static 1], Value slot[static 1]);
+ObjFunction*    newFunction(GC gc[static 1]);
+ObjNative*      newNative(GC gc[static 1], NativeFn function);
+ObjClosure*     newClosure(GC gc[static 1], ObjFunction function[static 1]);
+ObjClass*       newClass(GC gc[static 1], ObjString name[static 1]);
+ObjInstance*    newInstance(GC gc[static 1], ObjClass class[static 1]);
+ObjBoundMethod* newBoundMethod(GC gc[static 1], Value receiver, ObjClosure method[static 1]);
 
 void printObject(Value value);
 

@@ -96,7 +96,7 @@ ObjString* takeString(VM* vm, char* chars, uint32_t length) {
 }
 
 
-ObjUpvalue* newUpvalue(GC* gc, Value* slot) {
+ObjUpvalue* newUpvalue(GC gc[static 1], Value slot[static 1]) {
     ObjUpvalue* upvalue = ALLOCATE_OBJ(gc, ObjUpvalue, OBJ_UPVALUE);
     upvalue->location = slot;
     upvalue->closed = nilVal();
@@ -106,7 +106,7 @@ ObjUpvalue* newUpvalue(GC* gc, Value* slot) {
 }
 
 
-ObjFunction* newFunction(GC* gc) {
+ObjFunction* newFunction(GC gc[static 1]) {
     ObjFunction* function = ALLOCATE_OBJ(gc, ObjFunction, OBJ_FUNCTION);
     function->arity = 0;
     function->upvalueCount = 0;
@@ -117,14 +117,14 @@ ObjFunction* newFunction(GC* gc) {
 }
 
 
-ObjNative* newNative(GC* gc, NativeFn function) {
+ObjNative* newNative(GC gc[static 1], NativeFn function) {
     ObjNative* native = ALLOCATE_OBJ(gc, ObjNative, OBJ_NATIVE);
     native->function = function;
 
     return native;
 }
 
-ObjClosure* newClosure(GC* gc, ObjFunction function[static 1]) {
+ObjClosure* newClosure(GC gc[static 1], ObjFunction function[static 1]) {
     ObjUpvalue** upvalues = ALLOCATE(gc, ObjUpvalue*, function->upvalueCount);
     for (uint8_t i = 0; i < function->upvalueCount; i++) {
         upvalues[i] = nullptr;
@@ -139,7 +139,7 @@ ObjClosure* newClosure(GC* gc, ObjFunction function[static 1]) {
 }
 
 
-ObjClass* newClass(GC* gc, ObjString* name) {
+ObjClass* newClass(GC gc[static 1], ObjString name[static 1]) {
     ObjClass* class = ALLOCATE_OBJ(gc, ObjClass, OBJ_CLASS);
     class->name = name;
     initTable(&class->methods);
@@ -148,7 +148,7 @@ ObjClass* newClass(GC* gc, ObjString* name) {
 }
 
 
-ObjInstance* newInstance(GC* gc, ObjClass* class) {
+ObjInstance* newInstance(GC gc[static 1], ObjClass class[static 1]) {
     ObjInstance* instance = ALLOCATE_OBJ(gc, ObjInstance, OBJ_INSTANCE);
     instance->class = class;
     initTable(&instance->fields);
@@ -158,9 +158,9 @@ ObjInstance* newInstance(GC* gc, ObjClass* class) {
 
 
 ObjBoundMethod* newBoundMethod(
-    GC* gc,
+    GC gc[static 1],
     Value receiver,
-    ObjClosure* method  /* TODO: replace with [static 1] */
+    ObjClosure method[static 1]
 ) {
     ObjBoundMethod* bound = ALLOCATE_OBJ(gc, ObjBoundMethod, OBJ_BOUND_METHOD);
     bound->receiver = receiver;
