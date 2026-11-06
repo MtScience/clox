@@ -10,15 +10,6 @@ set(CMAKE_C_STANDARD 23)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 
-# Enable useful warnings.
-add_compile_options(
-    -Wall
-    -Wextra
-    -Wpedantic
-    -Wconversion
-    -Wsign-conversion
-)
-
 # Main executable.
 add_executable(clox)
 target_sources(clox
@@ -69,9 +60,22 @@ if (NAN_BOXING)
     target_compile_definitions(clox PRIVATE NAN_BOXING)
 endif()
 
+# Compilation flags
+if (MSVC)
+    target_compile_options(clox
+        PRIVATE
+            /W4
+            /std:clatest
+    )
+else()
+    target_compile_options(clox
+        PRIVATE
+            -Werror
+            -Wall
+            -Wextra
+            -Wpedantic
+            -Wconversion
+            -Wsign-conversion
+    )
+endif()
 
-# Optional: enable stricter warnings for GCC specifically.
-target_compile_options(clox
-    PRIVATE
-        -Werror
-)
