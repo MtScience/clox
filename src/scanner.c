@@ -10,12 +10,20 @@ static bool isAtEnd(Scanner scanner[static 1]) {
 }
 
 
-static bool isAlpha(char c) [[unsequenced]] {
+static bool isAlpha(char c)
+#if __has_c_attribute(unsequenced)
+[[unsequenced]]
+#endif
+{
     return c == '_' || isalpha(c);
 }
 
 
-static bool isAlphaNum(char c) [[unsequenced]] {
+static bool isAlphaNum(char c)
+#if __has_c_attribute(unsequenced)
+[[unsequenced]]
+#endif
+{
     return c == '_' || isalnum(c);
 }
 
