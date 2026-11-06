@@ -34,7 +34,11 @@ void writeValueArray(GC* gc, ValueArray array[static 1], Value value) {
 }
 
 
-bool valuesEqual(Value a, Value b) [[reproducible]] {
+bool valuesEqual(Value a, Value b)
+#if __has_c_attribute(reproducible)
+[[reproducible]]
+#endif
+{
 #ifdef NAN_BOXING
     if (isNumber(a) && isNumber(b)) {
         return asNumber(a) == asNumber(b);
