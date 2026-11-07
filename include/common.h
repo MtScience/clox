@@ -6,6 +6,9 @@
 #include <stddef.h>  /* For unreachable */
 
 
+/**
+ * \brief Number of values, representable with `uint8_t` type.
+ */
 constexpr uint16_t uint8Count = UINT8_MAX + 1;
 
 

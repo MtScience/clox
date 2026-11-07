@@ -1149,6 +1149,8 @@ static void resetGC(CompilationState state[static 1]) {
 }
 
 
+/* Public functions */
+
 ObjFunction* compile(VM vm[static 1], char const* source) {
     Scanner scanner;
     initScanner(&scanner, source);

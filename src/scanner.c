@@ -194,6 +194,8 @@ static Token identifier(Scanner scanner[static 1]) {
 }
 
 
+/* Public functions */
+
 void initScanner(Scanner scanner[static 1], char const* source) {
     *scanner = (Scanner) {
         .start = source,

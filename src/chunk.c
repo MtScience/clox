@@ -31,7 +31,6 @@ void writeChunk(GC gc[restrict static 1], Chunk chunk[static 1], uint8_t byte, u
         chunk->lines = GROW_ARRAY(gc, uint32_t, chunk->lines, oldCapacity, chunk->capacity);
     }
 
-
     chunk->code[chunk->count] = byte;
     chunk->lines[chunk->count] = line;
     chunk->count++;

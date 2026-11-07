@@ -61,6 +61,8 @@ static uint32_t invokeInstruction(char const* name, Chunk chunk[static 1], uint3
 }
 
 
+/* Public functions */
+
 void disassembleChunk(Chunk chunk[static 1], char const* name) {
     printf("== %s ==\n", name);
 

@@ -2,13 +2,27 @@
 #define clox_scanner_h
 
 
+/**
+ * \struct Scanner scanner.h
+ * \brief Code scanner type.
+ *
+ * A `struct` that represents the code scanner. Keeps pointers to two characters
+ * in the source code string. The `Scanner` is lazy: it does not immediately generate
+ * a list of `Token`s; instead the user is supposed to request them by calling
+ * `scanToken()`.
+ */
 typedef struct {
-    char const* start;
-    char const* current;
-    uint32_t    line;
+    char const* start;    /**< Pointer to the character at the start of the token. */
+    char const* current;  /**< Pointer to the current character. */
+    uint32_t    line;     /**< Number of source line currently being scanned. */
 } Scanner;
 
 
+/**
+ * \brief Token types enumeration.
+ *
+ * An `enum` that lists all the valid types for source tokens.
+ */
 typedef enum : uint8_t {
   /* Single-character tokens */
 
@@ -39,16 +53,40 @@ typedef enum : uint8_t {
 } TokenType;
 
 
+/**
+ * \struct Token scanner.h
+ * \brief Token type.
+ *
+ * A `struct` that represents a source token. Keeps information about the
+ * corresponding lexeme.
+ */
 typedef struct {
-    char const* start;
-    uint32_t    line;
-    uint16_t    length;
-    TokenType   type;
+    char const* start;   /**< Pointer to the start of the corresponding lexeme. */
+    uint32_t    line;    /**< Number of source line from the token was compiled. */
+    uint16_t    length;  /**< Length of the corresponding lexeme in bytes. */
+    TokenType   type;    /**< Type of the token. */
 } Token;
 
 
+/**
+ * \brief Initializes a scanner.
+ *
+ * Takes a newly-created `Scanner` and fills in its fields, putting the structure
+ * in a well-defined state.
+ *
+ * \param[in,out] scanner Non-`NULL` pointer to the scanner to be Initialized.
+ * \param[in]     source  The string containing the source code to scan.
+ */
 void initScanner(Scanner scanner[static 1], char const* source);
 
+/**
+ * \brief Scans one token from the source.
+ *
+ * \param[in,out] scanner The scanner to request a token from.
+ *
+ * \returns A token scanned from the current position in the source
+ *          or an error token in case scan failed.
+ */
 Token scanToken(Scanner scanner[static 1]);
 
 
