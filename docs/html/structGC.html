@@ -140,6 +140,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Pointer to the function that deals with weak references (only string objects in this implementation). </p>
 
 </div>
 </div>
@@ -154,6 +155,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Maximum number of object references that can be kept in <span class="tt"><a class="el" href="#aac51de1347bdf2933a3af201a1124af3">GC::grayStack</a></span>. </p>
 
 </div>
 </div>
@@ -168,6 +170,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Number of object references in <span class="tt"><a class="el" href="#aac51de1347bdf2933a3af201a1124af3">GC::grayStack</a></span>. </p>
 
 </div>
 </div>
@@ -182,6 +185,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>List of reachable but not yet fully processed objects. Is <span class="tt">NULL</span> between cycles. </p>
 
 </div>
 </div>
@@ -196,7 +200,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the argument for <span class="tt">markRoots</span>. </p>
+<p>Pointer to the argument for <span class="tt"><a class="el" href="#a1083ed9c41d18de1e473df67831df979">GC::markRoots</a></span>. </p>
 
 </div>
 </div>
@@ -226,7 +230,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Threshold, at which a garbage collection cycle will be triggered. Adjusted at each cycle. </p>
+<p>Threshold, at which a garbage collection cycle will be triggered. Default is 1 MB. Adjusted at each cycle. </p>
 
 </div>
 </div>
@@ -256,7 +260,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Pointer to the argument fot <span class="tt">cleanupWeakRefs</span>. </p>
+<p>Pointer to the argument fot <span class="tt"><a class="el" href="#a652b0514d78575f3e9a27c8612548e90">GC::cleanupWeakRefs</a></span>. </p>
 
 </div>
 </div>

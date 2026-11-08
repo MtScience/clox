@@ -132,7 +132,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a constant in a chunk. </p>
-<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt"><a class="el" href="structValue.html">Value</a></span> and writes the value into the <span class="tt">constants</span> field of the chunk. Takes care not to let the garbage collector delete a value too early, by putting it onto the stack of the <a class="el" href="structVM.html">VM</a>, and popping it after it is safely written into the chunk.</p>
+<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt"><a class="el" href="structValue.html">Value</a></span> and writes the value into the <span class="tt"><a class="el" href="structChunk.html#a6ef3ac2a64667a4635b414daca1196af">Chunk::constants</a></span> field of the chunk. Takes care not to let the garbage collector delete a value too early, by putting it onto the stack of the <a class="el" href="structVM.html">VM</a>, and popping it after it is safely written into the chunk.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the <a class="el" href="structVM.html">VM</a> governing the chunk. </td></tr>
@@ -232,7 +232,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Writes a byte to a chunk. </p>
-<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt">uint8_t</span> (byte) and writes the byte into the <span class="tt">code</span> field of the chunk. The byte can be an arbitrary <span class="tt">uint8_t</span> value (since this function is also used for writing instruction arguments).</p>
+<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt">uint8_t</span> (byte) and writes the byte into the <span class="tt"><a class="el" href="structChunk.html#a3bd97432faba57c9187c7d264995b33f">Chunk::code</a></span> field of the chunk. The byte can be an arbitrary <span class="tt">uint8_t</span> value (since this function is also used for writing instruction arguments).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure. To avoid problems with freeing and garbage collection, this should always point to the same structure for a given chunk. </td></tr>

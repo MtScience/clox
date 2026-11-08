@@ -6,7 +6,7 @@ var searchData=
   ['read_5fstring_3',['READ_STRING',['../vm_8c.html#a49c43dd7a58bf7648fda3cb705c8ec95',1,'vm.c']]],
   ['readfile_4',['readFile',['../main_8c.html#ade04357b0ba86f463125775817a9a680',1,'main.c']]],
   ['readme_2emd_5',['README.md',['../README_8md.html',1,'']]],
-  ['reallocate_6',['reallocate',['../memory_8h.html#a21437d4945a7d16a1382e48ce8c4187a',1,'reallocate(GC *gc, void *pointer, size_t oldSize, size_t newSize):&#160;memory.c'],['../memory_8c.html#a21437d4945a7d16a1382e48ce8c4187a',1,'reallocate(GC *gc, void *pointer, size_t oldSize, size_t newSize):&#160;memory.c']]],
+  ['reallocate_6',['reallocate',['../memory_8h.html#aef27bccd01f602cfab7155511d9a4af2',1,'reallocate(GC gc[static 1], void *pointer, size_t oldSize, size_t newSize):&#160;memory.c'],['../memory_8c.html#aef27bccd01f602cfab7155511d9a4af2',1,'reallocate(GC gc[static 1], void *pointer, size_t oldSize, size_t newSize):&#160;memory.c']]],
   ['receiver_7',['receiver',['../structObjBoundMethod.html#aaae0bba08511b3039acfe6d0862ee7b7',1,'ObjBoundMethod']]],
   ['repl_8',['repl',['../main_8c.html#a1f7d5df93ca44f63e8bda613c0b858a3',1,'main.c']]],
   ['resetgc_9',['resetGC',['../compiler_8c.html#a21213b8c1bdb79051a59eec847b30101',1,'compiler.c']]],

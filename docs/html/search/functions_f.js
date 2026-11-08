@@ -1,7 +1,7 @@
 var searchData=
 [
   ['readfile_0',['readFile',['../main_8c.html#ade04357b0ba86f463125775817a9a680',1,'main.c']]],
-  ['reallocate_1',['reallocate',['../memory_8h.html#a21437d4945a7d16a1382e48ce8c4187a',1,'reallocate(GC *gc, void *pointer, size_t oldSize, size_t newSize):&#160;memory.c'],['../memory_8c.html#a21437d4945a7d16a1382e48ce8c4187a',1,'reallocate(GC *gc, void *pointer, size_t oldSize, size_t newSize):&#160;memory.c']]],
+  ['reallocate_1',['reallocate',['../memory_8h.html#aef27bccd01f602cfab7155511d9a4af2',1,'reallocate(GC gc[static 1], void *pointer, size_t oldSize, size_t newSize):&#160;memory.c'],['../memory_8c.html#aef27bccd01f602cfab7155511d9a4af2',1,'reallocate(GC gc[static 1], void *pointer, size_t oldSize, size_t newSize):&#160;memory.c']]],
   ['repl_2',['repl',['../main_8c.html#a1f7d5df93ca44f63e8bda613c0b858a3',1,'main.c']]],
   ['resetgc_3',['resetGC',['../compiler_8c.html#a21213b8c1bdb79051a59eec847b30101',1,'compiler.c']]],
   ['resetstack_4',['resetStack',['../vm_8c.html#a57fe3af0577a4138b74dc4d96b7250a5',1,'vm.c']]],

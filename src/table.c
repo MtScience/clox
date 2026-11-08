@@ -7,7 +7,7 @@
 #include "value.h"
 
 
-constexpr double tableMaxLoad = 0.75;
+static constexpr double tableMaxLoad = 0.75;
 
 
 /* Local functions */

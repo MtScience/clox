@@ -74,7 +74,7 @@ typedef struct {
  * Takes a newly-created `Scanner` and fills in its fields, putting the structure
  * in a well-defined state.
  *
- * \param[in,out] scanner Non-`NULL` pointer to the scanner to be Initialized.
+ * \param[in,out] scanner Non-`NULL` pointer to the scanner to be initialized.
  * \param[in]     source  The string containing the source code to scan.
  */
 void initScanner(Scanner scanner[static 1], char const* source);

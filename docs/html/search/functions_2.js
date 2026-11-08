@@ -9,7 +9,7 @@ var searchData=
   ['cleanupcompilerweakrefs_6',['cleanupCompilerWeakRefs',['../compiler_8c.html#a006842ea491a7e4a9507604b12d038cb',1,'compiler.c']]],
   ['clocknative_7',['clockNative',['../native_8h.html#a16ebc30963ed0e39d342852ea5db8dce',1,'clockNative(uint8_t argCount, Value *args):&#160;native.c'],['../native_8c.html#a16ebc30963ed0e39d342852ea5db8dce',1,'clockNative(uint8_t argCount, Value *args):&#160;native.c']]],
   ['closeupvalues_8',['closeUpvalues',['../vm_8c.html#a0ee3833a52dfd8dd7d4371f64ad09641',1,'vm.c']]],
-  ['collectgarbage_9',['collectGarbage',['../memory_8h.html#a8603a8d2a3a44892a94c06005e75dd65',1,'collectGarbage(GC *gc):&#160;memory.c'],['../memory_8c.html#a8603a8d2a3a44892a94c06005e75dd65',1,'collectGarbage(GC *gc):&#160;memory.c']]],
+  ['collectgarbage_9',['collectGarbage',['../memory_8h.html#ae0d730344c12024aa0f4b36b34b50c37',1,'collectGarbage(GC gc[static 1]):&#160;memory.c'],['../memory_8c.html#ae0d730344c12024aa0f4b36b34b50c37',1,'collectGarbage(GC gc[static 1]):&#160;memory.c']]],
   ['compile_10',['compile',['../compiler_8h.html#acbb959fba389512febc229e7f5a01218',1,'compile(VM vm[static 1], char const *source):&#160;compiler.c'],['../compiler_8c.html#acbb959fba389512febc229e7f5a01218',1,'compile(VM vm[static 1], char const *source):&#160;compiler.c']]],
   ['concatenate_11',['concatenate',['../vm_8c.html#ac86590d15cd9d03fc27a544129a15bf1',1,'vm.c']]],
   ['configuregc_12',['configureGC',['../compiler_8c.html#aea12788cdf5b58fb9ce1e958be1abf53',1,'compiler.c']]],

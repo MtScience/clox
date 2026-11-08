@@ -10,7 +10,7 @@
 #endif
 
 
-constexpr uint32_t GCHeapGrowthFactor = 2;
+static constexpr uint32_t GCHeapGrowthFactor = 2;
 
 
 /* Local functions */
@@ -159,7 +159,7 @@ static void sweep(GC* gc) {
 
 /* Public functions */
 
-void* reallocate(GC* gc, void* pointer, size_t oldSize, size_t newSize) {
+void* reallocate(GC gc[static 1], void* pointer, size_t oldSize, size_t newSize) {
     gc->bytesAllocated += newSize - oldSize;
     if (newSize > oldSize) {
 #ifdef DEBUG_STRESS_GC
@@ -185,7 +185,7 @@ void* reallocate(GC* gc, void* pointer, size_t oldSize, size_t newSize) {
 }
 
 
-void freeObjects(GC* gc) {
+void freeObjects(GC gc[static 1]) {
     Obj* object = gc->objects;
     while (object) {
         Obj* next = object->next;
@@ -197,7 +197,7 @@ void freeObjects(GC* gc) {
 }
 
 
-void markObject(GC* gc, Obj* object) {
+void markObject(GC gc[static 1], Obj* object) {
     if (!object || object->isMarked) {
         return;
     }
@@ -227,14 +227,14 @@ void markObject(GC* gc, Obj* object) {
 }
 
 
-void markValue(GC* gc, Value value) {
+void markValue(GC gc[static 1], Value value) {
     if (isObj(value)) {
         markObject(gc, asObj(value));
     }
 }
 
 
-void collectGarbage(GC* gc) {
+void collectGarbage(GC gc[static 1]) {
 #ifdef DEBUG_LOG_GC
     puts("-- gc begin");
     size_t before = gc->bytesAllocated;

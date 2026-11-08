@@ -204,7 +204,7 @@ Functions</h2></td></tr>
 <p>Operation code type. </p>
 <p>An <span class="tt">enum</span> that lists all the supported instruction codes. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a0aae8bd3e44dcbe18dcd011ea16f7d3c" name="a7e85f04e30e1c4c4607773335350fe20a0aae8bd3e44dcbe18dcd011ea16f7d3c"></a>OP_CONSTANT&#160;</td><td class="fielddoc"><p>Reads the value specified by the argument from the <span class="tt">constants</span> field of the current chunk and pushes it onto the stack. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a0aae8bd3e44dcbe18dcd011ea16f7d3c" name="a7e85f04e30e1c4c4607773335350fe20a0aae8bd3e44dcbe18dcd011ea16f7d3c"></a>OP_CONSTANT&#160;</td><td class="fielddoc"><p>Reads the value specified by the argument from the <span class="tt"><a class="el" href="structChunk.html#a6ef3ac2a64667a4635b414daca1196af">Chunk::constants</a></span> field of the current chunk and pushes it onto the stack. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a24efa62543d37080a32e43b653c343dc" name="a7e85f04e30e1c4c4607773335350fe20a24efa62543d37080a32e43b653c343dc"></a>OP_NEGATE&#160;</td><td class="fielddoc"><p>Negates the number at the top of the stack. </p>
 </td></tr>
@@ -216,15 +216,18 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20afb3c2d934da3bfb01e4fd56338324e21" name="a7e85f04e30e1c4c4607773335350fe20afb3c2d934da3bfb01e4fd56338324e21"></a>OP_POP&#160;</td><td class="fielddoc"><p>Pops the topmost value from the stack. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20ad7949d038b7cd346c45278c5ecf3fa86" name="a7e85f04e30e1c4c4607773335350fe20ad7949d038b7cd346c45278c5ecf3fa86"></a>OP_GET_LOCAL&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a7fded28a708b5128f74d1ee932c1e2cd" name="a7e85f04e30e1c4c4607773335350fe20a7fded28a708b5128f74d1ee932c1e2cd"></a>OP_SET_LOCAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20ad7949d038b7cd346c45278c5ecf3fa86" name="a7e85f04e30e1c4c4607773335350fe20ad7949d038b7cd346c45278c5ecf3fa86"></a>OP_GET_LOCAL&#160;</td><td class="fielddoc"><p>Finds the value on the stack that corresponds to the local variable and pushes it to the top of the stack </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a7fded28a708b5128f74d1ee932c1e2cd" name="a7e85f04e30e1c4c4607773335350fe20a7fded28a708b5128f74d1ee932c1e2cd"></a>OP_SET_LOCAL&#160;</td><td class="fielddoc"><p>Finds the value on the stack that corresponds to the local variable and changes it to the value at the top of the stack. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a05667ae6375d7ab4ce3ed171f76d7776" name="a7e85f04e30e1c4c4607773335350fe20a05667ae6375d7ab4ce3ed171f76d7776"></a>OP_GET_UPVALUE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a72308153bbaabc78a9bffd5beba94357" name="a7e85f04e30e1c4c4607773335350fe20a72308153bbaabc78a9bffd5beba94357"></a>OP_SET_UPVALUE&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20afd1a9342eba7164a9549c635949a18d7" name="a7e85f04e30e1c4c4607773335350fe20afd1a9342eba7164a9549c635949a18d7"></a>OP_GET_PROPERTY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20aa81d7d906822e3e4f40bbaa2fb576415" name="a7e85f04e30e1c4c4607773335350fe20aa81d7d906822e3e4f40bbaa2fb576415"></a>OP_SET_PROPERTY&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a2e1ceb865f6c84b05e9c0b98f15ea1b8" name="a7e85f04e30e1c4c4607773335350fe20a2e1ceb865f6c84b05e9c0b98f15ea1b8"></a>OP_GET_GLOBAL&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a1878b0c98afd38ba282c15ff90368700" name="a7e85f04e30e1c4c4607773335350fe20a1878b0c98afd38ba282c15ff90368700"></a>OP_SET_GLOBAL&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a2919243a288096a3dd8fb013f9b4ff05" name="a7e85f04e30e1c4c4607773335350fe20a2919243a288096a3dd8fb013f9b4ff05"></a>OP_DEFINE_GLOBAL&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a2919243a288096a3dd8fb013f9b4ff05" name="a7e85f04e30e1c4c4607773335350fe20a2919243a288096a3dd8fb013f9b4ff05"></a>OP_DEFINE_GLOBAL&#160;</td><td class="fielddoc"><p>Creates a new entry in the <span class="tt"><a class="el" href="structVM.html#acdd97dfa7dc0561b8397a8c24e94e71c">VM::globals</a></span> hash table and sets it to the value at the top of the stack. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a383e0c5476b2ddc1839af951b393ca17" name="a7e85f04e30e1c4c4607773335350fe20a383e0c5476b2ddc1839af951b393ca17"></a>OP_EQUAL&#160;</td><td class="fielddoc"><p>Checks the two topmost values on the stack for equality. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20addbb0006f28cdbbe905d2a40690c59cd" name="a7e85f04e30e1c4c4607773335350fe20addbb0006f28cdbbe905d2a40690c59cd"></a>OP_GREATER&#160;</td><td class="fielddoc"><p>Checks whether the topmost number on the stack is less than the one below it. </p>
@@ -250,13 +253,19 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a8064a796d29992a8e4042a55d34d69ab" name="a7e85f04e30e1c4c4607773335350fe20a8064a796d29992a8e4042a55d34d69ab"></a>OP_PRINT&#160;</td><td class="fielddoc"><p>Prints the topmost value on the stack. </p>
 </td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a098bbeea13096667b102f7fd90cbe38f" name="a7e85f04e30e1c4c4607773335350fe20a098bbeea13096667b102f7fd90cbe38f"></a>OP_CALL&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a407a76cd8c503b0f4dc14603687a77a2" name="a7e85f04e30e1c4c4607773335350fe20a407a76cd8c503b0f4dc14603687a77a2"></a>OP_CLOSURE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a407a76cd8c503b0f4dc14603687a77a2" name="a7e85f04e30e1c4c4607773335350fe20a407a76cd8c503b0f4dc14603687a77a2"></a>OP_CLOSURE&#160;</td><td class="fielddoc"><p>Creates a new closure from the function at the top of the stack. </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20aab701cd5894cd00f45b81e0065e25d79" name="a7e85f04e30e1c4c4607773335350fe20aab701cd5894cd00f45b81e0065e25d79"></a>OP_CLOSE_UPVALUE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20ad436c18b194473f5ec64c28b774e41b3" name="a7e85f04e30e1c4c4607773335350fe20ad436c18b194473f5ec64c28b774e41b3"></a>OP_RETURN&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a1f99e671caee687d352cce89c95e04c9" name="a7e85f04e30e1c4c4607773335350fe20a1f99e671caee687d352cce89c95e04c9"></a>OP_CLASS&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a9370372bd57f3cf1a8509288035a6476" name="a7e85f04e30e1c4c4607773335350fe20a9370372bd57f3cf1a8509288035a6476"></a>OP_METHOD&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a43bdd4f0b1bf4e57bee0c40c292c2312" name="a7e85f04e30e1c4c4607773335350fe20a43bdd4f0b1bf4e57bee0c40c292c2312"></a>OP_INVOKE&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a1c724ef5985b6f80949ac0fc32353a2e" name="a7e85f04e30e1c4c4607773335350fe20a1c724ef5985b6f80949ac0fc32353a2e"></a>OP_SUPER_INVOKE&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20ad436c18b194473f5ec64c28b774e41b3" name="a7e85f04e30e1c4c4607773335350fe20ad436c18b194473f5ec64c28b774e41b3"></a>OP_RETURN&#160;</td><td class="fielddoc"><p>Indicates return from a function or end of script. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a1f99e671caee687d352cce89c95e04c9" name="a7e85f04e30e1c4c4607773335350fe20a1f99e671caee687d352cce89c95e04c9"></a>OP_CLASS&#160;</td><td class="fielddoc"><p>Defines a new class. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a9370372bd57f3cf1a8509288035a6476" name="a7e85f04e30e1c4c4607773335350fe20a9370372bd57f3cf1a8509288035a6476"></a>OP_METHOD&#160;</td><td class="fielddoc"><p>Defines a new method. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a43bdd4f0b1bf4e57bee0c40c292c2312" name="a7e85f04e30e1c4c4607773335350fe20a43bdd4f0b1bf4e57bee0c40c292c2312"></a>OP_INVOKE&#160;</td><td class="fielddoc"><p>Calls a method (optimized invocation cases like <span class="tt">obj.method()</span>). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20a1c724ef5985b6f80949ac0fc32353a2e" name="a7e85f04e30e1c4c4607773335350fe20a1c724ef5985b6f80949ac0fc32353a2e"></a>OP_SUPER_INVOKE&#160;</td><td class="fielddoc"><p>Calls a superclass method (optimized invocation). </p>
+</td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20afc440549c9c1b7a63a564d339fd6eb8e" name="a7e85f04e30e1c4c4607773335350fe20afc440549c9c1b7a63a564d339fd6eb8e"></a>OP_INHERIT&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="a7e85f04e30e1c4c4607773335350fe20acbbf1db59026b95817284ae5c3d1586c" name="a7e85f04e30e1c4c4607773335350fe20acbbf1db59026b95817284ae5c3d1586c"></a>OP_GET_SUPER&#160;</td><td class="fielddoc"></td></tr>
 </table>
@@ -289,7 +298,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Creates a constant in a chunk. </p>
-<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt"><a class="el" href="structValue.html">Value</a></span> and writes the value into the <span class="tt">constants</span> field of the chunk. Takes care not to let the garbage collector delete a value too early, by putting it onto the stack of the <a class="el" href="structVM.html">VM</a>, and popping it after it is safely written into the chunk.</p>
+<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt"><a class="el" href="structValue.html">Value</a></span> and writes the value into the <span class="tt"><a class="el" href="structChunk.html#a6ef3ac2a64667a4635b414daca1196af">Chunk::constants</a></span> field of the chunk. Takes care not to let the garbage collector delete a value too early, by putting it onto the stack of the <a class="el" href="structVM.html">VM</a>, and popping it after it is safely written into the chunk.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the <a class="el" href="structVM.html">VM</a> governing the chunk. </td></tr>
@@ -389,7 +398,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Writes a byte to a chunk. </p>
-<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt">uint8_t</span> (byte) and writes the byte into the <span class="tt">code</span> field of the chunk. The byte can be an arbitrary <span class="tt">uint8_t</span> value (since this function is also used for writing instruction arguments).</p>
+<p>Takes a <span class="tt"><a class="el" href="structChunk.html" title="Code chunk type.">Chunk</a></span> and a <span class="tt">uint8_t</span> (byte) and writes the byte into the <span class="tt"><a class="el" href="structChunk.html#a3bd97432faba57c9187c7d264995b33f">Chunk::code</a></span> field of the chunk. The byte can be an arbitrary <span class="tt">uint8_t</span> value (since this function is also used for writing instruction arguments).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure. To avoid problems with freeing and garbage collection, this should always point to the same structure for a given chunk. </td></tr>

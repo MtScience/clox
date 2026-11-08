@@ -109,7 +109,9 @@ Typedefs</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9dc0c4449f366e534b0fbdcc7db54e1e" id="r_a9dc0c4449f366e534b0fbdcc7db54e1e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9dc0c4449f366e534b0fbdcc7db54e1e">initGC</a> (<a class="el" href="structGC.html">GC</a> gc[restrict static 1])</td></tr>
+<tr class="memdesc:a9dc0c4449f366e534b0fbdcc7db54e1e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a garbage collector.  <br /></td></tr>
 <tr class="memitem:ab8b7ea30b370ff79e861d11c3cbc6219" id="r_ab8b7ea30b370ff79e861d11c3cbc6219"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8b7ea30b370ff79e861d11c3cbc6219">freeGC</a> (<a class="el" href="structGC.html">GC</a> gc[restrict static 1])</td></tr>
+<tr class="memdesc:ab8b7ea30b370ff79e861d11c3cbc6219"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a garbage collector.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="ad7367140a73435d5b6fc062da55e4845" name="ad7367140a73435d5b6fc062da55e4845"></a>
@@ -158,6 +160,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Frees a garbage collector. </p>
+<p>Takes a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> and frees the memory occupied by it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector to be freed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a9dc0c4449f366e534b0fbdcc7db54e1e" name="a9dc0c4449f366e534b0fbdcc7db54e1e"></a>
@@ -174,6 +185,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initializes a garbage collector. </p>
+<p>Takes a newly-created <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> and fills in its fields, putting the structure in a well-defined state. All the pointer fields are <span class="tt">NULL</span> by default.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector to be initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

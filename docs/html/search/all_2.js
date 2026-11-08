@@ -24,7 +24,7 @@ var searchData=
   ['closure_21',['closure',['../structCallFrame.html#a69032cedac4d40b468b1f3242854f07a',1,'CallFrame']]],
   ['clox_22',['clox',['../md_README.html',1,'']]],
   ['code_23',['code',['../structChunk.html#a3bd97432faba57c9187c7d264995b33f',1,'Chunk']]],
-  ['collectgarbage_24',['collectGarbage',['../memory_8h.html#a8603a8d2a3a44892a94c06005e75dd65',1,'collectGarbage(GC *gc):&#160;memory.c'],['../memory_8c.html#a8603a8d2a3a44892a94c06005e75dd65',1,'collectGarbage(GC *gc):&#160;memory.c']]],
+  ['collectgarbage_24',['collectGarbage',['../memory_8h.html#ae0d730344c12024aa0f4b36b34b50c37',1,'collectGarbage(GC gc[static 1]):&#160;memory.c'],['../memory_8c.html#ae0d730344c12024aa0f4b36b34b50c37',1,'collectGarbage(GC gc[static 1]):&#160;memory.c']]],
   ['common_2eh_25',['common.h',['../common_8h.html',1,'']]],
   ['compilationstate_26',['CompilationState',['../structCompilationState.html',1,'']]],
   ['compile_27',['compile',['../compiler_8h.html#acbb959fba389512febc229e7f5a01218',1,'compile(VM vm[static 1], char const *source):&#160;compiler.c'],['../compiler_8c.html#acbb959fba389512febc229e7f5a01218',1,'compile(VM vm[static 1], char const *source):&#160;compiler.c']]],

@@ -99,7 +99,9 @@ $(function(){initNavTree('native_8c.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a213aaf98e0a4b0e15f921789bb8550c8" id="r_a213aaf98e0a4b0e15f921789bb8550c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a213aaf98e0a4b0e15f921789bb8550c8">defineNative</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], char const *name, <a class="el" href="object_8h.html#a1ee07220ce91996c56464d1bd4cb4634">NativeFn</a> <a class="el" href="compiler_8c.html#a1f38dd147c38700420dfc36aedabf6ff">function</a>)</td></tr>
+<tr class="memdesc:a213aaf98e0a4b0e15f921789bb8550c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a Lox native function.  <br /></td></tr>
 <tr class="memitem:a16ebc30963ed0e39d342852ea5db8dce" id="r_a16ebc30963ed0e39d342852ea5db8dce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16ebc30963ed0e39d342852ea5db8dce">clockNative</a> (uint8_t argCount, <a class="el" href="structValue.html">Value</a> *args)</td></tr>
+<tr class="memdesc:a16ebc30963ed0e39d342852ea5db8dce"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU clock function.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a16ebc30963ed0e39d342852ea5db8dce" name="a16ebc30963ed0e39d342852ea5db8dce"></a>
@@ -120,6 +122,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>CPU clock function. </p>
+<p>An example Lox native function that implements timing. Defined in terms of C's <span class="tt">clock()</span> function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argCount</td><td>Number of arguments the function takes. <b>Unused</b>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">args</td><td>Array of arguments. <b>Unused</b>.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The result of C's <span class="tt">clock()</span> divided by <span class="tt">CLOCKS_PER_SEC</span>, wrapped in a Lox value. </dd></dl>
 
 </div>
 </div>
@@ -146,6 +159,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Defines a Lox native function. </p>
+<p>Takes a <span class="tt"><a class="el" href="structVM.html">VM</a></span>, a pointer to a C function that implements the behaviour and the string representing the function name and creates a reference to the function in the <span class="tt"><a class="el" href="structVM.html#acdd97dfa7dc0561b8397a8c24e94e71c">VM::globals</a></span> field of the vm.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine in which to define the function. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>String that contains the function name. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">function</td><td>Pointer to the function of signature <span class="tt"><a class="el" href="object_8h.html#a1ee07220ce91996c56464d1bd4cb4634">NativeFn</a></span>. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
