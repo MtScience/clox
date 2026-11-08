@@ -100,10 +100,15 @@ $(function(){initNavTree('value_8c.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad40f4c9dd14d39dfca6e8c6dcd32689e" id="r_ad40f4c9dd14d39dfca6e8c6dcd32689e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad40f4c9dd14d39dfca6e8c6dcd32689e">initValueArray</a> (<a class="el" href="structValueArray.html">ValueArray</a> array[restrict static 1])</td></tr>
+<tr class="memdesc:ad40f4c9dd14d39dfca6e8c6dcd32689e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a value array.  <br /></td></tr>
 <tr class="memitem:aa0388ba7c214d14e98d0d6193313ded3" id="r_aa0388ba7c214d14e98d0d6193313ded3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0388ba7c214d14e98d0d6193313ded3">freeValueArray</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structValueArray.html">ValueArray</a> array[restrict static 1])</td></tr>
+<tr class="memdesc:aa0388ba7c214d14e98d0d6193313ded3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a value array.  <br /></td></tr>
 <tr class="memitem:af49be27b9c2efc7d109ae781c0740c71" id="r_af49be27b9c2efc7d109ae781c0740c71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af49be27b9c2efc7d109ae781c0740c71">writeValueArray</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structValueArray.html">ValueArray</a> array[static 1], <a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:af49be27b9c2efc7d109ae781c0740c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a value to an array.  <br /></td></tr>
 <tr class="memitem:a43e6f5fd4daa9c682a5e4936fbe675eb" id="r_a43e6f5fd4daa9c682a5e4936fbe675eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43e6f5fd4daa9c682a5e4936fbe675eb">valuesEqual</a> (<a class="el" href="structValue.html">Value</a> a, <a class="el" href="structValue.html">Value</a> b)</td></tr>
+<tr class="memdesc:a43e6f5fd4daa9c682a5e4936fbe675eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests values for equality.  <br /></td></tr>
 <tr class="memitem:a82c711c20ecc604872af80107c561375" id="r_a82c711c20ecc604872af80107c561375"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82c711c20ecc604872af80107c561375">printValue</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a82c711c20ecc604872af80107c561375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a value.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="aa0388ba7c214d14e98d0d6193313ded3" name="aa0388ba7c214d14e98d0d6193313ded3"></a>
@@ -125,6 +130,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Frees a value array. </p>
+<p>Takes a <span class="tt"><a class="el" href="structValueArray.html" title="Array of values type.">ValueArray</a></span> and frees the memory occupied by it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure. <span class="tt">gc</span> must point to the same structure that was used for filling the array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>Non-<span class="tt">NULL</span> pointer to the array to be freed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ad40f4c9dd14d39dfca6e8c6dcd32689e" name="ad40f4c9dd14d39dfca6e8c6dcd32689e"></a>
@@ -142,6 +157,15 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Initializes a value array. </p>
+<p>Takes a newly-created <span class="tt"><a class="el" href="structValueArray.html" title="Array of values type.">ValueArray</a></span> and fills in its fields, putting the structure in a well-defined state.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">array</td><td>Non-<span class="tt">NULL</span> pointer to the chunk to be initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a82c711c20ecc604872af80107c561375" name="a82c711c20ecc604872af80107c561375"></a>
@@ -158,6 +182,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Prints a value. </p>
+<p>Takes a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> and prints its numeric value, boolean value, <span class="tt">nil</span> or object representation, depending on what its <span class="tt"><a class="el" href="structValue.html#ab45dfd167290d4324ba4832abcc4064d">Value::type</a></span> is (or its bit pattern, in case <span class="tt">NAN_BOXING</span> is defined).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to be printed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -179,6 +212,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Tests values for equality. </p>
+<p>Checks whether two <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>s are equal. For booleans and numbers it uses the regular value comparison; for Lox objects it uses pointer equality (basically functioning like Python's <span class="tt">is</span> operator).</p>
+<p>This function is marked as <span class="tt">[[reproducible]]</span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>Left operand. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Right operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Equality test result. </dd></dl>
 
 </div>
 </div>
@@ -205,6 +250,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Writes a value to an array. </p>
+<p>Takes a <span class="tt"><a class="el" href="structValueArray.html" title="Array of values type.">ValueArray</a></span> and a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> and writes the value into the <span class="tt"><a class="el" href="structValueArray.html#ab4c919f5e88d92b18febe946d17dae7b">ValueArray::values</a></span> field.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure. To avoid problems with freeing and garbage collection, this should always point to the same structure for a given value array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>Non-<span class="tt">NULL</span> pointer to the array to write the value into. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -219,7 +219,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Frees all objects. </p>
-<p><span class="tt"><a class="el" href="memory_8h.html#a2a30af439455d74aee4e58afe689ea1f" title="Frees all objects.">freeObjects()</a></span> free all the objects managed in a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> (references to which are kep in <span class="tt"><a class="el" href="structGC.html#a7921751f8b68a9cd95521f149ced8082">GC::objects</a></span>). If there are several garbage collectors (<em>e.g</em>., when using several <span class="tt"><a class="el" href="structVM.html">VM</a></span>'s in separate threads), this function will have to be called for each of them.</p>
+<p><span class="tt"><a class="el" href="memory_8h.html#a2a30af439455d74aee4e58afe689ea1f" title="Frees all objects.">freeObjects()</a></span> free all the objects managed in a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> (references to which are kep in <span class="tt"><a class="el" href="structGC.html#a7921751f8b68a9cd95521f149ced8082">GC::objects</a></span>). If there are several garbage collectors (<em>e.g</em>., when using several <span class="tt"><a class="el" href="structVM.html" title="Virtual machine type.">VM</a></span>s in separate threads), this function will have to be called for each of them.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector, whose managed objects are to be freed. </td></tr>

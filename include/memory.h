@@ -115,7 +115,7 @@ void* reallocate(GC gc[static 1], void* pointer, size_t oldSize, size_t newSize)
  * \brief Frees all objects.
  *
  * `freeObjects()` free all the objects managed in a `GC` (references to which are kep in `GC::objects`).
- * If there are several garbage collectors (\e e.g., when using several `VM`'s in separate threads),
+ * If there are several garbage collectors (\e e.g., when using several `VM`s in separate threads),
  * this function will have to be called for each of them.
  *
  * \param[in] gc Non-`NULL` pointer to the garbage collector, whose managed objects are to be freed.

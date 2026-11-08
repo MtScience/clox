@@ -19,7 +19,7 @@ typedef struct VM VM;
  */
 typedef enum : uint8_t {
     OP_CONSTANT,      /**< Reads the value specified by the argument from the
-                       * `Chunk::constants` field of the current chunk and pushes it onto the stack. */
+                       *   `Chunk::constants` field of the current chunk and pushes it onto the stack. */
     OP_NEGATE,        /**< Negates the number at the top of the stack. */
     OP_NIL,           /**< Pushes a `nil` value onto the stack. */
     OP_TRUE,          /**< Pushes a `true` value onto the stack. */
@@ -45,19 +45,19 @@ typedef enum : uint8_t {
     OP_MULTIPLY,      /**< Multiplies the two topmost numbers on the stack. */
     OP_DIVIDE,        /**< Divides the second number from the top by the topmost number on the stack. */
     OP_NOT,           /**< Negates the boolean at the top of the stack. */
-    OP_LOOP,          /**< Unconditionally decreases the instruction pointer by the amount specified by argument. */
-    OP_JUMP,          /**< Unconditionally increases the instruction pointer by the amount specified by argument. */
+    OP_LOOP,          /**< Unconditionally decreases the instruction pointer by the amount specified by the argument. */
+    OP_JUMP,          /**< Unconditionally increases the instruction pointer by the amount specified by the argument. */
     OP_JUMP_IF_FALSE, /**< Increases the instruction pointer if the topmost value on the stack is false. */
     OP_PRINT,         /**< Prints the topmost value on the stack. */
-    OP_CALL,          /**<  */
+    OP_CALL,          /**< Pushes a new call frame onto the stack. */
     OP_CLOSURE,       /**< Creates a new closure from the function at the top of the stack. */
-    OP_CLOSE_UPVALUE, /**<  */
+    OP_CLOSE_UPVALUE, /**< Copies a value from the stack into the heap. */
     OP_RETURN,        /**< Indicates return from a function or end of script. */
     OP_CLASS,         /**< Defines a new class. */
     OP_METHOD,        /**< Defines a new method. */
     OP_INVOKE,        /**< Calls a method (optimized invocation cases like `obj.method()`). */
     OP_SUPER_INVOKE,  /**< Calls a superclass method (optimized invocation). */
-    OP_INHERIT,       /**<  */
+    OP_INHERIT,       /**< Copies all the methods from the superclass to the subclass' `ObjClass::methods` table. */
     OP_GET_SUPER,     /**<  */
 } OpCode;
 
@@ -86,7 +86,6 @@ typedef struct {
 
 
 /* Interface */
-
 
 /**
  * \brief Initializes a chunk.

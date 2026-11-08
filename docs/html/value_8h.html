@@ -98,14 +98,20 @@ $(function(){initNavTree('value_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:Value" id="r_Value"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structValue.html">Value</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lox value type.  <a href="structValue.html#details">More...</a><br /></td></tr>
 <tr class="memitem:ValueArray" id="r_ValueArray"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structValueArray.html">ValueArray</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array of values type.  <a href="structValueArray.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a965c744818a6d6fe881812c7ef6a26c9" id="r_a965c744818a6d6fe881812c7ef6a26c9"><td class="memItemLeft" align="right" valign="top">typedef struct ObjString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a965c744818a6d6fe881812c7ef6a26c9">ObjString</a></td></tr>
+<tr class="memdesc:a965c744818a6d6fe881812c7ef6a26c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declares the <span class="tt"><a class="el" href="structObjString.html">ObjString</a></span> structure.  <br /></td></tr>
 <tr class="memitem:a48d12acacfa93318dba8ceb452bd1996" id="r_a48d12acacfa93318dba8ceb452bd1996"><td class="memItemLeft" align="right" valign="top">typedef struct ObjFunction&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48d12acacfa93318dba8ceb452bd1996">ObjFunction</a></td></tr>
+<tr class="memdesc:a48d12acacfa93318dba8ceb452bd1996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declares the <span class="tt"><a class="el" href="structObjFunction.html">ObjFunction</a></span> structure.  <br /></td></tr>
 <tr class="memitem:af7c8141af92ee70e89e182cf9b9234f3" id="r_af7c8141af92ee70e89e182cf9b9234f3"><td class="memItemLeft" align="right" valign="top">typedef struct ObjClosure&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af7c8141af92ee70e89e182cf9b9234f3">ObjClosure</a></td></tr>
+<tr class="memdesc:af7c8141af92ee70e89e182cf9b9234f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declares the <span class="tt"><a class="el" href="structObjClosure.html">ObjClosure</a></span> structure.  <br /></td></tr>
 <tr class="memitem:a1100b3c2e5e98519ab6d0ecbf26a27d0" id="r_a1100b3c2e5e98519ab6d0ecbf26a27d0"><td class="memItemLeft" align="right" valign="top">typedef struct ObjUpvalue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1100b3c2e5e98519ab6d0ecbf26a27d0">ObjUpvalue</a></td></tr>
+<tr class="memdesc:a1100b3c2e5e98519ab6d0ecbf26a27d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward declares the <span class="tt"><a class="el" href="structObjUpvalue.html">ObjUpvalue</a></span> structure.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -114,25 +120,42 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a374c860c922f0b389e0291d92c099c35a92c4e89ee247ed0b07e8920bbba1a718">VAL_NUMBER</a>
 , <a class="el" href="#a374c860c922f0b389e0291d92c099c35a01982aa56ac573db6831d13db32cafbf">VAL_OBJ</a>
  }</td></tr>
+<tr class="memdesc:a374c860c922f0b389e0291d92c099c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lox value types enumeration.  <a href="#a374c860c922f0b389e0291d92c099c35">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:acba36ea67c58f5fac91bda1c7b5a5ba7" id="r_acba36ea67c58f5fac91bda1c7b5a5ba7"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acba36ea67c58f5fac91bda1c7b5a5ba7">isBool</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:acba36ea67c58f5fac91bda1c7b5a5ba7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a boolean.  <br /></td></tr>
 <tr class="memitem:aba23e093b6a447bd24f5011ec0424ff3" id="r_aba23e093b6a447bd24f5011ec0424ff3"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aba23e093b6a447bd24f5011ec0424ff3">isNil</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:aba23e093b6a447bd24f5011ec0424ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a <span class="tt">nil</span> value.  <br /></td></tr>
 <tr class="memitem:a92ffca3ce18d7473f38bb06f74d81b63" id="r_a92ffca3ce18d7473f38bb06f74d81b63"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92ffca3ce18d7473f38bb06f74d81b63">isNumber</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a92ffca3ce18d7473f38bb06f74d81b63"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a number.  <br /></td></tr>
 <tr class="memitem:a558ca8bcfb35bce37c1f599bdd663abb" id="r_a558ca8bcfb35bce37c1f599bdd663abb"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a558ca8bcfb35bce37c1f599bdd663abb">isObj</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a558ca8bcfb35bce37c1f599bdd663abb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a Lox object.  <br /></td></tr>
 <tr class="memitem:a018cc0a3f95997d11229d55981b568c5" id="r_a018cc0a3f95997d11229d55981b568c5"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a018cc0a3f95997d11229d55981b568c5">asBool</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a018cc0a3f95997d11229d55981b568c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a C boolean from a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>.  <br /></td></tr>
 <tr class="memitem:a9809720f013f86bb946c62e1df2074a0" id="r_a9809720f013f86bb946c62e1df2074a0"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9809720f013f86bb946c62e1df2074a0">asNumber</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a9809720f013f86bb946c62e1df2074a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts a C <span class="tt">double</span> from a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>.  <br /></td></tr>
 <tr class="memitem:a5259846beab61d4f0aedebec87685a7a" id="r_a5259846beab61d4f0aedebec87685a7a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObj.html">Obj</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5259846beab61d4f0aedebec87685a7a">asObj</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a5259846beab61d4f0aedebec87685a7a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extracts an <span class="tt"><a class="el" href="structObj.html">Obj</a></span> pointer from a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>.  <br /></td></tr>
 <tr class="memitem:a2f56c56f4fc2f777584a4d22a58f520b" id="r_a2f56c56f4fc2f777584a4d22a58f520b"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f56c56f4fc2f777584a4d22a58f520b">boolVal</a> (bool value)</td></tr>
+<tr class="memdesc:a2f56c56f4fc2f777584a4d22a58f520b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox boolean value.  <br /></td></tr>
 <tr class="memitem:ab6ecea82b4b8b6867a7c9bbb08c7c93f" id="r_ab6ecea82b4b8b6867a7c9bbb08c7c93f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6ecea82b4b8b6867a7c9bbb08c7c93f">nilVal</a> (void)</td></tr>
+<tr class="memdesc:ab6ecea82b4b8b6867a7c9bbb08c7c93f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox <span class="tt">nil</span> value.  <br /></td></tr>
 <tr class="memitem:a5703bfc0b8321b3571d49c170f85840f" id="r_a5703bfc0b8321b3571d49c170f85840f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5703bfc0b8321b3571d49c170f85840f">numberVal</a> (double value)</td></tr>
+<tr class="memdesc:a5703bfc0b8321b3571d49c170f85840f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox numeric value.  <br /></td></tr>
 <tr class="memitem:a05abe97bcefa27c473068b61f809b81e" id="r_a05abe97bcefa27c473068b61f809b81e"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a05abe97bcefa27c473068b61f809b81e">objVal</a> (<a class="el" href="structObj.html">Obj</a> *value)</td></tr>
+<tr class="memdesc:a05abe97bcefa27c473068b61f809b81e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox object value.  <br /></td></tr>
 <tr class="memitem:ad40f4c9dd14d39dfca6e8c6dcd32689e" id="r_ad40f4c9dd14d39dfca6e8c6dcd32689e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad40f4c9dd14d39dfca6e8c6dcd32689e">initValueArray</a> (<a class="el" href="structValueArray.html">ValueArray</a> array[restrict static 1])</td></tr>
+<tr class="memdesc:ad40f4c9dd14d39dfca6e8c6dcd32689e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a value array.  <br /></td></tr>
 <tr class="memitem:aa0388ba7c214d14e98d0d6193313ded3" id="r_aa0388ba7c214d14e98d0d6193313ded3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0388ba7c214d14e98d0d6193313ded3">freeValueArray</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structValueArray.html">ValueArray</a> array[restrict static 1])</td></tr>
+<tr class="memdesc:aa0388ba7c214d14e98d0d6193313ded3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a value array.  <br /></td></tr>
 <tr class="memitem:af49be27b9c2efc7d109ae781c0740c71" id="r_af49be27b9c2efc7d109ae781c0740c71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af49be27b9c2efc7d109ae781c0740c71">writeValueArray</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structValueArray.html">ValueArray</a> array[static 1], <a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:af49be27b9c2efc7d109ae781c0740c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a value to an array.  <br /></td></tr>
 <tr class="memitem:a43e6f5fd4daa9c682a5e4936fbe675eb" id="r_a43e6f5fd4daa9c682a5e4936fbe675eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43e6f5fd4daa9c682a5e4936fbe675eb">valuesEqual</a> (<a class="el" href="structValue.html">Value</a> a, <a class="el" href="structValue.html">Value</a> b)</td></tr>
+<tr class="memdesc:a43e6f5fd4daa9c682a5e4936fbe675eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests values for equality.  <br /></td></tr>
 <tr class="memitem:a82c711c20ecc604872af80107c561375" id="r_a82c711c20ecc604872af80107c561375"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82c711c20ecc604872af80107c561375">printValue</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a82c711c20ecc604872af80107c561375"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a value.  <br /></td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="af7c8141af92ee70e89e182cf9b9234f3" name="af7c8141af92ee70e89e182cf9b9234f3"></a>
@@ -146,6 +169,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Forward declares the <span class="tt"><a class="el" href="structObjClosure.html">ObjClosure</a></span> structure. </p>
 
 </div>
 </div>
@@ -161,6 +186,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Forward declares the <span class="tt"><a class="el" href="structObjFunction.html">ObjFunction</a></span> structure. </p>
+
 </div>
 </div>
 <a id="a965c744818a6d6fe881812c7ef6a26c9" name="a965c744818a6d6fe881812c7ef6a26c9"></a>
@@ -174,6 +201,8 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Forward declares the <span class="tt"><a class="el" href="structObjString.html">ObjString</a></span> structure. </p>
 
 </div>
 </div>
@@ -189,6 +218,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Forward declares the <span class="tt"><a class="el" href="structObjUpvalue.html">ObjUpvalue</a></span> structure. </p>
+
 </div>
 </div>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
@@ -203,11 +234,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Lox value types enumeration. </p>
+<p>An <span class="tt">enum</span> that lists all the types a Lox value can have. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35a0f0f6f8ec1389872c13b69a7ee1cb1b0" name="a374c860c922f0b389e0291d92c099c35a0f0f6f8ec1389872c13b69a7ee1cb1b0"></a>VAL_BOOL&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35ac853239f568bd51a89f8523bc112abee" name="a374c860c922f0b389e0291d92c099c35ac853239f568bd51a89f8523bc112abee"></a>VAL_NIL&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35a92c4e89ee247ed0b07e8920bbba1a718" name="a374c860c922f0b389e0291d92c099c35a92c4e89ee247ed0b07e8920bbba1a718"></a>VAL_NUMBER&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35a01982aa56ac573db6831d13db32cafbf" name="a374c860c922f0b389e0291d92c099c35a01982aa56ac573db6831d13db32cafbf"></a>VAL_OBJ&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35a0f0f6f8ec1389872c13b69a7ee1cb1b0" name="a374c860c922f0b389e0291d92c099c35a0f0f6f8ec1389872c13b69a7ee1cb1b0"></a>VAL_BOOL&#160;</td><td class="fielddoc"><p>Specifies a boolean value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35ac853239f568bd51a89f8523bc112abee" name="a374c860c922f0b389e0291d92c099c35ac853239f568bd51a89f8523bc112abee"></a>VAL_NIL&#160;</td><td class="fielddoc"><p>Specifies a <span class="tt">nil</span> value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35a92c4e89ee247ed0b07e8920bbba1a718" name="a374c860c922f0b389e0291d92c099c35a92c4e89ee247ed0b07e8920bbba1a718"></a>VAL_NUMBER&#160;</td><td class="fielddoc"><p>Specifies a numeric value. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a374c860c922f0b389e0291d92c099c35a01982aa56ac573db6831d13db32cafbf" name="a374c860c922f0b389e0291d92c099c35a01982aa56ac573db6831d13db32cafbf"></a>VAL_OBJ&#160;</td><td class="fielddoc"><p>Specifies a value that keeps an object reference. </p>
+</td></tr>
 </table>
 
 </div>
@@ -236,6 +274,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Extracts a C boolean from a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to extract data from.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The boolean value held in the structure.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#a9809720f013f86bb946c62e1df2074a0" title="Extracts a C double from a Value.">asNumber()</a></span>, <span class="tt"><a class="el" href="#a5259846beab61d4f0aedebec87685a7a" title="Extracts an Obj pointer from a Value.">asObj()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="a9809720f013f86bb946c62e1df2074a0" name="a9809720f013f86bb946c62e1df2074a0"></a>
@@ -260,6 +308,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Extracts a C <span class="tt">double</span> from a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to extract data from.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The numeric value held in the structure.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#a018cc0a3f95997d11229d55981b568c5" title="Extracts a C boolean from a Value.">asBool()</a></span>, <span class="tt"><a class="el" href="#a5259846beab61d4f0aedebec87685a7a" title="Extracts an Obj pointer from a Value.">asObj()</a></span> </dd></dl>
 
 </div>
 </div>
@@ -286,6 +344,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Extracts an <span class="tt"><a class="el" href="structObj.html">Obj</a></span> pointer from a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to extract data from.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer held in the structure.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#a018cc0a3f95997d11229d55981b568c5" title="Extracts a C boolean from a Value.">asBool()</a></span>, <span class="tt"><a class="el" href="#a9809720f013f86bb946c62e1df2074a0" title="Extracts a C double from a Value.">asNumber()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="a2f56c56f4fc2f777584a4d22a58f520b" name="a2f56c56f4fc2f777584a4d22a58f520b"></a>
@@ -311,6 +379,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a Lox boolean value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>C boolean value that the resulting Lox value should represent.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Structure that represents a Lox boolean value.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#ab6ecea82b4b8b6867a7c9bbb08c7c93f" title="Constructs a Lox nil value.">nilVal()</a></span>, <span class="tt"><a class="el" href="#a5703bfc0b8321b3571d49c170f85840f" title="Constructs a Lox numeric value.">numberVal()</a></span>, <span class="tt"><a class="el" href="#a05abe97bcefa27c473068b61f809b81e" title="Constructs a Lox object value.">objVal()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="aa0388ba7c214d14e98d0d6193313ded3" name="aa0388ba7c214d14e98d0d6193313ded3"></a>
@@ -332,6 +410,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Frees a value array. </p>
+<p>Takes a <span class="tt"><a class="el" href="structValueArray.html" title="Array of values type.">ValueArray</a></span> and frees the memory occupied by it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure. <span class="tt">gc</span> must point to the same structure that was used for filling the array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>Non-<span class="tt">NULL</span> pointer to the array to be freed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ad40f4c9dd14d39dfca6e8c6dcd32689e" name="ad40f4c9dd14d39dfca6e8c6dcd32689e"></a>
@@ -348,6 +436,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initializes a value array. </p>
+<p>Takes a newly-created <span class="tt"><a class="el" href="structValueArray.html" title="Array of values type.">ValueArray</a></span> and fills in its fields, putting the structure in a well-defined state.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">array</td><td>Non-<span class="tt">NULL</span> pointer to the chunk to be initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -374,6 +471,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a boolean. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to be tested.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Test result.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#aba23e093b6a447bd24f5011ec0424ff3" title="Checks whether a Value represents a nil value.">isNil()</a></span>, <span class="tt"><a class="el" href="#a92ffca3ce18d7473f38bb06f74d81b63" title="Checks whether a Value represents a number.">isNumber()</a></span>, <span class="tt"><a class="el" href="#a558ca8bcfb35bce37c1f599bdd663abb" title="Checks whether a Value represents a Lox object.">isObj()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="aba23e093b6a447bd24f5011ec0424ff3" name="aba23e093b6a447bd24f5011ec0424ff3"></a>
@@ -398,6 +505,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a <span class="tt">nil</span> value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to be tested.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Test result.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#acba36ea67c58f5fac91bda1c7b5a5ba7" title="Checks whether a Value represents a boolean.">isBool()</a></span>, <span class="tt"><a class="el" href="#a92ffca3ce18d7473f38bb06f74d81b63" title="Checks whether a Value represents a number.">isNumber()</a></span>, <span class="tt"><a class="el" href="#a558ca8bcfb35bce37c1f599bdd663abb" title="Checks whether a Value represents a Lox object.">isObj()</a></span> </dd></dl>
 
 </div>
 </div>
@@ -424,6 +541,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a number. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to be tested.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Test result.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#acba36ea67c58f5fac91bda1c7b5a5ba7" title="Checks whether a Value represents a boolean.">isBool()</a></span>, <span class="tt"><a class="el" href="#aba23e093b6a447bd24f5011ec0424ff3" title="Checks whether a Value represents a nil value.">isNil()</a></span>, <span class="tt"><a class="el" href="#a558ca8bcfb35bce37c1f599bdd663abb" title="Checks whether a Value represents a Lox object.">isObj()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="a558ca8bcfb35bce37c1f599bdd663abb" name="a558ca8bcfb35bce37c1f599bdd663abb"></a>
@@ -448,6 +575,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks whether a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> represents a Lox object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The structure to be tested.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Test result.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#acba36ea67c58f5fac91bda1c7b5a5ba7" title="Checks whether a Value represents a boolean.">isBool()</a></span>, <span class="tt"><a class="el" href="#aba23e093b6a447bd24f5011ec0424ff3" title="Checks whether a Value represents a nil value.">isNil()</a></span>, <span class="tt"><a class="el" href="#a92ffca3ce18d7473f38bb06f74d81b63" title="Checks whether a Value represents a number.">isNumber()</a></span> </dd></dl>
 
 </div>
 </div>
@@ -474,6 +611,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a Lox <span class="tt">nil</span> value. </p>
+<dl class="section return"><dt>Returns</dt><dd>Structure that represents a Lox <span class="tt">nil</span> value.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#a2f56c56f4fc2f777584a4d22a58f520b" title="Constructs a Lox boolean value.">boolVal()</a></span>, <span class="tt"><a class="el" href="#a5703bfc0b8321b3571d49c170f85840f" title="Constructs a Lox numeric value.">numberVal()</a></span>, <span class="tt"><a class="el" href="#a05abe97bcefa27c473068b61f809b81e" title="Constructs a Lox object value.">objVal()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="a5703bfc0b8321b3571d49c170f85840f" name="a5703bfc0b8321b3571d49c170f85840f"></a>
@@ -498,6 +639,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Constructs a Lox numeric value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Numeric value of the structure being constructed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Structure that represents a Lox numeric value.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#a2f56c56f4fc2f777584a4d22a58f520b" title="Constructs a Lox boolean value.">boolVal()</a></span>, <span class="tt"><a class="el" href="#ab6ecea82b4b8b6867a7c9bbb08c7c93f" title="Constructs a Lox nil value.">nilVal()</a></span>, <span class="tt"><a class="el" href="#a05abe97bcefa27c473068b61f809b81e" title="Constructs a Lox object value.">objVal()</a></span> </dd></dl>
 
 </div>
 </div>
@@ -524,6 +675,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Constructs a Lox object value. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>Pointer to the C object that represents a Lox object (string, function, <em>etc</em>.).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Structure that represents a Lox object.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#a2f56c56f4fc2f777584a4d22a58f520b" title="Constructs a Lox boolean value.">boolVal()</a></span>, <span class="tt"><a class="el" href="#ab6ecea82b4b8b6867a7c9bbb08c7c93f" title="Constructs a Lox nil value.">nilVal()</a></span>, <span class="tt"><a class="el" href="#a5703bfc0b8321b3571d49c170f85840f" title="Constructs a Lox numeric value.">numberVal()</a></span> </dd></dl>
+
 </div>
 </div>
 <a id="a82c711c20ecc604872af80107c561375" name="a82c711c20ecc604872af80107c561375"></a>
@@ -540,6 +701,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Prints a value. </p>
+<p>Takes a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> and prints its numeric value, boolean value, <span class="tt">nil</span> or object representation, depending on what its <span class="tt"><a class="el" href="structValue.html#ab45dfd167290d4324ba4832abcc4064d">Value::type</a></span> is (or its bit pattern, in case <span class="tt">NAN_BOXING</span> is defined).</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to be printed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -561,6 +731,18 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Tests values for equality. </p>
+<p>Checks whether two <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>s are equal. For booleans and numbers it uses the regular value comparison; for Lox objects it uses pointer equality (basically functioning like Python's <span class="tt">is</span> operator).</p>
+<p>This function is marked as <span class="tt">[[reproducible]]</span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">a</td><td>Left operand. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">b</td><td>Right operand.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Equality test result. </dd></dl>
 
 </div>
 </div>
@@ -587,6 +769,17 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Writes a value to an array. </p>
+<p>Takes a <span class="tt"><a class="el" href="structValueArray.html" title="Array of values type.">ValueArray</a></span> and a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> and writes the value into the <span class="tt"><a class="el" href="structValueArray.html#ab4c919f5e88d92b18febe946d17dae7b">ValueArray::values</a></span> field.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure. To avoid problems with freeing and garbage collection, this should always point to the same structure for a given value array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">array</td><td>Non-<span class="tt">NULL</span> pointer to the array to write the value into. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to be written. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

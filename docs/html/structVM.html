@@ -92,6 +92,9 @@ $(function(){initNavTree('structVM.html','',''); });
 </div><!--header-->
 <div class="contents">
 
+<p>Virtual machine type.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="vm_8h_source.html">vm.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -106,7 +109,10 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ad4ffe477834e8db3b0ad4a45f73dae0c" id="r_ad4ffe477834e8db3b0ad4a45f73dae0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjUpvalue.html">ObjUpvalue</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad4ffe477834e8db3b0ad4a45f73dae0c">openUpvalues</a></td></tr>
 <tr class="memitem:abbd8d47840c22bd8f5c153ce9d76ea51" id="r_abbd8d47840c22bd8f5c153ce9d76ea51"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structGC.html">GC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abbd8d47840c22bd8f5c153ce9d76ea51">gc</a></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Virtual machine type. </p>
+<p>A <span class="tt">struct</span> that represents a Lox virtual machine. It keeps a call stack, a garbage collector, references to all the strings in the user's code and other data. </p>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="a8594d9bc288ecfc9dc9d07208b7bc773" name="a8594d9bc288ecfc9dc9d07208b7bc773"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8594d9bc288ecfc9dc9d07208b7bc773">&#9670;&#160;</a></span>frameCount</h2>
 
@@ -118,6 +124,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Number of currently active call frames. </p>
 
 </div>
 </div>
@@ -132,6 +139,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>List of currently active call frames. </p>
 
 </div>
 </div>
@@ -146,6 +154,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The virtual machine's associated garbage collector. </p>
 
 </div>
 </div>
@@ -160,6 +169,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Hash map of all the global names in the code being run. </p>
 
 </div>
 </div>
@@ -174,6 +184,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Name for class initializer methods. </p>
 
 </div>
 </div>
@@ -188,6 +199,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Linked list of <span class="tt"><a class="el" href="structObjUpvalue.html">ObjUpvalue</a></span>s referring to values still on the stack. </p>
 
 </div>
 </div>
@@ -202,6 +214,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The value stack. </p>
 
 </div>
 </div>
@@ -216,6 +229,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Pointer to the stack slot 1 past the topmost occupied one. </p>
 
 </div>
 </div>
@@ -230,6 +244,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Hash set of all the strings in the code (including identifiers). Used for string interning. </p>
 
 </div>
 </div>

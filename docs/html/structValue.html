@@ -92,6 +92,9 @@ $(function(){initNavTree('structValue.html','',''); });
 </div><!--header-->
 <div class="contents">
 
+<p>Lox value type.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="value_8h_source.html">value.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -103,7 +106,10 @@ Data Fields</h2></td></tr>
 <tr class="memitem:ad62bee583c861666e28e2106f5b6f996" id="r_ad62bee583c861666e28e2106f5b6f996"><td class="memItemLeft anonEnd" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad62bee583c861666e28e2106f5b6f996">as</a></td></tr>
 <tr class="memitem:ab45dfd167290d4324ba4832abcc4064d" id="r_ab45dfd167290d4324ba4832abcc4064d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="value_8h.html#a374c860c922f0b389e0291d92c099c35">ValueType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab45dfd167290d4324ba4832abcc4064d">type</a></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Lox value type. </p>
+<p>A <span class="tt">struct</span> that represents a Lox value. Consists only of the value's bit pattern and a type tag, which specifies what that pattern actually holds. </p>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="ad62bee583c861666e28e2106f5b6f996" name="ad62bee583c861666e28e2106f5b6f996"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad62bee583c861666e28e2106f5b6f996">&#9670;&#160;</a></span>[union]</h2>
 
@@ -115,6 +121,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Actual value, kept as a <span class="tt">union</span> to allow for bit pattern reinterpretation. </p>
 
 </div>
 </div>
@@ -129,6 +136,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Treats a C value as a boolean. </p>
 
 </div>
 </div>
@@ -143,6 +151,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Treats a C value as a <span class="tt">double</span>. </p>
 
 </div>
 </div>
@@ -157,6 +166,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Treats a C value as a reference to a Lox object. </p>
 
 </div>
 </div>
@@ -171,6 +181,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Type tag. </p>
 
 </div>
 </div>

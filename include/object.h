@@ -99,26 +99,26 @@ bool isObjType(Value value, ObjType type) {
     return isObj(value) && asObj(value)->type == type;
 }
 
-static inline ObjType objType(Value value)       { return asObj(value)->type;                 }
-static inline bool    isString(Value value)      { return isObjType(value, OBJ_STRING);       }
-static inline bool    isFunction(Value value)    { return isObjType(value, OBJ_FUNCTION);     }
-static inline bool    isNative(Value value)      { return isObjType(value, OBJ_NATIVE);       }
-static inline bool    isClosure(Value value)     { return isObjType(value, OBJ_CLOSURE);      }
-static inline bool    isClass(Value value)       { return isObjType(value, OBJ_CLASS);        }
-static inline bool    isInstance(Value value)    { return isObjType(value, OBJ_INSTANCE);     }
-static inline bool    isBoundMethod(Value value) { return isObjType(value, OBJ_BOUND_METHOD); }
+static inline ObjType objType(Value value) { return asObj(value)->type; }
+static inline bool isString(Value value) { return isObjType(value, OBJ_STRING); }
+static inline bool isFunction(Value value) { return isObjType(value, OBJ_FUNCTION); }
+static inline bool isNative(Value value) { return isObjType(value, OBJ_NATIVE); }
+static inline bool isClosure(Value value) { return isObjType(value, OBJ_CLOSURE); }
+static inline bool isClass(Value value) { return isObjType(value, OBJ_CLASS); }
+static inline bool isInstance(Value value) { return isObjType(value, OBJ_INSTANCE); }
+static inline bool isBoundMethod(Value value) { return isObjType(value, OBJ_BOUND_METHOD); }
 
 
 /* Type conversions */
 
-static inline char*           asCString(Value value)     { return ((ObjString*)asObj(value))->chars;    }
-static inline ObjString*      asString(Value value)      { return (ObjString*)asObj(value);             }
-static inline ObjFunction*    asFunction(Value value)    { return (ObjFunction*)asObj(value);           }
-static inline NativeFn        asNative(Value value)      { return ((ObjNative*)asObj(value))->function; }
-static inline ObjClosure*     asClosure(Value value)     { return (ObjClosure*)asObj(value);            }
-static inline ObjClass*       asClass(Value value)       { return (ObjClass*)asObj(value);              }
-static inline ObjInstance*    asInstance(Value value)    { return (ObjInstance*)asObj(value);           }
-static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMethod*)asObj(value);        }
+static inline char* asCString(Value value) { return ((ObjString*)asObj(value))->chars; }
+static inline ObjString* asString(Value value) { return (ObjString*)asObj(value); }
+static inline ObjFunction* asFunction(Value value) { return (ObjFunction*)asObj(value); }
+static inline NativeFn asNative(Value value) { return ((ObjNative*)asObj(value))->function; }
+static inline ObjClosure* asClosure(Value value) { return (ObjClosure*)asObj(value); }
+static inline ObjClass* asClass(Value value) { return (ObjClass*)asObj(value); }
+static inline ObjInstance* asInstance(Value value) { return (ObjInstance*)asObj(value); }
+static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMethod*)asObj(value); }
 
 
 /* Interface */
@@ -126,12 +126,12 @@ static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMetho
 ObjString* copyString(VM* vm, char const* chars, uint32_t length);
 ObjString* takeString(VM* vm, char* chars, uint32_t length);
 
-ObjUpvalue*     newUpvalue(GC gc[static 1], Value slot[static 1]);
-ObjFunction*    newFunction(GC gc[static 1]);
-ObjNative*      newNative(GC gc[static 1], NativeFn function);
-ObjClosure*     newClosure(GC gc[static 1], ObjFunction function[static 1]);
-ObjClass*       newClass(GC gc[static 1], ObjString* name);
-ObjInstance*    newInstance(GC gc[static 1], ObjClass class[static 1]);
+ObjUpvalue* newUpvalue(GC gc[static 1], Value slot[static 1]);
+ObjFunction* newFunction(GC gc[static 1]);
+ObjNative* newNative(GC gc[static 1], NativeFn function);
+ObjClosure* newClosure(GC gc[static 1], ObjFunction function[static 1]);
+ObjClass* newClass(GC gc[static 1], ObjString* name);
+ObjInstance* newInstance(GC gc[static 1], ObjClass class[static 1]);
 ObjBoundMethod* newBoundMethod(GC gc[static 1], Value receiver, ObjClosure method[static 1]);
 
 void printObject(Value value);

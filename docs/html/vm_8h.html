@@ -101,7 +101,9 @@ $(function(){initNavTree('vm_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:CallFrame" id="r_CallFrame"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCallFrame.html">CallFrame</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Call frame type.  <a href="structCallFrame.html#details">More...</a><br /></td></tr>
 <tr class="memitem:VM" id="r_VM"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVM.html">VM</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual machine type.  <a href="structVM.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -109,19 +111,27 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#a4d6afb19f3b2de4eca81185e9c3f718faae99c979231ba7e46438a670d60eaa1f">INTERPRET_COMPILE_ERROR</a>
 , <a class="el" href="#a4d6afb19f3b2de4eca81185e9c3f718fa972582a24d30295c98b476fc924f2a0c">INTERPRET_RUNTIME_ERROR</a>
  }</td></tr>
+<tr class="memdesc:a4d6afb19f3b2de4eca81185e9c3f718f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpretation result type.  <a href="#a4d6afb19f3b2de4eca81185e9c3f718f">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a486dc5ea4818f3e35cedfa94e2f429c0" id="r_a486dc5ea4818f3e35cedfa94e2f429c0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a486dc5ea4818f3e35cedfa94e2f429c0">initVM</a> (<a class="el" href="structVM.html">VM</a> vm[restrict static 1])</td></tr>
+<tr class="memdesc:a486dc5ea4818f3e35cedfa94e2f429c0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a virtual machine.  <br /></td></tr>
 <tr class="memitem:a9d13489a48587dfd3b1504c29f75e878" id="r_a9d13489a48587dfd3b1504c29f75e878"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d13489a48587dfd3b1504c29f75e878">freeVM</a> (<a class="el" href="structVM.html">VM</a> vm[restrict static 1])</td></tr>
+<tr class="memdesc:a9d13489a48587dfd3b1504c29f75e878"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a virtual machine.  <br /></td></tr>
 <tr class="memitem:a317fa2c1858a0398d9fde5f29c211917" id="r_a317fa2c1858a0398d9fde5f29c211917"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a4d6afb19f3b2de4eca81185e9c3f718f">InterpretResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a317fa2c1858a0398d9fde5f29c211917">interpret</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], char const *source)</td></tr>
+<tr class="memdesc:a317fa2c1858a0398d9fde5f29c211917"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compiles and runs Lox source code.  <br /></td></tr>
 <tr class="memitem:afcc1c85e4a1631bd4ee674d2f09c5c87" id="r_afcc1c85e4a1631bd4ee674d2f09c5c87"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afcc1c85e4a1631bd4ee674d2f09c5c87">push</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], <a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:afcc1c85e4a1631bd4ee674d2f09c5c87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pushes a value onto a virtual machine's stack.  <br /></td></tr>
 <tr class="memitem:aae8fda1a8a64834e8409975854d8fed9" id="r_aae8fda1a8a64834e8409975854d8fed9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae8fda1a8a64834e8409975854d8fed9">pop</a> (<a class="el" href="structVM.html">VM</a> vm[static 1])</td></tr>
+<tr class="memdesc:aae8fda1a8a64834e8409975854d8fed9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pops a value from a virtual machine's stack.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a8fcebb23a9f7c626f02259d94d2f43d4" id="r_a8fcebb23a9f7c626f02259d94d2f43d4"><td class="memItemLeft" align="right" valign="top">constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fcebb23a9f7c626f02259d94d2f43d4">framesMax</a> = 64</td></tr>
-<tr class="memitem:ab8ef002ae1aae961f3d940e7b5b6578a" id="r_ab8ef002ae1aae961f3d940e7b5b6578a"><td class="memItemLeft" align="right" valign="top">constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8ef002ae1aae961f3d940e7b5b6578a">stackMax</a> = <a class="el" href="#a8fcebb23a9f7c626f02259d94d2f43d4">framesMax</a> * <a class="el" href="common_8h.html#af9d94e28b75d9a26cd257d13f8e088fa">uint8Count</a></td></tr>
+<tr class="memdesc:a8fcebb23a9f7c626f02259d94d2f43d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of call frames the stack can hold before overflowing.  <br /></td></tr>
+<tr class="memitem:ab8ef002ae1aae961f3d940e7b5b6578a" id="r_ab8ef002ae1aae961f3d940e7b5b6578a"><td class="memItemLeft" align="right" valign="top">static constexpr uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab8ef002ae1aae961f3d940e7b5b6578a">stackMax</a> = <a class="el" href="#a8fcebb23a9f7c626f02259d94d2f43d4">framesMax</a> * <a class="el" href="common_8h.html#af9d94e28b75d9a26cd257d13f8e088fa">uint8Count</a></td></tr>
+<tr class="memdesc:ab8ef002ae1aae961f3d940e7b5b6578a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum number of values the stack can hold.  <br /></td></tr>
 </table>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
 <a id="a4d6afb19f3b2de4eca81185e9c3f718f" name="a4d6afb19f3b2de4eca81185e9c3f718f"></a>
@@ -135,10 +145,16 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Interpretation result type. </p>
+<p>An <span class="tt">enum</span> that lists all the interpretation result codes. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4d6afb19f3b2de4eca81185e9c3f718fa21efe79feb312c3a5aab7a6c3f867839" name="a4d6afb19f3b2de4eca81185e9c3f718fa21efe79feb312c3a5aab7a6c3f867839"></a>INTERPRET_OK&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4d6afb19f3b2de4eca81185e9c3f718faae99c979231ba7e46438a670d60eaa1f" name="a4d6afb19f3b2de4eca81185e9c3f718faae99c979231ba7e46438a670d60eaa1f"></a>INTERPRET_COMPILE_ERROR&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a4d6afb19f3b2de4eca81185e9c3f718fa972582a24d30295c98b476fc924f2a0c" name="a4d6afb19f3b2de4eca81185e9c3f718fa972582a24d30295c98b476fc924f2a0c"></a>INTERPRET_RUNTIME_ERROR&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4d6afb19f3b2de4eca81185e9c3f718fa21efe79feb312c3a5aab7a6c3f867839" name="a4d6afb19f3b2de4eca81185e9c3f718fa21efe79feb312c3a5aab7a6c3f867839"></a>INTERPRET_OK&#160;</td><td class="fielddoc"><p>Indicates a successful run. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4d6afb19f3b2de4eca81185e9c3f718faae99c979231ba7e46438a670d60eaa1f" name="a4d6afb19f3b2de4eca81185e9c3f718faae99c979231ba7e46438a670d60eaa1f"></a>INTERPRET_COMPILE_ERROR&#160;</td><td class="fielddoc"><p>Indicates a compilation error (invalid syntax, <em>etc</em>.). </p>
+</td></tr>
+<tr><td class="fieldname"><a id="a4d6afb19f3b2de4eca81185e9c3f718fa972582a24d30295c98b476fc924f2a0c" name="a4d6afb19f3b2de4eca81185e9c3f718fa972582a24d30295c98b476fc924f2a0c"></a>INTERPRET_RUNTIME_ERROR&#160;</td><td class="fielddoc"><p>Indicates a runtime error (division by zero, <em>etc</em>.). </p>
+</td></tr>
 </table>
 
 </div>
@@ -159,6 +175,15 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Frees a virtual machine. </p>
+<p>Takes a <span class="tt"><a class="el" href="structVM.html" title="Virtual machine type.">VM</a></span> and frees the memory occupied by it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine to be freed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a486dc5ea4818f3e35cedfa94e2f429c0" name="a486dc5ea4818f3e35cedfa94e2f429c0"></a>
@@ -175,6 +200,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initializes a virtual machine. </p>
+<p>Takes a newly-created <span class="tt"><a class="el" href="structVM.html" title="Virtual machine type.">VM</a></span> and fills in its fields, putting the structure in a well-defined state.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine to be initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -197,6 +231,16 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Compiles and runs Lox source code. </p>
+<p>This function implements the main logic of the whole project. Takes a <span class="tt"><a class="el" href="structVM.html" title="Virtual machine type.">VM</a></span> and a piece of source code and run that source with the given virtual machine.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine to run the source with. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">source</td><td>C string containing the source code to be run. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="aae8fda1a8a64834e8409975854d8fed9" name="aae8fda1a8a64834e8409975854d8fed9"></a>
@@ -213,6 +257,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pops a value from a virtual machine's stack. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine whose stack to pop from.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The removed Lox value. </dd></dl>
 
 </div>
 </div>
@@ -234,6 +287,15 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Pushes a value onto a virtual machine's stack. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine whose stack to push the value to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to be pushed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -258,6 +320,8 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Maximum number of call frames the stack can hold before overflowing. </p>
+
 </div>
 </div>
 <a id="ab8ef002ae1aae961f3d940e7b5b6578a" name="ab8ef002ae1aae961f3d940e7b5b6578a"></a>
@@ -275,10 +339,13 @@ Variables</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel constexpr">constexpr</span></span>  </td>
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel constexpr">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Maximum number of values the stack can hold. </p>
+<p>Number of values for a call frame must not exceed <span class="tt">uint8Count</span>. </p>
 
 </div>
 </div>

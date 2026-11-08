@@ -92,6 +92,9 @@ $(function(){initNavTree('structCallFrame.html','',''); });
 </div><!--header-->
 <div class="contents">
 
+<p>Call frame type.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="vm_8h_source.html">vm.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -100,7 +103,10 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a61accb7c5ac41480812ecd0803257048" id="r_a61accb7c5ac41480812ecd0803257048"><td class="memItemLeft" align="right" valign="top">uint8_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a61accb7c5ac41480812ecd0803257048">ip</a></td></tr>
 <tr class="memitem:a5e7f98c2f2c8fd1e4fe629997b594ab6" id="r_a5e7f98c2f2c8fd1e4fe629997b594ab6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structValue.html">Value</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e7f98c2f2c8fd1e4fe629997b594ab6">slots</a></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Call frame type. </p>
+<p>A <span class="tt">struct</span> that represents a Lox call frame. A call frame keeps references to the chunk it represents and the first stack slot it is allowed to use. </p>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="a69032cedac4d40b468b1f3242854f07a" name="a69032cedac4d40b468b1f3242854f07a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a69032cedac4d40b468b1f3242854f07a">&#9670;&#160;</a></span>closure</h2>
 
@@ -112,6 +118,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Pointer to the closure being called. </p>
 
 </div>
 </div>
@@ -126,6 +133,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Pointer to the next instruction in the <span class="tt"><a class="el" href="#a69032cedac4d40b468b1f3242854f07a">CallFrame::closure</a></span>'s chunk to be executed. </p>
 
 </div>
 </div>
@@ -140,6 +148,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Pointer to the first value on the stack that the frame can reference (start of the frame). </p>
 
 </div>
 </div>

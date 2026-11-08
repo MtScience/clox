@@ -259,10 +259,10 @@ static InterpretResult run(VM vm[static 1]) {
         uint8_t instruction;
         switch (instruction = READ_BYTE()) {
             case OP_CONSTANT: {
-                Value constant = READ_CONSTANT();
-                push(vm, constant);
-                break;
-            }
+                    Value constant = READ_CONSTANT();
+                    push(vm, constant);
+                    break;
+                }
             case OP_NEGATE:
                 if (!isNumber(peek(vm, 0))) {
                     runtimeError(vm, "Operand must be a number");
@@ -274,59 +274,59 @@ static InterpretResult run(VM vm[static 1]) {
             case OP_TRUE:  push(vm, boolVal(true));  break;
             case OP_FALSE: push(vm, boolVal(false)); break;
             case OP_GET_LOCAL: {
-                uint8_t slot = READ_BYTE();
-                push(vm, frame->slots[slot]);
-                break;
-            }
-            case OP_SET_LOCAL: {
-                uint8_t slot = READ_BYTE();
-                frame->slots[slot] = peek(vm, 0);
-                break;
-            }
-            case OP_GET_UPVALUE: {
-                uint8_t slot = READ_BYTE();
-                push(vm, *frame->closure->upvalues[slot]->location);
-                break;
-            }
-            case OP_SET_UPVALUE: {
-                uint8_t slot = READ_BYTE();
-                *frame->closure->upvalues[slot]->location = peek(vm, 0);
-                break;
-            }
-            case OP_GET_PROPERTY: {
-                if (!isInstance(peek(vm, 0))) {
-                    runtimeError(vm, "Only instances have properties.");
-                    return INTERPRET_RUNTIME_ERROR;
+                    uint8_t slot = READ_BYTE();
+                    push(vm, frame->slots[slot]);
+                    break;
                 }
+            case OP_SET_LOCAL: {
+                    uint8_t slot = READ_BYTE();
+                    frame->slots[slot] = peek(vm, 0);
+                    break;
+                }
+            case OP_GET_UPVALUE: {
+                    uint8_t slot = READ_BYTE();
+                    push(vm, *frame->closure->upvalues[slot]->location);
+                    break;
+                }
+            case OP_SET_UPVALUE: {
+                    uint8_t slot = READ_BYTE();
+                    *frame->closure->upvalues[slot]->location = peek(vm, 0);
+                    break;
+                }
+            case OP_GET_PROPERTY: {
+                    if (!isInstance(peek(vm, 0))) {
+                        runtimeError(vm, "Only instances have properties.");
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
 
-                ObjInstance* instance = asInstance(peek(vm, 0));
-                ObjString* name= READ_STRING();
+                    ObjInstance* instance = asInstance(peek(vm, 0));
+                    ObjString* name= READ_STRING();
 
-                Value value;
-                if (tableGet(&instance->fields, name, &value)) {
+                    Value value;
+                    if (tableGet(&instance->fields, name, &value)) {
+                        pop(vm);
+                        push(vm, value);
+                        break;
+                    }
+
+                    if (!bindMethod(vm, instance->class, name)) {
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+                    break;
+                }
+            case OP_SET_PROPERTY: {
+                    if (!isInstance(peek(vm, 1))) {
+                        runtimeError(vm, "Only instances have fields.");
+                        return INTERPRET_RUNTIME_ERROR;
+                    }
+
+                    ObjInstance* instance = asInstance(peek(vm, 1));
+                    tableSet(&vm->gc, &instance->fields, READ_STRING(), peek(vm, 0));
+                    Value value = pop(vm);
                     pop(vm);
                     push(vm, value);
                     break;
                 }
-
-                if (!bindMethod(vm, instance->class, name)) {
-                    return INTERPRET_RUNTIME_ERROR;
-                }
-                break;
-            }
-            case OP_SET_PROPERTY: {
-                if (!isInstance(peek(vm, 1))) {
-                    runtimeError(vm, "Only instances have fields.");
-                    return INTERPRET_RUNTIME_ERROR;
-                }
-
-                ObjInstance* instance = asInstance(peek(vm, 1));
-                tableSet(&vm->gc, &instance->fields, READ_STRING(), peek(vm, 0));
-                Value value = pop(vm);
-                pop(vm);
-                push(vm, value);
-                break;
-            }
             case OP_GET_GLOBAL: {
                     ObjString* name = READ_STRING();
                     Value value;
