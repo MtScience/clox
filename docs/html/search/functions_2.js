@@ -7,7 +7,7 @@ var searchData=
   ['checkkeyword_4',['checkKeyword',['../scanner_8c.html#a7c3135d2af47af545a80b731202d93fa',1,'scanner.c']]],
   ['classdeclaration_5',['classDeclaration',['../compiler_8c.html#a4108081ff5b1cfaa77f21719861f83b0',1,'compiler.c']]],
   ['cleanupcompilerweakrefs_6',['cleanupCompilerWeakRefs',['../compiler_8c.html#a006842ea491a7e4a9507604b12d038cb',1,'compiler.c']]],
-  ['clocknative_7',['clockNative',['../native_8h.html#a16ebc30963ed0e39d342852ea5db8dce',1,'clockNative(uint8_t argCount, Value *args):&#160;native.c'],['../native_8c.html#a16ebc30963ed0e39d342852ea5db8dce',1,'clockNative(uint8_t argCount, Value *args):&#160;native.c']]],
+  ['clocknative_7',['clockNative',['../native_8h.html#ac34757c04a8cc09db6284562c60d849a',1,'clockNative(uint8_t argCount, Value args[static argCount]):&#160;native.c'],['../native_8c.html#ac34757c04a8cc09db6284562c60d849a',1,'clockNative(uint8_t argCount, Value args[static argCount]):&#160;native.c']]],
   ['closeupvalues_8',['closeUpvalues',['../vm_8c.html#a0ee3833a52dfd8dd7d4371f64ad09641',1,'vm.c']]],
   ['collectgarbage_9',['collectGarbage',['../memory_8h.html#ae0d730344c12024aa0f4b36b34b50c37',1,'collectGarbage(GC gc[static 1]):&#160;memory.c'],['../memory_8c.html#ae0d730344c12024aa0f4b36b34b50c37',1,'collectGarbage(GC gc[static 1]):&#160;memory.c']]],
   ['compile_10',['compile',['../compiler_8h.html#acbb959fba389512febc229e7f5a01218',1,'compile(VM vm[static 1], char const *source):&#160;compiler.c'],['../compiler_8c.html#acbb959fba389512febc229e7f5a01218',1,'compile(VM vm[static 1], char const *source):&#160;compiler.c']]],

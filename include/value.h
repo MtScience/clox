@@ -175,140 +175,71 @@ typedef struct {
 /* Type checks */
 
 /**
- * \brief Checks whether a `Value` represents a boolean.
+ * \defgroup ValueTypeChecks
+ * \brief Lox value type checking functions.
  *
- * \param[in] value The structure to be tested.
+ * These functions take a `Value` and test whether it has a certain type.
  *
- * \returns Test result.
+ * \param[in] value The value to test the type of.
  *
- * \sa `isNil()`, `isNumber()`, `isObj()`
+ * \returns Type test result.
+ *
+ * @{
  */
-static inline bool isBool(Value value)   { return value.type == VAL_BOOL; }
-
-/**
- * \brief Checks whether a `Value` represents a `nil` value.
- *
- * \param[in] value The structure to be tested.
- *
- * \returns Test result.
- *
- * \sa `isBool()`, `isNumber()`, `isObj()`
- */
-static inline bool isNil(Value value)    { return value.type == VAL_NIL; }
-
-/**
- * \brief Checks whether a `Value` represents a number.
- *
- * \param[in] value The structure to be tested.
- *
- * \returns Test result.
- *
- * \sa `isBool()`, `isNil()`, `isObj()`
- */
+static inline bool isBool(Value value)   { return value.type == VAL_BOOL;   }
+static inline bool isNil(Value value)    { return value.type == VAL_NIL;    }
 static inline bool isNumber(Value value) { return value.type == VAL_NUMBER; }
-
+static inline bool isObj(Value value)    { return value.type == VAL_OBJ;    }
 /**
- * \brief Checks whether a `Value` represents a Lox object.
- *
- * \param[in] value The structure to be tested.
- *
- * \returns Test result.
- *
- * \sa `isBool()`, `isNil()`, `isNumber()`
+ * @}
  */
-static inline bool isObj(Value value)    { return value.type == VAL_OBJ; }
 
 
 /* Type conversions */
 
 /**
- * \brief Extracts a C boolean from a `Value`.
+ * \defgroup ValueTypeConversions
+ * \brief Value type conversion functions.
  *
- * \param[in] value The structure to extract data from.
+ * These functions take a `Value` and extract data of certain type from its
+ * underlying `union`.
  *
- * \returns The boolean value held in the structure.
+ * \param[in] value The value to extract data from.
  *
- * \sa `asNumber()`, `asObj()`
+ * \returns Extracted C value.
+ *
+ * @{
  */
-static inline bool asBool(Value value)   { return value.as.boolean; }
-
+static inline bool   asBool(Value value)   { return value.as.boolean; }
+static inline double asNumber(Value value) { return value.as.number;  }
+static inline Obj*   asObj(Value value)    { return value.as.obj;     }
 /**
- * \brief Extracts a C `double` from a `Value`.
- *
- * \param[in] value The structure to extract data from.
- *
- * \returns The numeric value held in the structure.
- *
- * \sa `asBool()`, `asObj()`
+ * @}
  */
-static inline double asNumber(Value value) { return value.as.number; }
-
-/**
- * \brief Extracts an `Obj` pointer from a `Value`.
- *
- * \param[in] value The structure to extract data from.
- *
- * \returns The pointer held in the structure.
- *
- * \sa `asBool()`, `asNumber()`
- */
-static inline Obj* asObj(Value value)    { return value.as.obj; }
 
 
 /* Constructors */
 
 /**
- * \brief Constructs a Lox boolean value.
+ * \defgroup ValueConstructors
+ * \brief Lox value construsction functions.
  *
- * \param[in] value C boolean value that the resulting Lox value
- *                  should represent.
+ * These functions take C values (booleans, pointers or `double`s) and pack them into
+ * `Value` structures.
  *
- * \returns Structure that represents a Lox boolean value.
+ * \param[in] value C value that the resulting Lox value should represent.
  *
- * \sa `nilVal()`, `numberVal()`, `objVal()`
+ * \returns Lox value structure.
+ *
+ * @{
  */
-static inline Value boolVal(bool value) {
-    return (Value){ .type = VAL_BOOL, .as = { .boolean = value } };
-}
-
+static inline Value boolVal(bool value)     { return (Value){ .type = VAL_BOOL,   .as = { .boolean = value } }; }
+static inline Value nilVal(void)            { return (Value){ .type = VAL_NIL,    .as = { .number = 0 } };      }
+static inline Value numberVal(double value) { return (Value){ .type = VAL_NUMBER, .as = { .number = value } };  }
+static inline Value objVal(Obj* value)      { return (Value){ .type = VAL_OBJ,    .as = { .obj = value } };     }
 /**
- * \brief Constructs a Lox `nil` value.
- *
- * \returns Structure that represents a Lox `nil` value.
- *
- * \sa `boolVal()`, `numberVal()`, `objVal()`
+ * @}
  */
-static inline Value nilVal(void) {
-    return (Value){ .type = VAL_NIL, .as = { .number = 0 } };
-}
-
-/**
- * \brief Constructs a Lox numeric value.
- *
- * \param[in] value Numeric value of the structure being constructed.
- *
- * \returns Structure that represents a Lox numeric value.
- *
- * \sa `boolVal()`, `nilVal()`, `objVal()`
- */
-static inline Value numberVal(double value) {
-    return (Value){ .type = VAL_NUMBER, .as = { .number = value } };
-}
-
-/**
- * \brief Constructs a Lox object value.
- *
- * \param[in] value Pointer to the C object that represents a Lox
- *                  object (string, function, \e etc.).
- *
- * \returns Structure that represents a Lox object.
- *
- * \sa `boolVal()`, `nilVal()`, `numberVal()`
- */
-static inline Value objVal(Obj* value) {
-    return (Value){ .type = VAL_OBJ, .as = { .obj = value } };
-
-}
 
 
 #endif

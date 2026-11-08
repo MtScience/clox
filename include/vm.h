@@ -2,9 +2,6 @@
 #define clox_vm_h
 
 
-/**
- * \brief forward declares the `VM` structure.
- */
 typedef struct VM VM;
 
 

@@ -6,16 +6,29 @@
 #include "value.h"
 
 
+/**
+ * \struct Entry table.h
+ * \brief Hash table entry type.
+ *
+ * A `struct` that represents a hash table entry.
+ */
 typedef struct {
-    ObjString* key;
-    Value      value;
+    ObjString* key;    /**< Entry key string. */
+    Value      value;  /**< Entry value. */
 } Entry;
 
 
+/**
+ * \struct Table table.h
+ * \brief Hash table type.
+ *
+ * A ``struct` that represents a hash table. Specialized to use
+ * `ObjString`s as keys and `Value`s for values.
+ */
 typedef struct {
-    uint32_t count;
-    uint32_t capacity;
-    Entry*   entries;
+    uint32_t count;     /**< Number of entries in the table. */
+    uint32_t capacity;  /**< Maximum number of entries the table can hold. */
+    Entry*   entries;   /**< List of entries. */
 } Table;
 
 

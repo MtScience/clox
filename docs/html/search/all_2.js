@@ -18,7 +18,7 @@ var searchData=
   ['classdeclaration_15',['classDeclaration',['../compiler_8c.html#a4108081ff5b1cfaa77f21719861f83b0',1,'compiler.c']]],
   ['cleanupcompilerweakrefs_16',['cleanupCompilerWeakRefs',['../compiler_8c.html#a006842ea491a7e4a9507604b12d038cb',1,'compiler.c']]],
   ['cleanupweakrefs_17',['cleanupWeakRefs',['../structGC.html#a652b0514d78575f3e9a27c8612548e90',1,'GC']]],
-  ['clocknative_18',['clockNative',['../native_8h.html#a16ebc30963ed0e39d342852ea5db8dce',1,'clockNative(uint8_t argCount, Value *args):&#160;native.c'],['../native_8c.html#a16ebc30963ed0e39d342852ea5db8dce',1,'clockNative(uint8_t argCount, Value *args):&#160;native.c']]],
+  ['clocknative_18',['clockNative',['../native_8h.html#ac34757c04a8cc09db6284562c60d849a',1,'clockNative(uint8_t argCount, Value args[static argCount]):&#160;native.c'],['../native_8c.html#ac34757c04a8cc09db6284562c60d849a',1,'clockNative(uint8_t argCount, Value args[static argCount]):&#160;native.c']]],
   ['closed_19',['closed',['../structObjUpvalue.html#add1eb481a4d24bfc3c86ed9f57f31681',1,'ObjUpvalue']]],
   ['closeupvalues_20',['closeUpvalues',['../vm_8c.html#a0ee3833a52dfd8dd7d4371f64ad09641',1,'vm.c']]],
   ['closure_21',['closure',['../structCallFrame.html#a69032cedac4d40b468b1f3242854f07a',1,'CallFrame']]],

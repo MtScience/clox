@@ -99,11 +99,15 @@ $(function(){initNavTree('scanner_8c.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9a64876091f145f6379e83c03c0d5cbd" id="r_a9a64876091f145f6379e83c03c0d5cbd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a64876091f145f6379e83c03c0d5cbd">isAtEnd</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1])</td></tr>
+<tr class="memdesc:a9a64876091f145f6379e83c03c0d5cbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether end of input is reached.  <br /></td></tr>
 <tr class="memitem:ad29572a738360647acbe128e650cb177" id="r_ad29572a738360647acbe128e650cb177"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad29572a738360647acbe128e650cb177">isAlpha</a> (char c)</td></tr>
+<tr class="memdesc:ad29572a738360647acbe128e650cb177"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a character is a letter.  <br /></td></tr>
 <tr class="memitem:aecbe2dd7a788a908c6dafd3f06e51fbd" id="r_aecbe2dd7a788a908c6dafd3f06e51fbd"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecbe2dd7a788a908c6dafd3f06e51fbd">isAlphaNum</a> (char c)</td></tr>
+<tr class="memdesc:aecbe2dd7a788a908c6dafd3f06e51fbd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a character is alphanumeric.  <br /></td></tr>
 <tr class="memitem:ae93447f63d585a6ae474b80a5f30d7bc" id="r_ae93447f63d585a6ae474b80a5f30d7bc"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structToken.html">Token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae93447f63d585a6ae474b80a5f30d7bc">makeToken</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1], <a class="el" href="scanner_8h.html#afa91e1934f818659a4e2b0c8ce1214b0">TokenType</a> type)</td></tr>
 <tr class="memitem:a4415969ccccceb7cf548bff9e5025497" id="r_a4415969ccccceb7cf548bff9e5025497"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structToken.html">Token</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4415969ccccceb7cf548bff9e5025497">errorToken</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1], char const *message)</td></tr>
 <tr class="memitem:a40345cbb341d84d74e10d689b5b3a7de" id="r_a40345cbb341d84d74e10d689b5b3a7de"><td class="memItemLeft" align="right" valign="top">static char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40345cbb341d84d74e10d689b5b3a7de">advance</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1])</td></tr>
+<tr class="memdesc:a40345cbb341d84d74e10d689b5b3a7de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Moves the scanner forward.  <br /></td></tr>
 <tr class="memitem:abda24bed6fccf3a73a50ebfcceda704b" id="r_abda24bed6fccf3a73a50ebfcceda704b"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abda24bed6fccf3a73a50ebfcceda704b">match</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1], char expected)</td></tr>
 <tr class="memitem:a4d484a57c248afdb90a7d4124d4d5506" id="r_a4d484a57c248afdb90a7d4124d4d5506"><td class="memItemLeft" align="right" valign="top">static char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4d484a57c248afdb90a7d4124d4d5506">peek</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1])</td></tr>
 <tr class="memitem:a71dd3ee89f745cf5f72a6c5ac851d526" id="r_a71dd3ee89f745cf5f72a6c5ac851d526"><td class="memItemLeft" align="right" valign="top">static char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71dd3ee89f745cf5f72a6c5ac851d526">peekNext</a> (<a class="el" href="structScanner.html">Scanner</a> scanner[static 1])</td></tr>
@@ -141,6 +145,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Moves the scanner forward. </p>
+<p>Takes a <span class="tt"><a class="el" href="structScanner.html" title="Code scanner type.">Scanner</a></span> and advances it by one single-byte character.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scanner</td><td>Non-<span class="tt">NULL</span> pointer to the scanner.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The last consumed character. </dd></dl>
 
 </div>
 </div>
@@ -321,6 +335,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Checks whether a character is a letter. </p>
+<p>For the purposes of this function, &lsquo;&rsquo;_'` is considered a letter.</p>
+<p>This function is pure and marked as <span class="tt">[[unsequenced]]</span>. </p>
+
 </div>
 </div>
 <a id="aecbe2dd7a788a908c6dafd3f06e51fbd" name="aecbe2dd7a788a908c6dafd3f06e51fbd"></a>
@@ -346,6 +364,10 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Checks whether a character is alphanumeric. </p>
+<p>For the purposes of this function, &lsquo;&rsquo;_'` is considered a letter.</p>
+<p>This function is pure and marked as <span class="tt">[[unsequenced]]</span>. </p>
+
 </div>
 </div>
 <a id="a9a64876091f145f6379e83c03c0d5cbd" name="a9a64876091f145f6379e83c03c0d5cbd"></a>
@@ -370,6 +392,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks whether end of input is reached. </p>
+<p>This function is marked as <span class="tt">[[reproducible]]</span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">scanner</td><td>Non-<span class="tt">NULL</span> pointer to the scanner.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if current character is &lsquo;&rsquo;\0'<span class="tt">, </span>false` otherwise. </dd></dl>
 
 </div>
 </div>

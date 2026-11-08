@@ -17,7 +17,7 @@
  *                       code.
  * \param[in]     source The source code to be compiled.
  *
- * \returns The pointer to an `ObjFunction` that contains the compiled code or `nullptr`
+ * \returns The pointer to an `ObjFunction` that contains the compiled code or `NULL`
  *          in case compilation failed.
  */
 ObjFunction* compile(VM vm[static 1], char const* source);

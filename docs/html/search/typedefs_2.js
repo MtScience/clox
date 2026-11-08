@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nativefn_0',['NativeFn',['../object_8h.html#a1ee07220ce91996c56464d1bd4cb4634',1,'object.h']]]
+  ['nativefn_0',['NativeFn',['../group__ObjectTypes.html#gade19914c87e28eec7bbdc5c0e32d9567',1,'object.h']]]
 ];

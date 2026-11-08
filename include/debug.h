@@ -13,7 +13,7 @@
  * \param[in] chunk Non-`NULL` pointer to the chunk to be disassembled.
  * \param[in] name  The name of the chunk.
  */
-void     disassembleChunk(Chunk chunk[static 1], char const* name);
+void disassembleChunk(Chunk chunk[static 1], char const* name);
 
 /**
  * \brief Prints debug information for an instruction.

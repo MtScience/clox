@@ -16,6 +16,6 @@ void defineNative(VM vm[static 1], char const* name, NativeFn function) {
 }
 
 
-Value clockNative([[maybe_unused]] uint8_t argCount, [[maybe_unused]] Value* args) {
+Value clockNative([[maybe_unused]] uint8_t argCount, [[maybe_unused]] Value args[static argCount]) {
     return numberVal((double)clock() / CLOCKS_PER_SEC);
 }

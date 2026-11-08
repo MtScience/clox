@@ -32,7 +32,7 @@ void defineNative(VM vm[static 1], char const* name, NativeFn function);
  *
  * \returns The result of C's `clock()` divided by `CLOCKS_PER_SEC`, wrapped in a Lox value.
  */
-Value clockNative(uint8_t argCount, Value* args);
+Value clockNative(uint8_t argCount, Value args[static argCount]);
 
 
 #endif

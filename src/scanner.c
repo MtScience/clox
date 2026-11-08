@@ -5,11 +5,31 @@
 #include "scanner.h"
 
 
-static bool isAtEnd(Scanner scanner[static 1]) {
+/**
+ * \brief Checks whether end of input is reached.
+ *
+ * This function is marked as `[[reproducible]]`.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ *
+ * \returns `true` if current character is `'\\0'`, `false` otherwise.
+ */
+static bool isAtEnd(Scanner scanner[static 1])
+#if __has_c_attribute(reproducible)
+[[reproducible]]
+#endif
+{
     return *scanner->current == '\0';
 }
 
 
+/**
+ * \brief Checks whether a character is a letter.
+ *
+ * For the purposes of this function, `'_'` is considered a letter.
+ *
+ * This function is pure and marked as `[[unsequenced]]`.
+ */
 static bool isAlpha(char c)
 #if __has_c_attribute(unsequenced)
 [[unsequenced]]
@@ -19,6 +39,13 @@ static bool isAlpha(char c)
 }
 
 
+/**
+ * \brief Checks whether a character is alphanumeric.
+ *
+ * For the purposes of this function, `'_'` is considered a letter.
+ *
+ * This function is pure and marked as `[[unsequenced]]`.
+ */
 static bool isAlphaNum(char c)
 #if __has_c_attribute(unsequenced)
 [[unsequenced]]
@@ -48,6 +75,15 @@ static Token errorToken(Scanner scanner[static 1], char const* message) {
 }
 
 
+/**
+ * \brief Moves the scanner forward.
+ *
+ * Takes a `Scanner` and advances it by one single-byte character.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ *
+ * \returns The last consumed character.
+ */
 static char advance(Scanner scanner[static 1]) {
     scanner->current++;
     return scanner->current[-1];
@@ -64,12 +100,20 @@ static bool match(Scanner scanner[static 1], char expected) {
 }
 
 
-static char peek(Scanner scanner[static 1]) {
+static char peek(Scanner scanner[static 1])
+#if __has_c_attribute(reproducible)
+[[reproducible]]
+#endif
+{
     return *scanner->current;
 }
 
 
-static char peekNext(Scanner scanner[static 1]) {
+static char peekNext(Scanner scanner[static 1])
+#if __has_c_attribute(reproducible)
+[[reproducible]]
+#endif
+{
     return isAtEnd(scanner) ? '\0': scanner->current[1];
 }
 
@@ -86,13 +130,13 @@ static void skipWhitespace(Scanner scanner[static 1]) {
                 advance(scanner);
                 break;
             case '/':
-                if (peekNext(scanner) == '/') {
-                    while (!isAtEnd(scanner) && peek(scanner) != '\n') {
-                        advance(scanner);
-                    }
-                } else {
+                if (peekNext(scanner) != '/') {
                     return;
                 }
+                while (!isAtEnd(scanner) && peek(scanner) != '\n') {
+                    advance(scanner);
+                }
+
                 break;
             default:
                 return;

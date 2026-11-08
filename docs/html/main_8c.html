@@ -101,9 +101,13 @@ $(function(){initNavTree('main_8c.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ade04357b0ba86f463125775817a9a680" id="r_ade04357b0ba86f463125775817a9a680"><td class="memItemLeft" align="right" valign="top">static char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade04357b0ba86f463125775817a9a680">readFile</a> (char const *path)</td></tr>
+<tr class="memdesc:ade04357b0ba86f463125775817a9a680"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads a file at the given location.  <br /></td></tr>
 <tr class="memitem:a1f7d5df93ca44f63e8bda613c0b858a3" id="r_a1f7d5df93ca44f63e8bda613c0b858a3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1f7d5df93ca44f63e8bda613c0b858a3">repl</a> (<a class="el" href="structVM.html">VM</a> *vm)</td></tr>
+<tr class="memdesc:a1f7d5df93ca44f63e8bda613c0b858a3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs the Lox REPL.  <br /></td></tr>
 <tr class="memitem:a7e70f5c311e55cb3cdb52299254a45a9" id="r_a7e70f5c311e55cb3cdb52299254a45a9"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e70f5c311e55cb3cdb52299254a45a9">runFile</a> (<a class="el" href="structVM.html">VM</a> *vm, char const *path)</td></tr>
+<tr class="memdesc:a7e70f5c311e55cb3cdb52299254a45a9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a Lox file.  <br /></td></tr>
 <tr class="memitem:a87931e5e19a9a3b35ada8acb79293603" id="r_a87931e5e19a9a3b35ada8acb79293603"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87931e5e19a9a3b35ada8acb79293603">main</a> (int argc, char const *argv[static argc+1])</td></tr>
+<tr class="memdesc:a87931e5e19a9a3b35ada8acb79293603"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <span class="tt">main</span> function.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a87931e5e19a9a3b35ada8acb79293603" name="a87931e5e19a9a3b35ada8acb79293603"></a>
@@ -124,6 +128,33 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The <span class="tt">main</span> function. </p>
+<p>Program entry point. Returns one of the following exit codes:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Exit code  </th><th class="markdownTableHeadNone">Meaning  </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><span class="tt">EXIT_SUCCESS</span>  </td><td class="markdownTableBodyNone">Success  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><span class="tt">EXIT_FAILURE</span>  </td><td class="markdownTableBodyNone">Memory allocation failure  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">64  </td><td class="markdownTableBodyNone">Incorrect program invocation (wrong number of arguments)  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">65  </td><td class="markdownTableBodyNone">Compilation error  </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">70  </td><td class="markdownTableBodyNone">Runtime error  </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">74  </td><td class="markdownTableBodyNone">Could not open or read the specified Lox source file  </td></tr>
+</table>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">argc</td><td>Number of command-line arguments </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">argv</td><td>List of command-line arguments as C strings.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Exit code according to the table above. </dd></dl>
 
 </div>
 </div>
@@ -150,6 +181,16 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Reads a file at the given location. </p>
+<p>Attempts to open the file, determine the size of its content, allocate memory to hold said content in a string and read the file into that string. If at any point an error happens, the function fails.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>C string containing the path to the file.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer to the allocated source string. </dd></dl>
+
 </div>
 </div>
 <a id="a1f7d5df93ca44f63e8bda613c0b858a3" name="a1f7d5df93ca44f63e8bda613c0b858a3"></a>
@@ -174,6 +215,15 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Runs the Lox REPL. </p>
+<p>Reads, compiles and runs user input in an endless loop. The size of the input line must not exceed 1024 bytes.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine to run the code. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -203,6 +253,16 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Runs a Lox file. </p>
+<p>Reads, compiles and runs source from a file. Fails if the file cannot be read.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine to run the code. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>C string containing the path to the Lox source file. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

@@ -29,12 +29,13 @@ static Obj* allocateObject(GC gc[static 1], size_t size, ObjType type) {
 }
 
 
-static ObjString* allocateString(VM vm[static 1], char* chars, uint32_t length, uint32_t hash) {
+static ObjString* allocateString(VM vm[static 1], char const* chars, uint32_t length, uint32_t hash) {
     ObjString* string = (ObjString*)allocateObject(&vm->gc,
-                                                   sizeof(ObjString) + sizeof(char[length]),
+                                                   sizeof(ObjString) + sizeof(char[length + 1]),
                                                    OBJ_STRING);
     string->length = length;
     memcpy(string->chars, chars, sizeof(char[length]));
+    string->chars[length] = '\0';
     string->hash = hash;
 
     push(vm, objVal((Obj*)string));
@@ -77,11 +78,7 @@ ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
         return interned;
     }
 
-    char* heapChars = ALLOCATE(&vm->gc, char, length + 1);
-    memcpy(heapChars, chars, length);
-    heapChars[length] = '\0';
-
-    return allocateString(vm, heapChars, length, hash);
+    return allocateString(vm, chars, length, hash);
 }
 
 
@@ -188,3 +185,6 @@ void printObject(Value value) {
             break;
     }
 }
+
+
+#undef ALLOCATE_OBJ

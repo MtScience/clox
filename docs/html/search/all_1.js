@@ -7,7 +7,7 @@ var searchData=
   ['blackenobject_4',['blackenObject',['../memory_8c.html#adfa7a58830456e7b3828636999fbae70',1,'memory.c']]],
   ['block_5',['block',['../compiler_8c.html#aa21b8538ad51cf487d5b8269b222fb4b',1,'compiler.c']]],
   ['boolean_6',['boolean',['../structValue.html#a1f30e2af69194563a12a5d6ccb2df05a',1,'Value']]],
-  ['boolval_7',['boolVal',['../value_8h.html#a2f56c56f4fc2f777584a4d22a58f520b',1,'value.h']]],
+  ['boolval_7',['boolVal',['../group__ValueConstructors.html#ga2f56c56f4fc2f777584a4d22a58f520b',1,'value.h']]],
   ['building_20and_20running_8',['Building and running',['../md_README.html#autotoc_md2',1,'']]],
   ['byteinstruction_9',['byteInstruction',['../debug_8c.html#a98b31deff6859fa84ce34b36db0d9475',1,'debug.c']]],
   ['bytesallocated_10',['bytesAllocated',['../structGC.html#af8ed6ba4558a65ef0b27cd498ea843db',1,'GC']]]

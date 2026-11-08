@@ -98,14 +98,14 @@ $(function(){initNavTree('native_8c.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a213aaf98e0a4b0e15f921789bb8550c8" id="r_a213aaf98e0a4b0e15f921789bb8550c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a213aaf98e0a4b0e15f921789bb8550c8">defineNative</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], char const *name, <a class="el" href="object_8h.html#a1ee07220ce91996c56464d1bd4cb4634">NativeFn</a> <a class="el" href="compiler_8c.html#a1f38dd147c38700420dfc36aedabf6ff">function</a>)</td></tr>
+<tr class="memitem:a213aaf98e0a4b0e15f921789bb8550c8" id="r_a213aaf98e0a4b0e15f921789bb8550c8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a213aaf98e0a4b0e15f921789bb8550c8">defineNative</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], char const *name, <a class="el" href="group__ObjectTypes.html#gade19914c87e28eec7bbdc5c0e32d9567">NativeFn</a> <a class="el" href="compiler_8c.html#a1f38dd147c38700420dfc36aedabf6ff">function</a>)</td></tr>
 <tr class="memdesc:a213aaf98e0a4b0e15f921789bb8550c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a Lox native function.  <br /></td></tr>
-<tr class="memitem:a16ebc30963ed0e39d342852ea5db8dce" id="r_a16ebc30963ed0e39d342852ea5db8dce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16ebc30963ed0e39d342852ea5db8dce">clockNative</a> (uint8_t argCount, <a class="el" href="structValue.html">Value</a> *args)</td></tr>
-<tr class="memdesc:a16ebc30963ed0e39d342852ea5db8dce"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU clock function.  <br /></td></tr>
+<tr class="memitem:ac34757c04a8cc09db6284562c60d849a" id="r_ac34757c04a8cc09db6284562c60d849a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structValue.html">Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac34757c04a8cc09db6284562c60d849a">clockNative</a> (uint8_t argCount, <a class="el" href="structValue.html">Value</a> args[static argCount])</td></tr>
+<tr class="memdesc:ac34757c04a8cc09db6284562c60d849a"><td class="mdescLeft">&#160;</td><td class="mdescRight">CPU clock function.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="a16ebc30963ed0e39d342852ea5db8dce" name="a16ebc30963ed0e39d342852ea5db8dce"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a16ebc30963ed0e39d342852ea5db8dce">&#9670;&#160;</a></span>clockNative()</h2>
+<a id="ac34757c04a8cc09db6284562c60d849a" name="ac34757c04a8cc09db6284562c60d849a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac34757c04a8cc09db6284562c60d849a">&#9670;&#160;</a></span>clockNative()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -118,7 +118,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="structValue.html">Value</a> *</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="structValue.html">Value</a></td>          <td class="paramname"><span class="paramname"><em>args</em></span>[static argCount]&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -155,7 +155,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="object_8h.html#a1ee07220ce91996c56464d1bd4cb4634">NativeFn</a></td>          <td class="paramname"><span class="paramname"><em>function</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="group__ObjectTypes.html#gade19914c87e28eec7bbdc5c0e32d9567">NativeFn</a></td>          <td class="paramname"><span class="paramname"><em>function</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -166,7 +166,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine in which to define the function. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>String that contains the function name. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">function</td><td>Pointer to the function of signature <span class="tt"><a class="el" href="object_8h.html#a1ee07220ce91996c56464d1bd4cb4634">NativeFn</a></span>. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">function</td><td>Pointer to the function of signature <span class="tt"><a class="el" href="group__ObjectTypes.html#gade19914c87e28eec7bbdc5c0e32d9567" title="Native function signature.">NativeFn</a></span>. </td></tr>
   </table>
   </dd>
 </dl>

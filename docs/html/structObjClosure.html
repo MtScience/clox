@@ -88,9 +88,12 @@ $(function(){initNavTree('structObjClosure.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">ObjClosure Struct Reference</div></div>
+  <div class="headertitle"><div class="title">ObjClosure Struct Reference<div class="ingroups"><a class="el" href="group__ObjectTypes.html">ObjectTypes</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Lox closure type.  
+ <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="object_8h_source.html">object.h</a>&gt;</code></p>
 <table class="memberdecls">
@@ -101,7 +104,10 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a59c2d65d6fa0b564100ff0fb1c264fc9" id="r_a59c2d65d6fa0b564100ff0fb1c264fc9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjUpvalue.html">ObjUpvalue</a> **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59c2d65d6fa0b564100ff0fb1c264fc9">upvalues</a></td></tr>
 <tr class="memitem:a7301f76e6c10c8336d74560d1cef9dec" id="r_a7301f76e6c10c8336d74560d1cef9dec"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7301f76e6c10c8336d74560d1cef9dec">upvalueCount</a></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Lox closure type. </p>
+<p>A <span class="tt">struct</span> that represents a closure. A <em>closure</em> is a function that references some value in the scope where it is defined and keeps this value after the surronding scope is destroyed. </p>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="a894cf5b1c2f9791c287f69b0b1c1db06" name="a894cf5b1c2f9791c287f69b0b1c1db06"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a894cf5b1c2f9791c287f69b0b1c1db06">&#9670;&#160;</a></span>function</h2>
 
@@ -113,6 +119,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The function associated with the closure. </p>
 
 </div>
 </div>
@@ -127,6 +134,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Object header. </p>
 
 </div>
 </div>
@@ -141,6 +149,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Number of upvalues in the closure. </p>
 
 </div>
 </div>
@@ -155,6 +164,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>List of pointers to upvalues the <span class="tt"><a class="el" href="#a894cf5b1c2f9791c287f69b0b1c1db06">ObjClosure::function</a></span> function references. </p>
 
 </div>
 </div>

@@ -92,6 +92,9 @@ $(function(){initNavTree('structTable.html','',''); });
 </div><!--header-->
 <div class="contents">
 
+<p>Hash table type.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="table_8h_source.html">table.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -100,7 +103,10 @@ Data Fields</h2></td></tr>
 <tr class="memitem:a82833d4797764b4cc20e7549588332aa" id="r_a82833d4797764b4cc20e7549588332aa"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82833d4797764b4cc20e7549588332aa">capacity</a></td></tr>
 <tr class="memitem:a0dea69372dd626be16b5525a2c78cb29" id="r_a0dea69372dd626be16b5525a2c78cb29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEntry.html">Entry</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0dea69372dd626be16b5525a2c78cb29">entries</a></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Hash table type. </p>
+<p>A `<span class="tt">struct</span> that represents a hash table. Specialized to use <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span>s as keys and <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span>s for values. </p>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="a82833d4797764b4cc20e7549588332aa" name="a82833d4797764b4cc20e7549588332aa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a82833d4797764b4cc20e7549588332aa">&#9670;&#160;</a></span>capacity</h2>
 
@@ -112,6 +118,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Maximum number of entries the table can hold. </p>
 
 </div>
 </div>
@@ -126,6 +133,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Number of entries in the table. </p>
 
 </div>
 </div>
@@ -140,6 +148,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>List of entries. </p>
 
 </div>
 </div>

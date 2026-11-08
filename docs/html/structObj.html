@@ -88,19 +88,26 @@ $(function(){initNavTree('structObj.html','',''); });
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Obj Struct Reference</div></div>
+  <div class="headertitle"><div class="title">Obj Struct Reference<div class="ingroups"><a class="el" href="group__ObjectTypes.html">ObjectTypes</a></div></div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Parent type for objects.  
+ <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="object_8h_source.html">object.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a8d6fa3d8a3e210b2fed45eab2a5ed302" id="r_a8d6fa3d8a3e210b2fed45eab2a5ed302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="object_8h.html#ab30fb4a321d0da8fb07e81dd1441469d">ObjType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d6fa3d8a3e210b2fed45eab2a5ed302">type</a></td></tr>
+<tr class="memitem:a8d6fa3d8a3e210b2fed45eab2a5ed302" id="r_a8d6fa3d8a3e210b2fed45eab2a5ed302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__ObjectTypes.html#gab30fb4a321d0da8fb07e81dd1441469d">ObjType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d6fa3d8a3e210b2fed45eab2a5ed302">type</a></td></tr>
 <tr class="memitem:ad62779aab0b80ea11004e292a3fd7e77" id="r_ad62779aab0b80ea11004e292a3fd7e77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad62779aab0b80ea11004e292a3fd7e77">isMarked</a></td></tr>
 <tr class="memitem:a290008d3526011b3487038409e7dfe4b" id="r_a290008d3526011b3487038409e7dfe4b"><td class="memItemLeft" align="right" valign="top">struct <a class="el" href="structObj.html">Obj</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a290008d3526011b3487038409e7dfe4b">next</a></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Parent type for objects. </p>
+<p>A <span class="tt">struct</span> that serves as a common "supertype" for all Lox objects. It must be included in an inheriting structure as its first field to allow for safe casting between pointer types.</p>
+<p>Implements an intrusive linked list data structure. </p>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Field Documentation</h2>
 <a id="ad62779aab0b80ea11004e292a3fd7e77" name="ad62779aab0b80ea11004e292a3fd7e77"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad62779aab0b80ea11004e292a3fd7e77">&#9670;&#160;</a></span>isMarked</h2>
 
@@ -112,6 +119,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Flag that is set during garbage collection if the object is reachable. </p>
 
 </div>
 </div>
@@ -126,6 +134,7 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Pointer to the next object in the list. </p>
 
 </div>
 </div>
@@ -136,10 +145,11 @@ Data Fields</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="object_8h.html#ab30fb4a321d0da8fb07e81dd1441469d">ObjType</a> Obj::type</td>
+          <td class="memname"><a class="el" href="group__ObjectTypes.html#gab30fb4a321d0da8fb07e81dd1441469d">ObjType</a> Obj::type</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>Type tag. Specifies what kind of object it is. </p>
 
 </div>
 </div>
