@@ -162,8 +162,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ga6bd7c42e921b00f7bc512ec11fd0af43" id="r_ga6bd7c42e921b00f7bc512ec11fd0af43"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObjClass.html">ObjClass</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ObjectTypeConversions.html#ga6bd7c42e921b00f7bc512ec11fd0af43">asClass</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
 <tr class="memitem:ga89ca0b7c0a3eca525dcdedb858569dc4" id="r_ga89ca0b7c0a3eca525dcdedb858569dc4"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObjInstance.html">ObjInstance</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ObjectTypeConversions.html#ga89ca0b7c0a3eca525dcdedb858569dc4">asInstance</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
 <tr class="memitem:ga390e1d4f1d7299eb2dd2a3af2e047882" id="r_ga390e1d4f1d7299eb2dd2a3af2e047882"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObjBoundMethod.html">ObjBoundMethod</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ObjectTypeConversions.html#ga390e1d4f1d7299eb2dd2a3af2e047882">asBoundMethod</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
-<tr class="memitem:a44193ddcc392214820082a743de06aac" id="r_a44193ddcc392214820082a743de06aac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a44193ddcc392214820082a743de06aac">copyString</a> (<a class="el" href="structVM.html">VM</a> *vm, char const *chars, uint32_t length)</td></tr>
-<tr class="memitem:a441474b4976295957e6bb0e480af68aa" id="r_a441474b4976295957e6bb0e480af68aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a441474b4976295957e6bb0e480af68aa">takeString</a> (<a class="el" href="structVM.html">VM</a> *vm, char *chars, uint32_t length)</td></tr>
+<tr class="memitem:a1945a963942c7f7c14f2728601006a67" id="r_a1945a963942c7f7c14f2728601006a67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1945a963942c7f7c14f2728601006a67">copyString</a> (<a class="el" href="structVM.html">VM</a> *vm, uint32_t length, char const chars[static length])</td></tr>
+<tr class="memdesc:a1945a963942c7f7c14f2728601006a67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox string.  <br /></td></tr>
+<tr class="memitem:ae99047fc499f7aa2423bcf90529e2fae" id="r_ae99047fc499f7aa2423bcf90529e2fae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae99047fc499f7aa2423bcf90529e2fae">takeString</a> (<a class="el" href="structVM.html">VM</a> *vm, uint32_t length, char chars[static length])</td></tr>
+<tr class="memdesc:ae99047fc499f7aa2423bcf90529e2fae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox string.  <br /></td></tr>
 <tr class="memitem:ga5ea096f12ca9e2fa88a27ca5a2f1487f" id="r_ga5ea096f12ca9e2fa88a27ca5a2f1487f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjUpvalue.html">ObjUpvalue</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ObjectConstructors.html#ga5ea096f12ca9e2fa88a27ca5a2f1487f">newUpvalue</a> (<a class="el" href="structGC.html">GC</a> gc[static 1], <a class="el" href="structValue.html">Value</a> slot[static 1])</td></tr>
 <tr class="memitem:gac2280e2781e139caa196ef6761721870" id="r_gac2280e2781e139caa196ef6761721870"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjFunction.html">ObjFunction</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ObjectConstructors.html#gac2280e2781e139caa196ef6761721870">newFunction</a> (<a class="el" href="structGC.html">GC</a> gc[static 1])</td></tr>
 <tr class="memitem:ga2d70872d684a984a3ec387d640d67488" id="r_ga2d70872d684a984a3ec387d640d67488"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjNative.html">ObjNative</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ObjectConstructors.html#ga2d70872d684a984a3ec387d640d67488">newNative</a> (<a class="el" href="structGC.html">GC</a> gc[static 1], <a class="el" href="group__ObjectTypes.html#gade19914c87e28eec7bbdc5c0e32d9567">NativeFn</a> <a class="el" href="compiler_8c.html#a1f38dd147c38700420dfc36aedabf6ff">function</a>)</td></tr>
@@ -175,8 +177,8 @@ Functions</h2></td></tr>
 <tr class="memdesc:a0bc4a59f9b0ef5e8ff26df059a27a514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a Lox object.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="a44193ddcc392214820082a743de06aac" name="a44193ddcc392214820082a743de06aac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44193ddcc392214820082a743de06aac">&#9670;&#160;</a></span>copyString()</h2>
+<a id="a1945a963942c7f7c14f2728601006a67" name="a1945a963942c7f7c14f2728601006a67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1945a963942c7f7c14f2728601006a67">&#9670;&#160;</a></span>copyString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -189,15 +191,27 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>, </td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+          <td class="paramtype">char const</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>[static length]&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs a Lox string. </p>
+<p>Takes a <span class="tt"><a class="el" href="structVM.html" title="Virtual machine type.">VM</a></span> and an array of <span class="tt">char</span>s and creates a new <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span>. This function assumes the caller does not own the source array, so it leaves it unchanged.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine that will manage the resulting Lox string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of the string being processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chars</td><td>An array of characters that contains the string data. Does not have to be a null-terminated C string.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer to the newly-created or previously interned (if available) Lox string. </dd></dl>
 
 </div>
 </div>
@@ -302,8 +316,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a441474b4976295957e6bb0e480af68aa" name="a441474b4976295957e6bb0e480af68aa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a441474b4976295957e6bb0e480af68aa">&#9670;&#160;</a></span>takeString()</h2>
+<a id="ae99047fc499f7aa2423bcf90529e2fae" name="ae99047fc499f7aa2423bcf90529e2fae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae99047fc499f7aa2423bcf90529e2fae">&#9670;&#160;</a></span>takeString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -316,15 +330,27 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char *</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>, </td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>length</em></span>&#160;)</td>
+          <td class="paramtype">char</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>[static length]&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Constructs a Lox string. </p>
+<p>Takes a <span class="tt"><a class="el" href="structVM.html" title="Virtual machine type.">VM</a></span> and an array of <span class="tt">char</span>s and creates a new <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span>. Unlike <span class="tt"><a class="el" href="#a1945a963942c7f7c14f2728601006a67" title="Constructs a Lox string.">copyString()</a></span>, it assumes the caller <em>does</em> own the source array, so it frees it if an interned string is found.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine that will manage the resulting Lox string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of the string being processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chars</td><td>An array of characters that contains the string data. Does not have to be a null-terminated C string.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer to the newly-created or previously interned (if available) Lox string. </dd></dl>
 
 </div>
 </div>

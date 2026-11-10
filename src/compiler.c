@@ -284,8 +284,8 @@ static void initCompiler(
 
     if (type != TYPE_SCRIPT) {
         compiler->function->name = copyString(state->vm,
-                                              state->parser->previous.start,
-                                              state->parser->previous.length);
+                                              state->parser->previous.length,
+                                              state->parser->previous.start);
     }
 
     Local* local = &compiler->locals[compiler->localCount++];
@@ -344,8 +344,8 @@ static void endScope(CompilationState state[static 1]) {
 static uint8_t identifierConstant(CompilationState state[static 1], Token name[static 1]) {
     return makeConstant(state,
                         objVal((Obj*)copyString(state->vm,
-                                                name->start,
-                                                name->length)));
+                                                name->length,
+                                                name->start)));
 }
 
 
@@ -542,8 +542,8 @@ static void literal(CompilationState state[static 1], [[maybe_unused]] bool canA
 static void string(CompilationState state[static 1], [[maybe_unused]] bool canAssign) {
     emitConstant(state,
                  objVal((Obj*)copyString(state->vm,
-                                         state->parser->previous.start + 1,
-                                         state->parser->previous.length - 2)));
+                                         state->parser->previous.length - 2,
+                                         state->parser->previous.start + 1)));
 }
 
 

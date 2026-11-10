@@ -212,7 +212,7 @@ void markObject(GC gc[static 1], Obj* object) {
 
     if (gc->grayCapacity < gc->grayCount + 1) {
         gc->grayCapacity = growCapacity(gc->grayCapacity);
-        gc->grayStack = realloc(gc->grayStack, sizeof(Obj*[gc->grayCapacity]));
+        gc->grayStack = realloc(gc->grayStack, gc->grayCapacity * sizeof(Obj*));
         /*
          * Technically, the above is a bad idea, but we are going to exit
          * immediately if allocation fails anyway, so it doesn't really matter.

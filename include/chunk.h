@@ -19,16 +19,19 @@ typedef struct VM VM;
  */
 typedef enum : uint8_t {
     OP_CONSTANT,      /**< Reads the value specified by the argument from the
-                       *   `Chunk::constants` field of the current chunk and pushes it onto the stack. */
+                       *   `Chunk::constants` field of the current chunk and pushes it onto the stack.
+                       */
     OP_NEGATE,        /**< Negates the number at the top of the stack. */
     OP_NIL,           /**< Pushes a `nil` value onto the stack. */
     OP_TRUE,          /**< Pushes a `true` value onto the stack. */
     OP_FALSE,         /**< Pushes a `false` value onto the stack. */
     OP_POP,           /**< Pops the topmost value from the stack. */
     OP_GET_LOCAL,     /**< Finds the value on the stack that corresponds to the local variable and pushes it to the top
-                       *   of the stack */
+                       *   of the stack
+                       */
     OP_SET_LOCAL,     /**< Finds the value on the stack that corresponds to the local variable and changes it to the
-                       *   value at the top of the stack. */
+                       *   value at the top of the stack.
+                       */
     OP_GET_UPVALUE,   /**<  */
     OP_SET_UPVALUE,   /**<  */
     OP_GET_PROPERTY,  /**<  */
@@ -36,7 +39,8 @@ typedef enum : uint8_t {
     OP_GET_GLOBAL,    /**<  */
     OP_SET_GLOBAL,    /**<  */
     OP_DEFINE_GLOBAL, /**< Creates a new entry in the `VM::globals` hash table and sets it to the value at the
-                       *   top of the stack. */
+                       *   top of the stack.
+                       */
     OP_EQUAL,         /**< Checks the two topmost values on the stack for equality. */
     OP_GREATER,       /**< Checks whether the topmost number on the stack is less than the one below it. */
     OP_LESS,          /**< Checks whether the topmost number on the stack is greater than the one below it. */
@@ -45,9 +49,15 @@ typedef enum : uint8_t {
     OP_MULTIPLY,      /**< Multiplies the two topmost numbers on the stack. */
     OP_DIVIDE,        /**< Divides the second number from the top by the topmost number on the stack. */
     OP_NOT,           /**< Negates the boolean at the top of the stack. */
-    OP_LOOP,          /**< Unconditionally decreases the instruction pointer by the amount specified by the argument. */
-    OP_JUMP,          /**< Unconditionally increases the instruction pointer by the amount specified by the argument. */
-    OP_JUMP_IF_FALSE, /**< Increases the instruction pointer if the topmost value on the stack is false. */
+    OP_LOOP,          /**< Unconditionally decreases the instruction pointer by the amount specified by the
+                       *   2-byte argument.
+                       */
+    OP_JUMP,          /**< Unconditionally increases the instruction pointer by the amount specified by the
+                       *   2-byte argument.
+                       */
+    OP_JUMP_IF_FALSE, /**< Increases the instruction pointer by the amount specified by the 2-byte argument
+                       *   if the topmost value on the stack is false.
+                       */
     OP_PRINT,         /**< Prints the topmost value on the stack. */
     OP_CALL,          /**< Pushes a new call frame onto the stack. */
     OP_CLOSURE,       /**< Creates a new closure from the function at the top of the stack. */

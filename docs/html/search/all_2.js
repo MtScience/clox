@@ -37,7 +37,7 @@ var searchData=
   ['constantinstruction_34',['constantInstruction',['../debug_8c.html#a2b971b53e5f62cefbf87d5392e22b969',1,'debug.c']]],
   ['constants_35',['constants',['../structChunk.html#a6ef3ac2a64667a4635b414daca1196af',1,'Chunk']]],
   ['consume_36',['consume',['../compiler_8c.html#a1964bea16086d64bfd122246e67a65fe',1,'compiler.c']]],
-  ['copystring_37',['copyString',['../object_8h.html#a44193ddcc392214820082a743de06aac',1,'copyString(VM *vm, char const *chars, uint32_t length):&#160;object.c'],['../object_8c.html#a44193ddcc392214820082a743de06aac',1,'copyString(VM *vm, char const *chars, uint32_t length):&#160;object.c']]],
+  ['copystring_37',['copyString',['../object_8h.html#a1945a963942c7f7c14f2728601006a67',1,'copyString(VM *vm, uint32_t length, char const chars[static length]):&#160;object.c'],['../object_8c.html#a1945a963942c7f7c14f2728601006a67',1,'copyString(VM *vm, uint32_t length, char const chars[static length]):&#160;object.c']]],
   ['count_38',['count',['../structChunk.html#a1ca0133248fe039ef7a4451631dc250c',1,'Chunk::count'],['../structTable.html#ad42465cbb3b2b3f01163669fe1dc32b1',1,'Table::count'],['../structValueArray.html#a72654535f7951c33332fbd95117279a6',1,'ValueArray::count']]],
   ['current_39',['current',['../structScanner.html#aaa8f7000b3d0206e1dd69276611b3420',1,'Scanner::current'],['../structParser.html#ab674a754dd185a02c606b0c5b539e3b4',1,'Parser::current']]],
   ['currentchunk_40',['currentChunk',['../compiler_8c.html#a7b26651e9db1d3e6b0a5aa288b8067bd',1,'compiler.c']]]

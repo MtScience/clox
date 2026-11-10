@@ -15,6 +15,6 @@ var searchData=
   ['configuregc_12',['configureGC',['../compiler_8c.html#aea12788cdf5b58fb9ce1e958be1abf53',1,'compiler.c']]],
   ['constantinstruction_13',['constantInstruction',['../debug_8c.html#a2b971b53e5f62cefbf87d5392e22b969',1,'debug.c']]],
   ['consume_14',['consume',['../compiler_8c.html#a1964bea16086d64bfd122246e67a65fe',1,'compiler.c']]],
-  ['copystring_15',['copyString',['../object_8h.html#a44193ddcc392214820082a743de06aac',1,'copyString(VM *vm, char const *chars, uint32_t length):&#160;object.c'],['../object_8c.html#a44193ddcc392214820082a743de06aac',1,'copyString(VM *vm, char const *chars, uint32_t length):&#160;object.c']]],
+  ['copystring_15',['copyString',['../object_8h.html#a1945a963942c7f7c14f2728601006a67',1,'copyString(VM *vm, uint32_t length, char const chars[static length]):&#160;object.c'],['../object_8c.html#a1945a963942c7f7c14f2728601006a67',1,'copyString(VM *vm, uint32_t length, char const chars[static length]):&#160;object.c']]],
   ['currentchunk_16',['currentChunk',['../compiler_8c.html#a7b26651e9db1d3e6b0a5aa288b8067bd',1,'compiler.c']]]
 ];

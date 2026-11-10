@@ -7,11 +7,29 @@
 #include "value.h"
 
 
+/**
+ * \brief Defines the maximum load factor for hash tables.
+ *
+ * As soon as number entries (including tombstones) exceeds the table's capacity times
+ * this number, the table is rebuilt with larger capacity.
+ *
+ * In this implementation, the value is chosen arbitrarily.
+ */
 static constexpr double tableMaxLoad = 0.75;
 
 
 /* Local functions */
 
+/**
+ * \brief Searches for a given key in an array of entries.
+ *
+ * \param[in] entries  Non-empty array of entries to search.
+ * \param[in] capacity The new capacity for the table.
+ * \param[in] key      Non-`NULL` pointer to the key to search for.
+ *
+ * \returns The pointer to the entry with the given key or where it should be inserted
+ *          if the key is not found.
+ */
 static Entry* findEntry(Entry entries[static 1], uint32_t capacity, ObjString* key) {
     uint32_t index = key->hash & (capacity - 1);
     Entry* tombstone = nullptr;
@@ -33,6 +51,17 @@ static Entry* findEntry(Entry entries[static 1], uint32_t capacity, ObjString* k
 }
 
 
+/**
+ * \brief Rebuilds a hash table.
+ *
+ * Takes a `Table` and a new value for its capacity and reconstructs the table
+ * with the specified capacity, eliminating tombstones in the process.
+ *
+ * \param[in] gc       Non-`NULL` pointer to the garbage collector that manages
+ *                     the table's memory.
+ * \param[in] table    Non-`NULL` pointer to the table to be rebuilt.
+ * \param[in] capacity The new capacity for the table.
+ */
 static void adjustCapacity(GC* gc, Table table[static 1], uint32_t capacity) {
     Entry* entries = ALLOCATE(gc, Entry, capacity);
 
@@ -144,7 +173,7 @@ bool tableDelete(Table table[static 1], ObjString* key) {
 }
 
 
-ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t length, uint32_t hash) {
+ObjString* tableFindString(Table table[static 1], uint32_t hash, uint32_t length, char const chars[static length]) {
     if (table->count == 0) {
         return nullptr;
     }
@@ -152,10 +181,8 @@ ObjString* tableFindString(Table table[static 1], char const* chars, uint32_t le
     uint32_t index = hash & (table->capacity - 1);
     for (;;) {
         Entry* entry = &table->entries[index];
-        if (!entry->key) {
-            if (isNil(entry->value)) {
-                return nullptr;
-            }
+        if (!entry->key && isNil(entry->value)) {
+            return nullptr;
         } else if (
             entry->key->length == length &&
             entry->key->hash == hash &&

@@ -19,7 +19,7 @@ var object_8h =
     [ "asInstance", "group__ObjectTypeConversions.html#ga89ca0b7c0a3eca525dcdedb858569dc4", null ],
     [ "asNative", "group__ObjectTypeConversions.html#ga7cd96c2deb3f145a681e0d155f17dac7", null ],
     [ "asString", "group__ObjectTypeConversions.html#ga10161eafa07942c905a70655e5153c23", null ],
-    [ "copyString", "object_8h.html#a44193ddcc392214820082a743de06aac", null ],
+    [ "copyString", "object_8h.html#a1945a963942c7f7c14f2728601006a67", null ],
     [ "isBoundMethod", "group__ObjectTypeChecks.html#gaaa892046f80fa15ccc9f956c8c5c58d7", null ],
     [ "isClass", "group__ObjectTypeChecks.html#gae53bd44a508fe45d330b81981f0bde8a", null ],
     [ "isClosure", "group__ObjectTypeChecks.html#gaf9856df6874286ffb2f2698824a6e204", null ],
@@ -37,5 +37,5 @@ var object_8h =
     [ "newUpvalue", "group__ObjectConstructors.html#ga5ea096f12ca9e2fa88a27ca5a2f1487f", null ],
     [ "objType", "object_8h.html#a607bd3631ef603835b16df318a2f9a71", null ],
     [ "printObject", "object_8h.html#a0bc4a59f9b0ef5e8ff26df059a27a514", null ],
-    [ "takeString", "object_8h.html#a441474b4976295957e6bb0e480af68aa", null ]
+    [ "takeString", "object_8h.html#ae99047fc499f7aa2423bcf90529e2fae", null ]
 ];

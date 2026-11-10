@@ -44,7 +44,7 @@ static void concatenate(VM vm[static 1]) {
     memcpy(chars + a->length, b->chars, b->length);
     chars[length + 1] = '\0';
 
-    ObjString* result = takeString(vm, chars, length);
+    ObjString* result = takeString(vm, length, chars);
     pop(vm);
     pop(vm);
     push(vm, objVal((Obj*)result));
@@ -546,7 +546,7 @@ void initVM(VM vm [restrict static 1]) {
     vm->gc.weakArg = &vm->strings;
 
     vm->initString = nullptr;
-    vm->initString = copyString(vm, "init", 4);
+    vm->initString = copyString(vm, 4, "init");
 
     defineNative(vm, "clock", clockNative);
 }

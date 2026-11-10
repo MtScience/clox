@@ -5,6 +5,27 @@
 #include "value.h"
 
 
+/**
+ * \brief Prints a constant instruction.
+ *
+ * This function defines the output format for instructions that refer to various constants
+ * (`OP_CONSTANT`, `OP_GET_PROPERTY` \e etc.). The format is:
+ * \code{.unparsed}
+ * [command name] [argument's index in the constant table] '[argument's value]'
+ * \endcode
+ *
+ * \e E.g., for an instruction loading a value `10`, located at index 1 in the chunk's constant
+ * table, onto the stack this function would produce this output:
+ * \code{.unprocessed}
+ * OP_CONSTANT      1 '10'
+ * \endcode
+ *
+ * \param[in] name   A C string representing the command name.
+ * \param[in] chunk  Non-`NULL` pointer to the chunk containing the instruction  to be printed.
+ * \param[in] offset Offset of the instruction from the beginning of the chunk.
+ *
+ * \returns The offset of the next instruction (`offset + 2`).
+ */
 static uint32_t constantInstruction(char const* name, Chunk chunk[static 1], uint32_t offset) {
     uint8_t constant = chunk->code[offset + 1];
     printf("%-16s %4u '", name, constant);
@@ -15,6 +36,27 @@ static uint32_t constantInstruction(char const* name, Chunk chunk[static 1], uin
 }
 
 
+/**
+ * \brief Prints an instruction with an argument.
+ *
+ * This function defines the output format for instructions that refer to bytes somewhere else
+ * in the chunk's code (`OP_GET_LOCAL`, `OP_CALL`, \e etc.). The format is:
+ * \code{.unparsed}
+ * [command name] [argument's index in the code]
+ * \endcode
+ *
+ * \e E.g., for an instruction loading a local variable, whose value is located at index 1 in
+ * the chunk's code, this function would produce this output:
+ * \code{.unprocessed}
+ * OP_GET_LOCAL     1
+ * \endcode
+ *
+ * \param[in] name   A C string representing the command name.
+ * \param[in] chunk  Non-`NULL` pointer to the chunk containing the instruction  to be printed.
+ * \param[in] offset Offset of the instruction from the beginning of the chunk.
+ *
+ * \returns The offset of the next instruction (`offset + 2`).
+ */
 static uint32_t byteInstruction(char const* name, Chunk chunk[static 1], uint32_t offset) {
     uint8_t slot = chunk->code[offset + 1];
     printf("%-16s %4u\n", name, slot);
@@ -23,6 +65,29 @@ static uint32_t byteInstruction(char const* name, Chunk chunk[static 1], uint32_
 }
 
 
+/**
+ * \brief Prints a jump instruction.
+ *
+ * This function defines the output format for instructions that perform various kinds of jumps
+ * (`OP_JUMP`, `OP_JUMP_IF_FALSE` and `OP_LOOP`). The format is
+ * \code{.unparsed}
+ * [command name] [start point instruction index] -> [destination instruction index]
+ * \endcode
+ *
+ * \e E.g., for an loop instruction that defines a jump from instruction 28 to instruction 14
+ * this function would produce this output:
+ * \code{.unprocessed}
+ * OP_LOOP          28 -> 14
+ * \endcode
+ *
+ * \param[in] name   A C string representing the command name.
+ * \param[in] sign   Direction of the jump. Positive for forward jumps, negative or zero for
+ *                   backward jumps (loops).
+ * \param[in] chunk  Non-`NULL` pointer to the chunk containing the instruction  to be printed.
+ * \param[in] offset Offset of the instruction from the beginning of the chunk.
+ *
+ * \returns The offset of the next instruction (`offset + 3`).
+ */
 static uint32_t jumpInstruction(char const* name, int8_t sign, Chunk chunk[static 1], uint32_t offset) {
     uint16_t jump = (uint16_t)(chunk->code[offset + 1] << 8);
     jump |= chunk->code[offset + 2];
@@ -44,12 +109,53 @@ static uint32_t jumpInstruction(char const* name, int8_t sign, Chunk chunk[stati
 }
 
 
+/**
+ * \brief Prints a basic instruction.
+ *
+ * This function defines the output format for basic instructions that take no argument
+ * (`OP_ADD` \e etc.) The format is:
+ * \code{.unparsed}
+ * [command name]
+ * \endcode
+ *
+ * \e E.g., for an addition of two numbers on the top of the Lox stack this function would
+ * produce this output:
+ * \code{.unprocessed}
+ * OP_ADD
+ * \endcode
+ *
+ * \param[in] name   A C string representing the command name.
+ * \param[in] offset Offset of the instruction from the beginning of the chunk.
+ *
+ * \returns The offset of the next instruction (`offset + 1`).
+ */
 static uint32_t simpleInstruction(char const* name, uint32_t offset) {
     puts(name);
     return offset + 1;
 }
 
 
+/**
+ * \brief Prints an invocation instruction.
+ *
+ * This function defines the output format for invocation instructions (`OP_INVOKE` and
+ * `OP_SUPER_INVOKE`). The format is
+ * \code{.unparsed}
+ * [command name] ([no. of arguments] args) [method name no. in the constant table] '[method name]'
+ * \endcode
+ *
+ * \e E.g., for an invocation of a method called "add", that takes 2 arguments and whose name is
+ * saved under no. 1 in the chunk's constant table, this function would produce this output:
+ * \code{.unprocessed}
+ * OP_INVOKE        (2 args) 1 'add'
+ * \endcode
+ *
+ * \param[in] name   A C string representing the command name.
+ * \param[in] chunk  Non-`NULL` pointer to the chunk containing the instruction  to be printed.
+ * \param[in] offset Offset of the instruction from the beginning of the chunk.
+ *
+ * \returns The offset of the next instruction (`offset + 3`).
+ */
 static uint32_t invokeInstruction(char const* name, Chunk chunk[static 1], uint32_t offset) {
     uint8_t constant = chunk->code[offset + 1];
     uint8_t argCount = chunk->code[offset + 2];

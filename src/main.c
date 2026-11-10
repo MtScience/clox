@@ -22,7 +22,7 @@ static char* readFile(char const* path) {
     FILE* file = fopen(path, "rb");
     if (!file) {
         fprintf(stderr, "Could not open file \"%s\".\n", path);
-        exit(74);
+        exit(EXIT_FILE_ERROR);
     }
 
     fseek(file, 0, SEEK_END);
@@ -32,13 +32,13 @@ static char* readFile(char const* path) {
     char* buffer = malloc(sizeof(char[fileSize + 1]));
     if (!buffer) {
         fprintf(stderr, "Not enough memory to read \"%s\".\n", path);
-        exit(74);
+        exit(EXIT_FILE_ERROR);
     }
 
     size_t bytesRead = fread(buffer, sizeof(char), fileSize, file);
     if (bytesRead < fileSize) {
         fprintf(stderr, "Could not read file \"%s\".\n", path);
-        exit(74);
+        exit(EXIT_FILE_ERROR);
     }
 
     buffer[bytesRead] = '\0';
@@ -86,10 +86,10 @@ static void runFile(VM* vm, char const* path) {
     free(source);
 
     if (result == INTERPRET_COMPILE_ERROR) {
-        exit(65);
+        exit(EXIT_COMPILE_ERROR);
     }
     if (result == INTERPRET_RUNTIME_ERROR) {
-        exit(70);
+        exit(EXIT_RUNTIME_ERROR);
     }
 }
 
@@ -99,14 +99,14 @@ static void runFile(VM* vm, char const* path) {
  *
  * Program entry point. Returns one of the following exit codes:
  *
- * | Exit code      | Meaning                                                  |
- * |----------------|----------------------------------------------------------|
- * | `EXIT_SUCCESS` | Success                                                  |
- * | `EXIT_FAILURE` | Memory allocation failure                                |
- * | 64             | Incorrect program invocation (wrong number of arguments) |
- * | 65             | Compilation error                                        |
- * | 70             | Runtime error                                            |
- * | 74             | Could not open or read the specified Lox source file     |
+ * | Name                 | Value                  | Meaning                                                  |
+ * |----------------------|------------------------|----------------------------------------------------------|
+ * | `EXIT_SUCCESS`       | Implementatio ndefined |  Success                                                 |
+ * | `EXIT_FAILURE`       | Implementatio ndefined | Memory allocation failure                                |
+ * | `EXIT_WRONG_ARGS`    | 64                     | Incorrect program invocation (wrong number of arguments) |
+ * | `EXIT_COMPILE_ERROR` | 65                     | Compilation error                                        |
+ * | `EXIT_RUNTIME_ERROR` | 70                     | Runtime error                                            |
+ * | `EXIT_FILE_ERROR`    | 74                     | Could not open or read the specified Lox source file     |
  *
  * \param[in] argc Number of command-line arguments
  * \param[in] argv List of command-line arguments as C strings.
@@ -123,7 +123,7 @@ int main(int argc, char const* argv[static argc + 1]) {
         runFile(&vm, argv[1]);
     } else {
         fprintf(stderr, "Usage: clox [path]\n");
-        exit(64);
+        exit(EXIT_WRONG_ARGS);
     }
 
     freeVM(&vm);

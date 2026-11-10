@@ -72,7 +72,7 @@ enum Tag : uint64_t {
 /**
  * \brief Special constant.
  *
- * This is a value with the bit pattern of `10...0`, \e i.e. all the bits set to zero,
+ * This is a value with the bit pattern of `10...0`, \e i.e. all the bits set to zero
  * except for the sign bit.
  */
 static constexpr uint64_t signBit  = 0x8000000000000000;

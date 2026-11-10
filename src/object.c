@@ -31,10 +31,10 @@ static Obj* allocateObject(GC gc[static 1], size_t size, ObjType type) {
 
 static ObjString* allocateString(VM vm[static 1], char const* chars, uint32_t length, uint32_t hash) {
     ObjString* string = (ObjString*)allocateObject(&vm->gc,
-                                                   sizeof(ObjString) + sizeof(char[length + 1]),
+                                                   sizeof(ObjString) + (length + 1) * sizeof(char),
                                                    OBJ_STRING);
     string->length = length;
-    memcpy(string->chars, chars, sizeof(char[length]));
+    memcpy(string->chars, chars, length * sizeof(char));
     string->chars[length] = '\0';
     string->hash = hash;
 
@@ -46,7 +46,7 @@ static ObjString* allocateString(VM vm[static 1], char const* chars, uint32_t le
 }
 
 
-static uint32_t hashString(char const* key, uint32_t length) {
+static uint32_t hashString(uint32_t length, char const key[static length]) {
     /* This is the 32-bit FNV-1a hash function */
 
     uint32_t hash = 2'166'136'261u;
@@ -70,10 +70,10 @@ static void printFunction(ObjFunction function[static 1]) {
 
 /* Public functions */
 
-ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
-    uint32_t hash = hashString(chars, length);
+ObjString* copyString(VM* vm, uint32_t length, char const chars[static length]) {
+    uint32_t hash = hashString(length, chars);
 
-    ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
+    ObjString* interned = tableFindString(&vm->strings, hash, length, chars);
     if (interned) {
         return interned;
     }
@@ -82,10 +82,10 @@ ObjString* copyString(VM* vm, char const* chars, uint32_t length) {
 }
 
 
-ObjString* takeString(VM* vm, char* chars, uint32_t length) {
-    uint32_t hash = hashString(chars, length);
+ObjString* takeString(VM* vm, uint32_t length, char chars[static length]) {
+    uint32_t hash = hashString(length, chars);
 
-    ObjString* interned = tableFindString(&vm->strings, chars, length, hash);
+    ObjString* interned = tableFindString(&vm->strings, hash, length, chars);
     if (interned) {
         FREE_ARRAY(&vm->gc, char, chars, length + 1);
         return interned;

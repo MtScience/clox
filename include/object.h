@@ -63,7 +63,9 @@ struct Obj {
 struct ObjString {
     Obj      obj;      /**< Object header. */
     uint32_t length;   /**< Length of the string in bytes. */
-    uint32_t hash;     /**< Hash value for the string. */
+    uint32_t hash;     /**< Hash value for the string. Necessary for hash table
+                        *   functionality.
+                        */
     char     chars[];  /**< Array of characters constituting the string. */
 };
 
@@ -283,8 +285,38 @@ static inline ObjBoundMethod* asBoundMethod(Value value) { return (ObjBoundMetho
 
 /* Constructors */
 
-ObjString* copyString(VM* vm, char const* chars, uint32_t length);
-ObjString* takeString(VM* vm, char* chars, uint32_t length);
+/**
+ * \brief Constructs a Lox string.
+ *
+ * Takes a `VM` and an array of `char`s and creates a new `ObjString`. This function assumes
+ * the caller does not own the source array, so it leaves it unchanged.
+ *
+ * \param[in] vm     Non-`NULL` pointer to the virtual machine that will manage the resulting
+ *                   Lox string.
+ * \param[in] length The length of the string being processed
+ * \param[in] chars  An array of characters that contains the string data. Does not have to be
+ *                   a null-terminated C string.
+ *
+ * \returns The pointer to the newly-created or previously interned (if available) Lox string.
+ */
+ObjString* copyString(VM* vm, uint32_t length, char const chars[static length]);
+
+/**
+ * \brief Constructs a Lox string.
+ *
+ * Takes a `VM` and an array of `char`s and creates a new `ObjString`. Unlike `copyString()`,
+ * it assumes the caller \e does own the source array, so it frees it if an interned string is
+ * found.
+ *
+ * \param[in] vm     Non-`NULL` pointer to the virtual machine that will manage the resulting
+ *                   Lox string.
+ * \param[in] length The length of the string being processed
+ * \param[in] chars  An array of characters that contains the string data. Does not have to be
+ *                   a null-terminated C string.
+ *
+ * \returns The pointer to the newly-created or previously interned (if available) Lox string.
+ */
+ObjString* takeString(VM* vm, uint32_t length, char chars[static length]);
 
 /**
  * \defgroup ObjectConstructors
@@ -296,7 +328,7 @@ ObjString* takeString(VM* vm, char* chars, uint32_t length);
  *
  * \param[in] gc Non-`NULL` pointer to a garbage collector that will manage the object.
  *
- * \returns The pointer to a newly-constructed structure of appropriate type.
+ * \returns The pointer to a newly-created structure of appropriate type.
  *
  * @{
  */
@@ -304,29 +336,29 @@ ObjString* takeString(VM* vm, char* chars, uint32_t length);
 /**
  * \param[in] slot Non-`NULL` pointer to the value to make an upvalue from.
  */
-ObjUpvalue*     newUpvalue(GC gc[static 1], Value slot[static 1]);
+ObjUpvalue* newUpvalue(GC gc[static 1], Value slot[static 1]);
 
-ObjFunction*    newFunction(GC gc[static 1]);
+ObjFunction* newFunction(GC gc[static 1]);
 
 /**
  * \param[in] function Pointer to the C function that implements the built-in's behaviour.
  */
-ObjNative*      newNative(GC gc[static 1], NativeFn function);
+ObjNative* newNative(GC gc[static 1], NativeFn function);
 
 /**
  * \param[in] function Non-`NULL` pointer to the Lox function to make a closure from.
  */
-ObjClosure*     newClosure(GC gc[static 1], ObjFunction function[static 1]);
+ObjClosure* newClosure(GC gc[static 1], ObjFunction function[static 1]);
 
 /**
  * \param[in] name Non-`NULL` pointer to a string object containing the name on the class.
  */
-ObjClass*       newClass(GC gc[static 1], ObjString* name);
+ObjClass* newClass(GC gc[static 1], ObjString* name);
 
 /**
  * \param[in] class Non-`NULL` pointer to the class whose instance is being created.
  */
-ObjInstance*    newInstance(GC gc[static 1], ObjClass class[static 1]);
+ObjInstance* newInstance(GC gc[static 1], ObjClass class[static 1]);
 
 /**
  * \param[in] receiver The value that keeps an instance, on which the method will be called.

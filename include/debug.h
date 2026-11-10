@@ -11,7 +11,7 @@
  * debug information for all instruction the chunk contains.
  *
  * \param[in] chunk Non-`NULL` pointer to the chunk to be disassembled.
- * \param[in] name  The name of the chunk.
+ * \param[in] name  A C string representing the command name.
  */
 void disassembleChunk(Chunk chunk[static 1], char const* name);
 

@@ -106,14 +106,23 @@ Data Structures</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a90ed80d88dc1de6342a19d13d73ff676" id="r_a90ed80d88dc1de6342a19d13d73ff676"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90ed80d88dc1de6342a19d13d73ff676">initTable</a> (<a class="el" href="structTable.html">Table</a> table[restrict static 1])</td></tr>
+<tr class="memdesc:a90ed80d88dc1de6342a19d13d73ff676"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes a hash table.  <br /></td></tr>
 <tr class="memitem:a06407307e3020495608a15a3812f1e6d" id="r_a06407307e3020495608a15a3812f1e6d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06407307e3020495608a15a3812f1e6d">freeTable</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structTable.html">Table</a> table[restrict static 1])</td></tr>
+<tr class="memdesc:a06407307e3020495608a15a3812f1e6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a hash table.  <br /></td></tr>
 <tr class="memitem:a5a14c62f22de7744d909600909ecf983" id="r_a5a14c62f22de7744d909600909ecf983"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5a14c62f22de7744d909600909ecf983">tableSet</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structTable.html">Table</a> table[static 1], <a class="el" href="structObjString.html">ObjString</a> *key, <a class="el" href="structValue.html">Value</a> value)</td></tr>
+<tr class="memdesc:a5a14c62f22de7744d909600909ecf983"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds or replaces a value in a table.  <br /></td></tr>
 <tr class="memitem:a19dfb90bc96758dfae3c39165df7f1bf" id="r_a19dfb90bc96758dfae3c39165df7f1bf"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19dfb90bc96758dfae3c39165df7f1bf">tableGet</a> (<a class="el" href="structTable.html">Table</a> table[static 1], <a class="el" href="structObjString.html">ObjString</a> *key, <a class="el" href="structValue.html">Value</a> *value)</td></tr>
+<tr class="memdesc:a19dfb90bc96758dfae3c39165df7f1bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a value in a table.  <br /></td></tr>
 <tr class="memitem:a337c1b607bc747dee8e14d0edbd06677" id="r_a337c1b607bc747dee8e14d0edbd06677"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a337c1b607bc747dee8e14d0edbd06677">tableAddAll</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structTable.html">Table</a> from[static 1], <a class="el" href="structTable.html">Table</a> to[static 1])</td></tr>
+<tr class="memdesc:a337c1b607bc747dee8e14d0edbd06677"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges two tables.  <br /></td></tr>
 <tr class="memitem:a62d619091a92bede0a34476de2a6bdd8" id="r_a62d619091a92bede0a34476de2a6bdd8"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a62d619091a92bede0a34476de2a6bdd8">tableDelete</a> (<a class="el" href="structTable.html">Table</a> table[static 1], <a class="el" href="structObjString.html">ObjString</a> *key)</td></tr>
-<tr class="memitem:a00ba7f6c1a6e6d24495d30fcc30e39f9" id="r_a00ba7f6c1a6e6d24495d30fcc30e39f9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a00ba7f6c1a6e6d24495d30fcc30e39f9">tableFindString</a> (<a class="el" href="structTable.html">Table</a> table[static 1], char const *chars, uint32_t length, uint32_t hash)</td></tr>
+<tr class="memdesc:a62d619091a92bede0a34476de2a6bdd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes a key-value pair from a table.  <br /></td></tr>
+<tr class="memitem:aeef14fd0cc47310959aac0e302b8786c" id="r_aeef14fd0cc47310959aac0e302b8786c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeef14fd0cc47310959aac0e302b8786c">tableFindString</a> (<a class="el" href="structTable.html">Table</a> table[static 1], uint32_t hash, uint32_t length, char const chars[static length])</td></tr>
+<tr class="memdesc:aeef14fd0cc47310959aac0e302b8786c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds a key in a table.  <br /></td></tr>
 <tr class="memitem:ad486838f252d98a7edc5b3ab322fa17a" id="r_ad486838f252d98a7edc5b3ab322fa17a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad486838f252d98a7edc5b3ab322fa17a">markTable</a> (<a class="el" href="structGC.html">GC</a> *gc, <a class="el" href="structTable.html">Table</a> table[static 1])</td></tr>
+<tr class="memdesc:ad486838f252d98a7edc5b3ab322fa17a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Marks a table as reachable.  <br /></td></tr>
 <tr class="memitem:ae95bcab2024e0ff5b91279104320c5f1" id="r_ae95bcab2024e0ff5b91279104320c5f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae95bcab2024e0ff5b91279104320c5f1">tableRemoveWhite</a> (<a class="el" href="structTable.html">Table</a> table[static 1])</td></tr>
+<tr class="memdesc:ae95bcab2024e0ff5b91279104320c5f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes unreachable pairs from a table.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a06407307e3020495608a15a3812f1e6d" name="a06407307e3020495608a15a3812f1e6d"></a>
@@ -135,6 +144,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Frees a hash table. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and frees the memory occupied by it.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure managing the table's <span class="tt"><a class="el" href="structTable.html#a0dea69372dd626be16b5525a2c78cb29">Table::entries</a></span> field. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chunk</td><td>Non-<span class="tt">NULL</span> pointer to the table to be freed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a90ed80d88dc1de6342a19d13d73ff676" name="a90ed80d88dc1de6342a19d13d73ff676"></a>
@@ -151,6 +170,15 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Initializes a hash table. </p>
+<p>Takes a newly-created <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and fills in its fields, putting the structure in a well-defined state.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in,out]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table to be initialized. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -172,6 +200,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Marks a table as reachable. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and iterates over it, marking every key and value as reachable using <span class="tt"><a class="el" href="memory_8h.html#a20007e25dd5859611045da07a9856d18" title="Marks an object as reachable.">markObject()</a></span> and <span class="tt"><a class="el" href="memory_8h.html#a25a326ccc606631e2a38e0ab90d2ba04" title="Marks a value as reachable.">markValue()</a></span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure managing the target table's <span class="tt"><a class="el" href="structTable.html#a0dea69372dd626be16b5525a2c78cb29">Table::entries</a></span> field. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table to be marked. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -199,6 +237,17 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Merges two tables. </p>
+<p>Takes a source <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span>, and a destination <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and adds all the entries in the source table to the destination table using <span class="tt"><a class="el" href="#a5a14c62f22de7744d909600909ecf983" title="Adds or replaces a value in a table.">tableSet()</a></span>. The source remains unchanged. Used for inheriting methods.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure managing the target table's <span class="tt"><a class="el" href="structTable.html#a0dea69372dd626be16b5525a2c78cb29">Table::entries</a></span> field. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">from</td><td>Non-<span class="tt">NULL</span> pointer to the source table. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">to</td><td>Non-<span class="tt">NULL</span> pointer to the destination table. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a62d619091a92bede0a34476de2a6bdd8" name="a62d619091a92bede0a34476de2a6bdd8"></a>
@@ -220,10 +269,21 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Removes a key-value pair from a table. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and an <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span> key and removes the pair that has the given key.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table, in which to create a key-value pair. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>Non-<span class="tt">NULL</span> pointer to the key to be removed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if a pair was found and deleted, <span class="tt">false</span> otherwise. </dd></dl>
+
 </div>
 </div>
-<a id="a00ba7f6c1a6e6d24495d30fcc30e39f9" name="a00ba7f6c1a6e6d24495d30fcc30e39f9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a00ba7f6c1a6e6d24495d30fcc30e39f9">&#9670;&#160;</a></span>tableFindString()</h2>
+<a id="aeef14fd0cc47310959aac0e302b8786c" name="aeef14fd0cc47310959aac0e302b8786c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeef14fd0cc47310959aac0e302b8786c">&#9670;&#160;</a></span>tableFindString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -236,7 +296,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>, </td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>hash</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -246,10 +306,23 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>hash</em></span>&#160;)</td>
+          <td class="paramtype">char const</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>[static length]&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Finds a key in a table. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span>, and C <span class="tt">char</span> array (not necessarily a proper null-terminated string) and searches for a key that mathces this character array. Used for string interning, where a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> is treated as a hash set.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table, in which to find the key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash</td><td>Hash value of the character array/key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>Length of the array. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chars</td><td>Array of characters to search for.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer to the <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span> representing the key if it found in the table, <span class="tt">NULL</span> otherwise. </dd></dl>
 
 </div>
 </div>
@@ -277,6 +350,18 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Finds a value in a table. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and an <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span> key and gets the value associated with that key. The value is returned through an argument..</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table, in which to find the key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>Non-<span class="tt">NULL</span> pointer to the key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>A pointer to the <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> in which to put the value associated with the key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if the given key was found in the table, <span class="tt">false</span> otherwise. </dd></dl>
+
 </div>
 </div>
 <a id="ae95bcab2024e0ff5b91279104320c5f1" name="ae95bcab2024e0ff5b91279104320c5f1"></a>
@@ -293,6 +378,16 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Deletes unreachable pairs from a table. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span> and iterates over it, deleting every pair whose key is not marked as reachable. It is supposed to be used as a <span class="tt"><a class="el" href="structGC.html#a652b0514d78575f3e9a27c8612548e90">GC::cleanupWeakRefs</a></span> function.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure managing the target table's <span class="tt"><a class="el" href="structTable.html#a0dea69372dd626be16b5525a2c78cb29">Table::entries</a></span> field. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table to be cleaned up. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -324,6 +419,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Adds or replaces a value in a table. </p>
+<p>Takes a <span class="tt"><a class="el" href="structTable.html" title="Hash table type.">Table</a></span>, an <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span> key and a <span class="tt"><a class="el" href="structValue.html" title="Lox value type.">Value</a></span> and associates the value with the given key in the given table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to the <span class="tt"><a class="el" href="structGC.html" title="The garbage collector.">GC</a></span> structure managing the table's <span class="tt"><a class="el" href="structTable.html#a0dea69372dd626be16b5525a2c78cb29">Table::entries</a></span> field. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">table</td><td>Non-<span class="tt">NULL</span> pointer to the table, in which to create a key-value pair. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>Non-<span class="tt">NULL</span> pointer to the key. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">value</td><td>The value to associate with the key.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><span class="tt">true</span> if a new pair was added, <span class="tt">false</span> otherwise. </dd></dl>
 
 </div>
 </div>

@@ -15,6 +15,11 @@ var searchData=
   ['errorat_12',['errorAt',['../compiler_8c.html#a0fd4545c4b9ced531fba0b210437bd95',1,'compiler.c']]],
   ['erroratcurrent_13',['errorAtCurrent',['../compiler_8c.html#af7639d7c9fd742d7c6852dd7734975f8',1,'compiler.c']]],
   ['errortoken_14',['errorToken',['../scanner_8c.html#a4415969ccccceb7cf548bff9e5025497',1,'scanner.c']]],
-  ['expression_15',['expression',['../compiler_8c.html#afadaeaf699ee52a46fff5023ae02b723',1,'compiler.c']]],
-  ['expressionstatement_16',['expressionStatement',['../compiler_8c.html#ac715a664304180eec49eee314772be8c',1,'compiler.c']]]
+  ['exit_5fcompile_5ferror_15',['EXIT_COMPILE_ERROR',['../group__ExitCodes.html#ga1bae46680f019158e9bb26001738a12f',1,'common.h']]],
+  ['exit_5ffile_5ferror_16',['EXIT_FILE_ERROR',['../group__ExitCodes.html#ga1aced120d8d05ea2f99a8788c7ef6e07',1,'common.h']]],
+  ['exit_5fruntime_5ferror_17',['EXIT_RUNTIME_ERROR',['../group__ExitCodes.html#ga91188e4e899c46df656ab05b6da97c01',1,'common.h']]],
+  ['exit_5fwrong_5fargs_18',['EXIT_WRONG_ARGS',['../group__ExitCodes.html#ga02e90e9220b3775ba466aa8b35938a30',1,'common.h']]],
+  ['exitcodes_19',['ExitCodes',['../group__ExitCodes.html',1,'']]],
+  ['expression_20',['expression',['../compiler_8c.html#afadaeaf699ee52a46fff5023ae02b723',1,'compiler.c']]],
+  ['expressionstatement_21',['expressionStatement',['../compiler_8c.html#ac715a664304180eec49eee314772be8c',1,'compiler.c']]]
 ];
