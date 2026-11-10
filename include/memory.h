@@ -7,19 +7,27 @@
 
 
 /**
+ * \defgroup AllocationMacros
+ * \brief Memory allocation/deallocation macros.
+ *
+ * \param[in] gc_ptr Non-`NULL` pointer to the garbage collector that manages the memory block.
+ *
+ * \returns The pointer to the allocated memory (or `NULL` if memory was freed).
+ *
+ * \sa `reallocate()`
+ *
+ * @{
+ */
+
+/**
  * \brief Resizes an array of the given type.
  *
  * This is a convenience macro. Contrary to its name, it can also be used for shrinking.
  *
- * \param[in] gc_ptr   Non-`NULL` pointer to the garbage collector that manages the memory block.
  * \param[in] pointer  The pointer to the block of memory, holding the array to be resized.
  * \param[in] type     Type of the values stored in the array.
  * \param[in] oldCount Current capacity of the array.
  * \param[in] newCount Desired capacity of the array.
- *
- * \returns The pointer to the resized memory block.
- *
- * \sa `FREE_ARRAY()`, `ALLOCATE()`, `FREE()`, `reallocate()`
  */
 #define GROW_ARRAY(gc_ptr, type, pointer, oldCount, newCount) \
     reallocate(gc_ptr, pointer, sizeof(type) * (oldCount), sizeof(type) * (newCount))
@@ -30,14 +38,9 @@
  * This is a convenience macro. Unlike the `free()` function, it does not bypass the garbage
  * collector.
  *
- * \param[in] gc_ptr   Non-`NULL` pointer to the garbage collector that manages the memory block.
  * \param[in] pointer  The pointer to the block of memory, holding the array to be freed.
  * \param[in] type     Type of the values stored in the array.
  * \param[in] oldCount Current capacity of the array.
- *
- * \returns `NULL`.
- *
- * \sa `GROW_ARRAY()`, `ALLOCATE()`, `FREE()`, `reallocate()`
  */
 #define FREE_ARRAY(gc_ptr, type, pointer, oldCount) \
     reallocate(gc_ptr, pointer, sizeof(type) * (oldCount), 0)
@@ -47,13 +50,8 @@
  *
  * This is a convenience macro.
  *
- * \param[in] gc_ptr Non-`NULL` pointer to the garbage collector that manages the memory block.
  * \param[in] type   Type of the values stored in the array.
  * \param[in] count  Desired capacity of the array.
- *
- * \returns The pointer to the allocated memory block.
- *
- * \sa `GROW_ARRAY()`, `FREE_ARRAY()`, `FREE()`, `reallocate()`
  */
 #define ALLOCATE(gc_ptr, type, count) \
     reallocate(gc_ptr, nullptr, 0, sizeof(type) * (count))
@@ -64,16 +62,15 @@
  * This is a convenience macro. Unlike the `free()` function, it does not bypass the garbage
  * collector.
  *
- * \param[in] gc_ptr Non-`NULL` pointer to the garbage collector that manages the memory block.
  * \param[in] type   Type of the values stored in the array.
  * \param[in] count  Desired capacity of the array.
- *
- * \returns `NULL`.
- *
- * \sa `GROW_ARRAY()`, `FREE_ARRAY()`, `ALLOCATE()`, `reallocate()`
  */
 #define FREE(gc_ptr, type, pointer) \
     reallocate(gc_ptr, pointer, sizeof(type), 0)
+
+/**
+ * @}
+ */
 
 
 /**

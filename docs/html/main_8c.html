@@ -135,9 +135,9 @@ Functions</h2></td></tr>
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Name  </th><th class="markdownTableHeadNone"><a class="el" href="structValue.html" title="Lox value type.">Value</a>  </th><th class="markdownTableHeadNone">Meaning  </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><span class="tt">EXIT_SUCCESS</span>  </td><td class="markdownTableBodyNone">Implementatio ndefined  </td><td class="markdownTableBodyNone">Success  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">EXIT_SUCCESS</span>  </td><td class="markdownTableBodyNone">Implementation defined  </td><td class="markdownTableBodyNone">Success  </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><span class="tt">EXIT_FAILURE</span>  </td><td class="markdownTableBodyNone">Implementatio ndefined  </td><td class="markdownTableBodyNone">Memory allocation failure  </td></tr>
+<td class="markdownTableBodyNone"><span class="tt">EXIT_FAILURE</span>  </td><td class="markdownTableBodyNone">Implementation defined  </td><td class="markdownTableBodyNone">Memory allocation failure  </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><span class="tt">EXIT_WRONG_ARGS</span>  </td><td class="markdownTableBodyNone">64  </td><td class="markdownTableBodyNone">Incorrect program invocation (wrong number of arguments)  </td></tr>
 <tr class="markdownTableRowEven">
@@ -185,7 +185,7 @@ Functions</h2></td></tr>
 <p>Attempts to open the file, determine the size of its content, allocate memory to hold said content in a string and read the file into that string. If at any point an error happens, the function fails.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>C string containing the path to the file.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>A C string containing the path to the file.</td></tr>
   </table>
   </dd>
 </dl>
@@ -259,7 +259,7 @@ Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine to run the code. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>C string containing the path to the Lox source file. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>A C string containing the path to the Lox source file. </td></tr>
   </table>
   </dd>
 </dl>

@@ -1,6 +1,7 @@
 var topics =
 [
     [ "ExitCodes", "group__ExitCodes.html", "group__ExitCodes" ],
+    [ "AllocationMacros", "group__AllocationMacros.html", "group__AllocationMacros" ],
     [ "ObjectTypes", "group__ObjectTypes.html", "group__ObjectTypes" ],
     [ "ObjectTypeChecks", "group__ObjectTypeChecks.html", "group__ObjectTypeChecks" ],
     [ "ObjectTypeConversions", "group__ObjectTypeConversions.html", "group__ObjectTypeConversions" ],

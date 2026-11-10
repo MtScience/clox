@@ -98,14 +98,14 @@ $(function(){initNavTree('memory_8h.html','',''); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:aac965f2115e7659bf9d1e6198c605a48" id="r_aac965f2115e7659bf9d1e6198c605a48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aac965f2115e7659bf9d1e6198c605a48">GROW_ARRAY</a>(gc_ptr,  type,  pointer,  oldCount,  newCount)</td></tr>
-<tr class="memdesc:aac965f2115e7659bf9d1e6198c605a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes an array of the given type.  <br /></td></tr>
-<tr class="memitem:af3ae98ce96a61f8dd7e2c910ee2468df" id="r_af3ae98ce96a61f8dd7e2c910ee2468df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af3ae98ce96a61f8dd7e2c910ee2468df">FREE_ARRAY</a>(gc_ptr,  type,  pointer,  oldCount)</td></tr>
-<tr class="memdesc:af3ae98ce96a61f8dd7e2c910ee2468df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a heap-allocated array of the given type.  <br /></td></tr>
-<tr class="memitem:a8b7f129c124db4383707b025ad813d34" id="r_a8b7f129c124db4383707b025ad813d34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b7f129c124db4383707b025ad813d34">ALLOCATE</a>(gc_ptr,  type,  count)</td></tr>
-<tr class="memdesc:a8b7f129c124db4383707b025ad813d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an array of the given type.  <br /></td></tr>
-<tr class="memitem:a9445ec62c165a98ec2f15645d5ebdd2c" id="r_a9445ec62c165a98ec2f15645d5ebdd2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9445ec62c165a98ec2f15645d5ebdd2c">FREE</a>(gc_ptr,  type,  pointer)</td></tr>
-<tr class="memdesc:a9445ec62c165a98ec2f15645d5ebdd2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a block of memory.  <br /></td></tr>
+<tr class="memitem:gaac965f2115e7659bf9d1e6198c605a48" id="r_gaac965f2115e7659bf9d1e6198c605a48"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AllocationMacros.html#gaac965f2115e7659bf9d1e6198c605a48">GROW_ARRAY</a>(gc_ptr,  type,  pointer,  oldCount,  newCount)</td></tr>
+<tr class="memdesc:gaac965f2115e7659bf9d1e6198c605a48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resizes an array of the given type.  <br /></td></tr>
+<tr class="memitem:gaf3ae98ce96a61f8dd7e2c910ee2468df" id="r_gaf3ae98ce96a61f8dd7e2c910ee2468df"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AllocationMacros.html#gaf3ae98ce96a61f8dd7e2c910ee2468df">FREE_ARRAY</a>(gc_ptr,  type,  pointer,  oldCount)</td></tr>
+<tr class="memdesc:gaf3ae98ce96a61f8dd7e2c910ee2468df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a heap-allocated array of the given type.  <br /></td></tr>
+<tr class="memitem:ga8b7f129c124db4383707b025ad813d34" id="r_ga8b7f129c124db4383707b025ad813d34"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AllocationMacros.html#ga8b7f129c124db4383707b025ad813d34">ALLOCATE</a>(gc_ptr,  type,  count)</td></tr>
+<tr class="memdesc:ga8b7f129c124db4383707b025ad813d34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an array of the given type.  <br /></td></tr>
+<tr class="memitem:ga9445ec62c165a98ec2f15645d5ebdd2c" id="r_ga9445ec62c165a98ec2f15645d5ebdd2c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AllocationMacros.html#ga9445ec62c165a98ec2f15645d5ebdd2c">FREE</a>(gc_ptr,  type,  pointer)</td></tr>
+<tr class="memdesc:ga9445ec62c165a98ec2f15645d5ebdd2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Frees a block of memory.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -122,186 +122,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ae0d730344c12024aa0f4b36b34b50c37" id="r_ae0d730344c12024aa0f4b36b34b50c37"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae0d730344c12024aa0f4b36b34b50c37">collectGarbage</a> (<a class="el" href="structGC.html">GC</a> gc[static 1])</td></tr>
 <tr class="memdesc:ae0d730344c12024aa0f4b36b34b50c37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Runs a garbage collection cycle.  <br /></td></tr>
 </table>
-<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
-<a id="a8b7f129c124db4383707b025ad813d34" name="a8b7f129c124db4383707b025ad813d34"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b7f129c124db4383707b025ad813d34">&#9670;&#160;</a></span>ALLOCATE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ALLOCATE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>gc_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>count</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_function" href="#aef27bccd01f602cfab7155511d9a4af2">reallocate</a>(gc_ptr, <span class="keyword">nullptr</span>, 0, <span class="keyword">sizeof</span>(type) * (count))</div>
-<div class="ttc" id="amemory_8h_html_aef27bccd01f602cfab7155511d9a4af2"><div class="ttname"><a href="#aef27bccd01f602cfab7155511d9a4af2">reallocate</a></div><div class="ttdeci">void * reallocate(GC gc[static 1], void *pointer, size_t oldSize, size_t newSize)</div><div class="ttdoc">Handles allocation and freeing of memory.</div><div class="ttdef"><b>Definition</b> memory.c:162</div></div>
-</div><!-- fragment -->
-<p>Allocates an array of the given type. </p>
-<p>This is a convenience macro.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">gc_ptr</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector that manages the memory block. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the values stored in the array. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>Desired capacity of the array.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The pointer to the allocated memory block.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#aac965f2115e7659bf9d1e6198c605a48" title="Resizes an array of the given type.">GROW_ARRAY()</a></span>, <span class="tt"><a class="el" href="#af3ae98ce96a61f8dd7e2c910ee2468df" title="Frees a heap-allocated array of the given type.">FREE_ARRAY()</a></span>, <span class="tt"><a class="el" href="#a9445ec62c165a98ec2f15645d5ebdd2c" title="Frees a block of memory.">FREE()</a></span>, <span class="tt"><a class="el" href="#aef27bccd01f602cfab7155511d9a4af2" title="Handles allocation and freeing of memory.">reallocate()</a></span> </dd></dl>
-
-</div>
-</div>
-<a id="a9445ec62c165a98ec2f15645d5ebdd2c" name="a9445ec62c165a98ec2f15645d5ebdd2c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9445ec62c165a98ec2f15645d5ebdd2c">&#9670;&#160;</a></span>FREE</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FREE</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>gc_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pointer</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_function" href="#aef27bccd01f602cfab7155511d9a4af2">reallocate</a>(gc_ptr, pointer, <span class="keyword">sizeof</span>(type), 0)</div>
-</div><!-- fragment -->
-<p>Frees a block of memory. </p>
-<p>This is a convenience macro. Unlike the <span class="tt">free()</span> function, it does not bypass the garbage collector.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">gc_ptr</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector that manages the memory block. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the values stored in the array. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">count</td><td>Desired capacity of the array.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">NULL</span>.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#aac965f2115e7659bf9d1e6198c605a48" title="Resizes an array of the given type.">GROW_ARRAY()</a></span>, <span class="tt"><a class="el" href="#af3ae98ce96a61f8dd7e2c910ee2468df" title="Frees a heap-allocated array of the given type.">FREE_ARRAY()</a></span>, <span class="tt"><a class="el" href="#a8b7f129c124db4383707b025ad813d34" title="Allocates an array of the given type.">ALLOCATE()</a></span>, <span class="tt"><a class="el" href="#aef27bccd01f602cfab7155511d9a4af2" title="Handles allocation and freeing of memory.">reallocate()</a></span> </dd></dl>
-
-</div>
-</div>
-<a id="af3ae98ce96a61f8dd7e2c910ee2468df" name="af3ae98ce96a61f8dd7e2c910ee2468df"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af3ae98ce96a61f8dd7e2c910ee2468df">&#9670;&#160;</a></span>FREE_ARRAY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define FREE_ARRAY</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>gc_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pointer</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>oldCount</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_function" href="#aef27bccd01f602cfab7155511d9a4af2">reallocate</a>(gc_ptr, pointer, <span class="keyword">sizeof</span>(type) * (oldCount), 0)</div>
-</div><!-- fragment -->
-<p>Frees a heap-allocated array of the given type. </p>
-<p>This is a convenience macro. Unlike the <span class="tt">free()</span> function, it does not bypass the garbage collector.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">gc_ptr</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector that manages the memory block. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pointer</td><td>The pointer to the block of memory, holding the array to be freed. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the values stored in the array. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">oldCount</td><td>Current capacity of the array.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd><span class="tt">NULL</span>.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#aac965f2115e7659bf9d1e6198c605a48" title="Resizes an array of the given type.">GROW_ARRAY()</a></span>, <span class="tt"><a class="el" href="#a8b7f129c124db4383707b025ad813d34" title="Allocates an array of the given type.">ALLOCATE()</a></span>, <span class="tt"><a class="el" href="#a9445ec62c165a98ec2f15645d5ebdd2c" title="Frees a block of memory.">FREE()</a></span>, <span class="tt"><a class="el" href="#aef27bccd01f602cfab7155511d9a4af2" title="Handles allocation and freeing of memory.">reallocate()</a></span> </dd></dl>
-
-</div>
-</div>
-<a id="aac965f2115e7659bf9d1e6198c605a48" name="aac965f2115e7659bf9d1e6198c605a48"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac965f2115e7659bf9d1e6198c605a48">&#9670;&#160;</a></span>GROW_ARRAY</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define GROW_ARRAY</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>gc_ptr</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>pointer</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>oldCount</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>newCount</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">    <a class="code hl_function" href="#aef27bccd01f602cfab7155511d9a4af2">reallocate</a>(gc_ptr, pointer, <span class="keyword">sizeof</span>(type) * (oldCount), <span class="keyword">sizeof</span>(type) * (newCount))</div>
-</div><!-- fragment -->
-<p>Resizes an array of the given type. </p>
-<p>This is a convenience macro. Contrary to its name, it can also be used for shrinking.</p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">gc_ptr</td><td>Non-<span class="tt">NULL</span> pointer to the garbage collector that manages the memory block. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">pointer</td><td>The pointer to the block of memory, holding the array to be resized. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>Type of the values stored in the array. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">oldCount</td><td>Current capacity of the array. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">newCount</td><td>Desired capacity of the array.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The pointer to the resized memory block.</dd></dl>
-<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="#af3ae98ce96a61f8dd7e2c910ee2468df" title="Frees a heap-allocated array of the given type.">FREE_ARRAY()</a></span>, <span class="tt"><a class="el" href="#a8b7f129c124db4383707b025ad813d34" title="Allocates an array of the given type.">ALLOCATE()</a></span>, <span class="tt"><a class="el" href="#a9445ec62c165a98ec2f15645d5ebdd2c" title="Frees a block of memory.">FREE()</a></span>, <span class="tt"><a class="el" href="#aef27bccd01f602cfab7155511d9a4af2" title="Handles allocation and freeing of memory.">reallocate()</a></span> </dd></dl>
-
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="ae0d730344c12024aa0f4b36b34b50c37" name="ae0d730344c12024aa0f4b36b34b50c37"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0d730344c12024aa0f4b36b34b50c37">&#9670;&#160;</a></span>collectGarbage()</h2>

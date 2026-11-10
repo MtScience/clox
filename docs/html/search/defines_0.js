@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['allocate_0',['ALLOCATE',['../memory_8h.html#a8b7f129c124db4383707b025ad813d34',1,'memory.h']]],
-  ['allocate_5fobj_1',['ALLOCATE_OBJ',['../object_8c.html#afc50786ca1897392965fdf45d99ac345',1,'object.c']]]
+  ['binary_5fop_0',['BINARY_OP',['../vm_8c.html#ae5be576e7ec901a1fc7e209e4f2b3b68',1,'vm.c']]]
 ];

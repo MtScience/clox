@@ -101,14 +101,19 @@ $(function(){initNavTree('object_8c.html','',''); });
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-define-members" class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:afc50786ca1897392965fdf45d99ac345" id="r_afc50786ca1897392965fdf45d99ac345"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afc50786ca1897392965fdf45d99ac345">ALLOCATE_OBJ</a>(gc,  type,  objectType)</td></tr>
+<tr class="memitem:ga69edc92787679a50fd1cb626ac414c35" id="r_ga69edc92787679a50fd1cb626ac414c35"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__AllocationMacros.html#ga69edc92787679a50fd1cb626ac414c35">ALLOCATE_OBJ</a>(gc_ptr,  type,  objectType)</td></tr>
+<tr class="memdesc:ga69edc92787679a50fd1cb626ac414c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience macro for object allocation.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9b26e7455ce3f869c7e22090ce8c8316" id="r_a9b26e7455ce3f869c7e22090ce8c8316"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObj.html">Obj</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b26e7455ce3f869c7e22090ce8c8316">allocateObject</a> (<a class="el" href="structGC.html">GC</a> gc[static 1], size_t size, <a class="el" href="group__ObjectTypes.html#gab30fb4a321d0da8fb07e81dd1441469d">ObjType</a> type)</td></tr>
-<tr class="memitem:adda53dfb77a10d4a51889a7a2f867db2" id="r_adda53dfb77a10d4a51889a7a2f867db2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adda53dfb77a10d4a51889a7a2f867db2">allocateString</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], char const *chars, uint32_t length, uint32_t hash)</td></tr>
+<tr class="memdesc:a9b26e7455ce3f869c7e22090ce8c8316"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates an <span class="tt"><a class="el" href="structObj.html" title="Parent type for objects.">Obj</a></span>.  <br /></td></tr>
+<tr class="memitem:a3f9350b32a6b95de207208bb4d71714a" id="r_a3f9350b32a6b95de207208bb4d71714a"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3f9350b32a6b95de207208bb4d71714a">allocateString</a> (<a class="el" href="structVM.html">VM</a> vm[static 1], uint32_t hash, uint32_t length, char const chars[static length])</td></tr>
+<tr class="memdesc:a3f9350b32a6b95de207208bb4d71714a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Allocates and fills an <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span>.  <br /></td></tr>
 <tr class="memitem:a1b583ffce2fa5c5efba80107db0a7487" id="r_a1b583ffce2fa5c5efba80107db0a7487"><td class="memItemLeft" align="right" valign="top">static uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b583ffce2fa5c5efba80107db0a7487">hashString</a> (uint32_t length, char const key[static length])</td></tr>
+<tr class="memdesc:a1b583ffce2fa5c5efba80107db0a7487"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function">FNV-1a</a> hash function.  <br /></td></tr>
 <tr class="memitem:a5021eb4fb2bc8ae928fecaf065f26d0c" id="r_a5021eb4fb2bc8ae928fecaf065f26d0c"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5021eb4fb2bc8ae928fecaf065f26d0c">printFunction</a> (<a class="el" href="structObjFunction.html">ObjFunction</a> <a class="el" href="compiler_8c.html#a1f38dd147c38700420dfc36aedabf6ff">function</a>[static 1])</td></tr>
+<tr class="memdesc:a5021eb4fb2bc8ae928fecaf065f26d0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a Lox function.  <br /></td></tr>
 <tr class="memitem:a1945a963942c7f7c14f2728601006a67" id="r_a1945a963942c7f7c14f2728601006a67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1945a963942c7f7c14f2728601006a67">copyString</a> (<a class="el" href="structVM.html">VM</a> *vm, uint32_t length, char const chars[static length])</td></tr>
 <tr class="memdesc:a1945a963942c7f7c14f2728601006a67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a Lox string.  <br /></td></tr>
 <tr class="memitem:ae99047fc499f7aa2423bcf90529e2fae" id="r_ae99047fc499f7aa2423bcf90529e2fae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structObjString.html">ObjString</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae99047fc499f7aa2423bcf90529e2fae">takeString</a> (<a class="el" href="structVM.html">VM</a> *vm, uint32_t length, char chars[static length])</td></tr>
@@ -123,35 +128,6 @@ Functions</h2></td></tr>
 <tr class="memitem:a0bc4a59f9b0ef5e8ff26df059a27a514" id="r_a0bc4a59f9b0ef5e8ff26df059a27a514"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0bc4a59f9b0ef5e8ff26df059a27a514">printObject</a> (<a class="el" href="structValue.html">Value</a> value)</td></tr>
 <tr class="memdesc:a0bc4a59f9b0ef5e8ff26df059a27a514"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a Lox object.  <br /></td></tr>
 </table>
-<a name="doc-define-members" id="doc-define-members"></a><h2 id="header-doc-define-members" class="groupheader">Macro Definition Documentation</h2>
-<a id="afc50786ca1897392965fdf45d99ac345" name="afc50786ca1897392965fdf45d99ac345"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afc50786ca1897392965fdf45d99ac345">&#9670;&#160;</a></span>ALLOCATE_OBJ</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define ALLOCATE_OBJ</td>
-          <td>(</td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>gc</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>type</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>objectType</em></span>&#160;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">(type*)<a class="code hl_function" href="#a9b26e7455ce3f869c7e22090ce8c8316">allocateObject</a>(gc, <span class="keyword">sizeof</span>(type), objectType)</div>
-<div class="ttc" id="aobject_8c_html_a9b26e7455ce3f869c7e22090ce8c8316"><div class="ttname"><a href="#a9b26e7455ce3f869c7e22090ce8c8316">allocateObject</a></div><div class="ttdeci">static Obj * allocateObject(GC gc[static 1], size_t size, ObjType type)</div><div class="ttdef"><b>Definition</b> object.c:16</div></div>
-</div><!-- fragment -->
-</div>
-</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="a9b26e7455ce3f869c7e22090ce8c8316" name="a9b26e7455ce3f869c7e22090ce8c8316"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9b26e7455ce3f869c7e22090ce8c8316">&#9670;&#160;</a></span>allocateObject()</h2>
@@ -185,10 +161,24 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Allocates an <span class="tt"><a class="el" href="structObj.html" title="Parent type for objects.">Obj</a></span>. </p>
+<p>Takes an amount of memory to be allocated and an <span class="tt"><a class="el" href="group__ObjectTypes.html#gab30fb4a321d0da8fb07e81dd1441469d" title="Object type enumeration.">ObjType</a></span> associated with that memory, performs an allocation, sets the type and registers the allocated memory with a garbage collector.</p>
+<p>The result of this function is supposed to be cast to a specific object pointer type.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">gc</td><td>Non-<span class="tt">NULL</span> pointer to a garbage collector that will manage the object. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the memory block to be allocated in bytes. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>The type tag of the requested object.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer to the allocated object.</dd></dl>
+<dl class="section see"><dt>See also</dt><dd><span class="tt"><a class="el" href="memory_8h.html#aef27bccd01f602cfab7155511d9a4af2" title="Handles allocation and freeing of memory.">reallocate()</a></span> </dd></dl>
+
 </div>
 </div>
-<a id="adda53dfb77a10d4a51889a7a2f867db2" name="adda53dfb77a10d4a51889a7a2f867db2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adda53dfb77a10d4a51889a7a2f867db2">&#9670;&#160;</a></span>allocateString()</h2>
+<a id="a3f9350b32a6b95de207208bb4d71714a" name="a3f9350b32a6b95de207208bb4d71714a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f9350b32a6b95de207208bb4d71714a">&#9670;&#160;</a></span>allocateString()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -204,7 +194,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">char const *</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>, </td>
+          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>hash</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -214,7 +204,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint32_t</td>          <td class="paramname"><span class="paramname"><em>hash</em></span>&#160;)</td>
+          <td class="paramtype">char const</td>          <td class="paramname"><span class="paramname"><em>chars</em></span>[static length]&#160;)</td>
         </tr>
       </table>
   </td>
@@ -223,6 +213,19 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Allocates and fills an <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span>. </p>
+<p>This function creates a new <span class="tt"><a class="el" href="structObjString.html" title="Lox string type.">ObjString</a></span> on the heap, initializes it and registers it in the virtual machine's <span class="tt"><a class="el" href="structVM.html#a2ba317e78202665d1faf9bb75b92798e">VM::strings</a></span> table.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">vm</td><td>Non-<span class="tt">NULL</span> pointer to the virtual machine that will manage the resulting Lox string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">hash</td><td>The pre-computed hash value of the string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of the string being processed </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">chars</td><td>An array of characters that contains the string data. Does not have to be a null-terminated C string.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pointer to the newly-constructed Lox string. </dd></dl>
 
 </div>
 </div>
@@ -291,6 +294,24 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>The <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function">FNV-1a</a> hash function. </p>
+<p>Implements the Fowler—Noll—Vo hashing algorithm (32-bit version). In this project it is used for hashing strings, but can be used for any value, <em>e.g</em>. with a <span class="tt">union</span>: </p><div class="fragment"><div class="line"><span class="keyword">union </span>{</div>
+<div class="line">    <span class="keywordtype">int</span> num;</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span>[<span class="keyword">sizeof</span>(int)] bytes;</div>
+<div class="line">} value = { .num = <a class="code hl_function" href="compiler_8c.html#a27f27ef689a55076d55bc8bcb772673d">number</a> };</div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_function" href="#a1b583ffce2fa5c5efba80107db0a7487">hashString</a>(<span class="keyword">sizeof</span>(<span class="keywordtype">int</span>), value.bytes);</div>
+<div class="ttc" id="acompiler_8c_html_a27f27ef689a55076d55bc8bcb772673d"><div class="ttname"><a href="compiler_8c.html#a27f27ef689a55076d55bc8bcb772673d">number</a></div><div class="ttdeci">static void number(CompilationState state[static 1], bool canAssign)</div><div class="ttdef"><b>Definition</b> compiler.c:524</div></div>
+<div class="ttc" id="aobject_8c_html_a1b583ffce2fa5c5efba80107db0a7487"><div class="ttname"><a href="#a1b583ffce2fa5c5efba80107db0a7487">hashString</a></div><div class="ttdeci">static uint32_t hashString(uint32_t length, char const key[static length])</div><div class="ttdoc">The FNV-1a hash function.</div><div class="ttdef"><b>Definition</b> object.c:113</div></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">length</td><td>The length of the memory chunk to be hashed (in bytes) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>The array of <span class="tt">char</span>s to be hashed (not necessarily a null-terminated string).</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The computed hash. </dd></dl>
+
 </div>
 </div>
 <a id="a5021eb4fb2bc8ae928fecaf065f26d0c" name="a5021eb4fb2bc8ae928fecaf065f26d0c"></a>
@@ -315,6 +336,15 @@ Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Prints a Lox function. </p>
+<p>If the function has no name (meaning it represents a script, since this implementation does not support anonymous functions), this funtion prints <span class="tt">"&lt;script&gt;"</span>, otherwise it prints <span class="tt">"&lt;fn [name]&gt;"</span>.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">function</td><td>Non-<span class="tt">NULL</span> pointer to the function to be printed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

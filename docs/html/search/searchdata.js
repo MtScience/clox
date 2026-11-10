@@ -8,8 +8,8 @@ var indexSectionsWithContent =
   5: "cgnopv",
   6: "fioptv",
   7: "ioptv",
-  8: "abfgr",
-  9: "eov",
+  8: "br",
+  9: "aeov",
   10: "abcfr"
 };
 

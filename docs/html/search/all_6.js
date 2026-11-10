@@ -11,6 +11,6 @@ var searchData=
   ['graycount_8',['grayCount',['../structGC.html#a8e6dd3052162302369679408ddd22a35',1,'GC']]],
   ['graystack_9',['grayStack',['../structGC.html#aac51de1347bdf2933a3af201a1124af3',1,'GC']]],
   ['grouping_10',['grouping',['../compiler_8c.html#a5ba3ca0f82758f0e0b6b7dc75fc5133e',1,'compiler.c']]],
-  ['grow_5farray_11',['GROW_ARRAY',['../memory_8h.html#aac965f2115e7659bf9d1e6198c605a48',1,'memory.h']]],
+  ['grow_5farray_11',['GROW_ARRAY',['../group__AllocationMacros.html#gaac965f2115e7659bf9d1e6198c605a48',1,'memory.h']]],
   ['growcapacity_12',['growCapacity',['../memory_8h.html#a6b558100de6dabdeb3d5203aef7783ac',1,'memory.h']]]
 ];

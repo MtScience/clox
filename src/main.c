@@ -14,7 +14,7 @@
  * memory to hold said content in a string and read the file into that string.
  * If at any point an error happens, the function fails.
  *
- * \param[in] path C string containing the path to the file.
+ * \param[in] path A C string containing the path to the file.
  *
  * \returns The pointer to the allocated source string.
  */
@@ -78,7 +78,7 @@ static void repl(VM* vm) {
  * Reads, compiles and runs source from a file. Fails if the file cannot be read.
  *
  * \param[in] vm   Non-`NULL` pointer to the virtual machine to run the code.
- * \param[in] path C string containing the path to the Lox source file.
+ * \param[in] path A C string containing the path to the Lox source file.
  */
 static void runFile(VM* vm, char const* path) {
     char* source = readFile(path);
@@ -101,8 +101,8 @@ static void runFile(VM* vm, char const* path) {
  *
  * | Name                 | Value                  | Meaning                                                  |
  * |----------------------|------------------------|----------------------------------------------------------|
- * | `EXIT_SUCCESS`       | Implementatio ndefined |  Success                                                 |
- * | `EXIT_FAILURE`       | Implementatio ndefined | Memory allocation failure                                |
+ * | `EXIT_SUCCESS`       | Implementation defined | Success                                                  |
+ * | `EXIT_FAILURE`       | Implementation defined | Memory allocation failure                                |
  * | `EXIT_WRONG_ARGS`    | 64                     | Incorrect program invocation (wrong number of arguments) |
  * | `EXIT_COMPILE_ERROR` | 65                     | Compilation error                                        |
  * | `EXIT_RUNTIME_ERROR` | 70                     | Runtime error                                            |

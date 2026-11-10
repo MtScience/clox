@@ -5,22 +5,7 @@
 #include "scanner.h"
 
 
-/**
- * \brief Checks whether end of input is reached.
- *
- * This function is marked as `[[reproducible]]`.
- *
- * \param[in] scanner Non-`NULL` pointer to the scanner.
- *
- * \returns `true` if current character is `'\\0'`, `false` otherwise.
- */
-static bool isAtEnd(Scanner scanner[static 1])
-#if __has_c_attribute(reproducible)
-[[reproducible]]
-#endif
-{
-    return *scanner->current == '\0';
-}
+/* Local functions */
 
 
 /**
@@ -29,6 +14,12 @@ static bool isAtEnd(Scanner scanner[static 1])
  * For the purposes of this function, `'_'` is considered a letter.
  *
  * This function is pure and marked as `[[unsequenced]]`.
+ *
+ * \param[in] c The character to be tested.
+ *
+ * \returns Test result.
+ *
+ * \sa `isAlphaNum()`
  */
 static bool isAlpha(char c)
 #if __has_c_attribute(unsequenced)
@@ -45,6 +36,12 @@ static bool isAlpha(char c)
  * For the purposes of this function, `'_'` is considered a letter.
  *
  * This function is pure and marked as `[[unsequenced]]`.
+ *
+ * \param[in] c The character to be tested.
+ *
+ * \returns Test result.
+ *
+ * \sa `isAlpha()`
  */
 static bool isAlphaNum(char c)
 #if __has_c_attribute(unsequenced)
@@ -55,6 +52,36 @@ static bool isAlphaNum(char c)
 }
 
 
+/**
+ * \brief Checks whether end of input is reached.
+ *
+ * This function is marked as `[[reproducible]]`.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ *
+ * \returns `true` if current character is zero, `false` otherwise.
+ */
+static bool isAtEnd(Scanner scanner[static 1])
+#if __has_c_attribute(reproducible)
+[[reproducible]]
+#endif
+{
+    return *scanner->current == '\0';
+}
+
+
+/**
+ * \brief Creates a regular token.
+ *
+ * Takes a `TokenType` and creates a token using the current position of the scanner.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ * \param[in] type    Type tag of the token.
+ *
+ * \returns The created token.
+ *
+ * \sa `errorToken()`
+ */
 static Token makeToken(Scanner scanner[static 1], TokenType type) {
     return (Token){
         .type = type,
@@ -65,6 +92,19 @@ static Token makeToken(Scanner scanner[static 1], TokenType type) {
 }
 
 
+/**
+ * \brief Creates an error token.
+ *
+ * Takes a C string and creates an error token using using that string as an error message.
+ * An error token signifies a syntax error in the code being compiled.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ * \param[in] message A C string containing the error message.
+ *
+ * \returns The created token.
+ *
+ * \sa `makeToken()`
+ */
 static Token errorToken(Scanner scanner[static 1], char const* message) {
     return (Token){
         .type = TOKEN_ERROR,
@@ -90,6 +130,19 @@ static char advance(Scanner scanner[static 1]) {
 }
 
 
+/**
+ * \brief Tests the current character for equality.
+ *
+ * Takes an expected character and tests whether the character the scanner
+ * is at matches it. If so, it advances the scanner.
+ *
+ * \param[in] scanner  Non-`NULL` pointer to the scanner.
+ * \param[in] expected The character to test for.
+ *
+ * \returns Equality test result.
+ *
+ * \sa `advance()`
+ */
 static bool match(Scanner scanner[static 1], char expected) {
     if (isAtEnd(scanner) || *scanner->current != expected) {
         return false;
@@ -100,6 +153,20 @@ static bool match(Scanner scanner[static 1], char expected) {
 }
 
 
+/**
+ * \brief Returns the current character.
+ *
+ * Only returns the character currently being scanned and does
+ * nothing else.
+ *
+ * This function is marked as `[[reproducible]]`.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ *
+ * \returns Current character.
+ *
+ * \sa `peekNext()`
+ */
 static char peek(Scanner scanner[static 1])
 #if __has_c_attribute(reproducible)
 [[reproducible]]
@@ -109,6 +176,19 @@ static char peek(Scanner scanner[static 1])
 }
 
 
+/**
+ * \brief Returns the next character.
+ *
+ * Only returns the next character in the stream and does nothing else.
+ *
+ * This function is marked as `[[reproducible]]`.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ *
+ * \returns Next character in the stream.
+ *
+ * \sa `peek()`
+ */
 static char peekNext(Scanner scanner[static 1])
 #if __has_c_attribute(reproducible)
 [[reproducible]]
@@ -118,6 +198,17 @@ static char peekNext(Scanner scanner[static 1])
 }
 
 
+/**
+ * \brief Skips whitespace characters in the stream.
+ *
+ * Takes a `Scanner` and advances it until a non-whitespace character is found,
+ * taking care to increase the line number.  For the purposes of this function
+ * comments are also treated as whitespace.
+ *
+ * \param[in] scanner Non-`NULL` pointer to the scanner.
+ *
+ * \sa `advance()`
+ */
 static void skipWhitespace(Scanner scanner[static 1]) {
     for (char c; (c = peek(scanner)); )
         switch (c) {

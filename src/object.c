@@ -10,9 +10,37 @@
 
 /* Local functions */
 
-#define ALLOCATE_OBJ(gc, type, objectType) (type*)allocateObject(gc, sizeof(type), objectType)
+/**
+ * \ingroup AllocationMacros
+ * \brief Convenience macro for object allocation.
+ *
+ * \param[in] type       C object type (`ObjFunction`, \e etc.) of the object to be be allocated.
+ * \param[in] objectType Type tag of the object.
+ *
+ * \returns The pointer to the allocated memory cast to the specified type pointer.
+ *
+ * \sa `allocateObject()`, `allocateString()`
+ */
+#define ALLOCATE_OBJ(gc_ptr, type, objectType) (type*)allocateObject(gc_ptr, sizeof(type), objectType)
 
 
+/**
+ * \brief Allocates an `Obj`.
+ *
+ * Takes an amount of memory to be allocated and an `ObjType` associated with that memory,
+ * performs an allocation, sets the type and registers the allocated memory with a garbage
+ * collector.
+ *
+ * The result of this function is supposed to be cast to a specific object pointer type.
+ *
+ * \param[in] gc   Non-`NULL` pointer to a garbage collector that will manage the object.
+ * \param[in] size The size of the memory block to be allocated in bytes.
+ * \param[in] type The type tag of the requested object.
+ *
+ * \returns The pointer to the allocated object.
+ *
+ * \sa `reallocate()`
+ */
 static Obj* allocateObject(GC gc[static 1], size_t size, ObjType type) {
     Obj* object = reallocate(gc, nullptr, 0, size);
     object->type = type;
@@ -29,7 +57,22 @@ static Obj* allocateObject(GC gc[static 1], size_t size, ObjType type) {
 }
 
 
-static ObjString* allocateString(VM vm[static 1], char const* chars, uint32_t length, uint32_t hash) {
+/**
+ * \brief Allocates and fills an `ObjString`.
+ *
+ * This function creates a new `ObjString` on the heap, initializes it and registers it in the
+ * virtual machine's `VM::strings` table.
+ *
+ * \param[in] vm     Non-`NULL` pointer to the virtual machine that will manage the resulting
+ *                   Lox string.
+ * \param[in] hash   The pre-computed hash value of the string.
+ * \param[in] length The length of the string being processed
+ * \param[in] chars  An array of characters that contains the string data. Does not have to be
+ *                   a null-terminated C string.
+ *
+ * \returns The pointer to the newly-constructed Lox string.
+ */
+static ObjString* allocateString(VM vm[static 1], uint32_t hash, uint32_t length, char const chars[static length]) {
     ObjString* string = (ObjString*)allocateObject(&vm->gc,
                                                    sizeof(ObjString) + (length + 1) * sizeof(char),
                                                    OBJ_STRING);
@@ -46,6 +89,27 @@ static ObjString* allocateString(VM vm[static 1], char const* chars, uint32_t le
 }
 
 
+/**
+ * \brief The <a href="https://en.wikipedia.org/wiki/Fowler%E2%80%93Noll%E2%80%93Vo_hash_function">FNV-1a</a> hash function.
+ *
+ * Implements the Fowler—Noll—Vo hashing algorithm (32-bit version). In this
+ * project it is used for hashing strings, but can be used for any value, \e e.g.
+ * with a `union`:
+ * \code{.c}
+ * union {
+ *     int num;
+ *     unsigned char[sizeof(int)] bytes;
+ * } value = { .num = number };
+ *
+ * hashString(sizeof(int), value.bytes);
+ * \endcode
+ *
+ * \param[in] length The length of the memory chunk to be hashed (in bytes)
+ * \param[in] key    The array of `char`s to be hashed (not necessarily a
+ *                   null-terminated string).
+ *
+ * \returns The computed hash.
+ */
 static uint32_t hashString(uint32_t length, char const key[static length]) {
     /* This is the 32-bit FNV-1a hash function */
 
@@ -59,6 +123,15 @@ static uint32_t hashString(uint32_t length, char const key[static length]) {
 }
 
 
+/**
+ * \brief Prints a Lox function.
+ *
+ * If the function has no name (meaning it represents a script, since this
+ * implementation does not support anonymous functions), this funtion prints
+ * `"<script>"`, otherwise it prints `"<fn [name]>"`.
+ *
+ * \param[in] function Non-`NULL` pointer to the function to be printed.
+ */
 static void printFunction(ObjFunction function[static 1]) {
     if (!function->name) {
         printf("<script>");
@@ -78,7 +151,7 @@ ObjString* copyString(VM* vm, uint32_t length, char const chars[static length]) 
         return interned;
     }
 
-    return allocateString(vm, chars, length, hash);
+    return allocateString(vm, hash, length, chars);
 }
 
 
@@ -91,7 +164,7 @@ ObjString* takeString(VM* vm, uint32_t length, char chars[static length]) {
         return interned;
     }
 
-    return allocateString(vm, chars, length, hash);
+    return allocateString(vm, hash, length, chars);
 }
 
 

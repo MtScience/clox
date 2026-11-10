@@ -6,7 +6,7 @@ var searchData=
   ['adjustcapacity_3',['adjustCapacity',['../table_8c.html#a713279ffd7124c26cce3dccd322aaa59',1,'table.c']]],
   ['advance_4',['advance',['../compiler_8c.html#aa2f7b1a368b1bd55ea11df61c444794d',1,'advance(Parser parser[static 1], Scanner scanner[static 1]):&#160;compiler.c'],['../scanner_8c.html#a40345cbb341d84d74e10d689b5b3a7de',1,'advance(Scanner scanner[static 1]):&#160;scanner.c']]],
   ['allocateobject_5',['allocateObject',['../object_8c.html#a9b26e7455ce3f869c7e22090ce8c8316',1,'object.c']]],
-  ['allocatestring_6',['allocateString',['../object_8c.html#adda53dfb77a10d4a51889a7a2f867db2',1,'object.c']]],
+  ['allocatestring_6',['allocateString',['../object_8c.html#a3f9350b32a6b95de207208bb4d71714a',1,'object.c']]],
   ['and_5f_7',['and_',['../compiler_8c.html#a59f093c304d3a79e7ffddbfc38b333c4',1,'compiler.c']]],
   ['argumentlist_8',['argumentList',['../compiler_8c.html#a3bbaa1658bf1c8c1775e3bf63f6ee5ab',1,'compiler.c']]],
   ['asbool_9',['asBool',['../group__ValueTypeConversions.html#ga018cc0a3f95997d11229d55981b568c5',1,'value.h']]],

@@ -1,8 +1,8 @@
 var object_8c =
 [
-    [ "ALLOCATE_OBJ", "object_8c.html#afc50786ca1897392965fdf45d99ac345", null ],
+    [ "ALLOCATE_OBJ", "group__AllocationMacros.html#ga69edc92787679a50fd1cb626ac414c35", null ],
     [ "allocateObject", "object_8c.html#a9b26e7455ce3f869c7e22090ce8c8316", null ],
-    [ "allocateString", "object_8c.html#adda53dfb77a10d4a51889a7a2f867db2", null ],
+    [ "allocateString", "object_8c.html#a3f9350b32a6b95de207208bb4d71714a", null ],
     [ "copyString", "object_8c.html#a1945a963942c7f7c14f2728601006a67", null ],
     [ "hashString", "object_8c.html#a1b583ffce2fa5c5efba80107db0a7487", null ],
     [ "newBoundMethod", "group__ObjectConstructors.html#ga9c643303ddea6287a9262c4f1ddc3a7a", null ],

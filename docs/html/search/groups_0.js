@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exitcodes_0',['ExitCodes',['../group__ExitCodes.html',1,'']]]
+  ['allocationmacros_0',['AllocationMacros',['../group__AllocationMacros.html',1,'']]]
 ];
